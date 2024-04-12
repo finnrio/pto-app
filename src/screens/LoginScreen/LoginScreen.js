@@ -3,13 +3,13 @@ import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import styles from './styles';
-import { firebase } from '../../firebase/config'
+// import { firebase } from '../../firebase/config'
 
 export default function LoginScreen({navigation}) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const auth = getAuth();
+    // const auth = getAuth();
     // signInWithEmailAndPassword(auth, email, password)
     //     .then((userCredendtial) => {
     //         // Signed in
@@ -20,41 +20,41 @@ export default function LoginScreen({navigation}) {
     //         const errorMessage = error.message;
     //     });
 
-    const onFooterLinkPress = () => {
-        navigation.navigate('Registration')
-    }
+    // const onFooterLinkPress = () => {
+    //     navigation.navigate('Registration')
+    // }
 
-    const onLoginPress = () => {
-        signInWithEmailAndPassword(auth, email, password)
-            .then((response) => {
-                const user = response.user;
-                if(!user){
-                    alert("User does not exist anymore.")
-                    return;
-                }
-                // navigation.navigate('Home', {user: user})
-                navigation.navigate('Home', {user: user})
-                // const uid = response.user.uid
-                // const usersRef = firebase.firestore().collection('users')
-                // usersRef
-                //     .doc(uid)
-                //     .get()
-                //     .then(firestoreDocument => {
-                //         if (!firestoreDocument.exists) {
-                //             alert("User does not exist anymore.")
-                //             return;
-                //         }
-                //         const user = firestoreDocument.data()
-                //         navigation.navigate('Home', {user: user})
-                //     })
-                //     .catch(error => {
-                //         alert(error)
-                //     });
-            })
-            .catch(error => {
-                alert(error)
-            })
-    }
+    // const onLoginPress = () => {
+    //     signInWithEmailAndPassword(auth, email, password)
+    //         .then((response) => {
+    //             const user = response.user;
+    //             if(!user){
+    //                 alert("User does not exist anymore.")
+    //                 return;
+    //             }
+    //             // navigation.navigate('Home', {user: user})
+    //             navigation.navigate('Home', {user: user})
+    //             // const uid = response.user.uid
+    //             // const usersRef = firebase.firestore().collection('users')
+    //             // usersRef
+    //             //     .doc(uid)
+    //             //     .get()
+    //             //     .then(firestoreDocument => {
+    //             //         if (!firestoreDocument.exists) {
+    //             //             alert("User does not exist anymore.")
+    //             //             return;
+    //             //         }
+    //             //         const user = firestoreDocument.data()
+    //             //         navigation.navigate('Home', {user: user})
+    //             //     })
+    //             //     .catch(error => {
+    //             //         alert(error)
+    //             //     });
+    //         })
+    //         .catch(error => {
+    //             alert(error)
+    //         })
+    // }
 
     return (
         <View style={styles.container}>
@@ -90,7 +90,7 @@ export default function LoginScreen({navigation}) {
                     <Text style={styles.buttonTitle}>Log in</Text>
                 </TouchableOpacity>
                 <View style={styles.footerView}>
-                    <Text style={styles.footerText}>Don't have an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Sign up</Text></Text>
+                    <Text style={styles.footerText}>Don't have an account? <Text  style={styles.footerLink}>Sign up</Text></Text>
                 </View>
             </KeyboardAwareScrollView>
         </View>
