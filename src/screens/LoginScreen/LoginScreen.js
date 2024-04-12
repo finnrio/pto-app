@@ -32,8 +32,9 @@ export default function LoginScreen({navigation}) {
                     alert("User does not exist anymore.")
                     return;
                 }
+                console.log("successful login as user:", user)
                 // navigation.navigate('Home', {user: user})
-                navigation.navigate('Home', {user: user})
+                // navigation.navigate('Home', {user: user})
                 // const uid = response.user.uid
                 // const usersRef = firebase.firestore().collection('users')
                 // usersRef

@@ -41,11 +41,11 @@ export default function App() {
     });
   }, []);
 
-  if (loading) {
-    return (
-      <></>
-    )
-  }
+  // if (loading) {
+  //   return (
+  //     <></>
+  //   )
+  // }
 
   return (
     <NavigationContainer>

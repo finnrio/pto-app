@@ -1,0 +1,21 @@
+{
+    "_redirectEventId": undefined,
+    "apiKey": "AIzaSyBEjW_646bH_Q4ECQD_g7nXhM_WTDQQZqw",
+    "appName": "[DEFAULT]",
+    "createdAt": "1712836751208",
+    "displayName": undefined,
+    "email": "archie@test.test",
+    "emailVerified": false,
+    "isAnonymous": false,
+    "lastLoginAt": "1712940969539",
+    "phoneNumber": undefined,
+    "photoURL": undefined,
+    "providerData": [[Object]],
+    "stsTokenManager": {
+        "accessToken": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImYyOThjZDA3NTlkOGNmN2JjZTZhZWNhODExNmU4ZjYzMDlhNDQwMjAiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vcHRvLWFwcC0zMDI3MSIsImF1ZCI6InB0by1hcHAtMzAyNzEiLCJhdXRoX3RpbWUiOjE3MTI5NDA5NjksInVzZXJfaWQiOiJYS2dPTUkyZTZVWkJ5ekY5cE04Y2d0NVVTSWIyIiwic3ViIjoiWEtnT01JMmU2VVpCeXpGOXBNOGNndDVVU0liMiIsImlhdCI6MTcxMjk0MDk2OSwiZXhwIjoxNzEyOTQ0NTY5LCJlbWFpbCI6ImFyY2hpZUB0ZXN0LnRlc3QiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsiYXJjaGllQHRlc3QudGVzdCJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.iBuNAT0mvuHzoJeST36oxobZ7qc1V6JR-AK8Z8XYotPL0W8SaQwvEE3ZCUQy9XchdtgRx3eH4ZbVZArqX2s9IZb0eAZCNMwgnwXMFN722VJoYPi7KcjXJ9Y7-f_LJI-v_zby-o_u0eujV5qwUDKFJNLvuy4zW3CsYGhQEReuxRa1WVSw9HLAK1rheOweStxkIpdnStdB30YR-TAYpl97XU8weFzixA69YfvaV2hMvjaCZjqk3pa40_bQNeJSXoe6d0WTMGvXFSOPG1ceJ4yMxne8xau0xb-QIZ6b3HZayowfyFtmlpH3ClhG77Z_j_TPtXmuwtIC4A9dZSUX_A-8-w",
+        "expirationTime": 1712944569589,
+        "refreshToken": "AMf-vBzFX6hBa53npQqOxYLF2nGZF8ImktBebYN02wbp2FqV-0WyUuPsAn42CBYmuKKUzvN5o9WS2tVxmv9ycMB5aIjcT9U4uLULbvMMn6q0py6DIv03yrw9JEn2nHS0r4SJaxpRYrW2nEAtYnfJKahydidwt1VpXoMPJyews2OL0fMH0PXovd4CnfoyyknM9ux_r1OCXzqNfYyewztpHuNxnAAa3ii7wQ"
+    },
+    "tenantId": undefined,
+    "uid": "XKgOMI2e6UZByzF9pM8cgt5USIb2"
+}
