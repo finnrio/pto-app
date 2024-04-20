@@ -5,14 +5,9 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { FIREBASE_AUTH } from '../../firebase/config';
 import styles from './styles';
 
-export default function LoginScreen({navigation}) {
+export default function LoginScreen({navigation}: any) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-
-
-    const onFooterLinkPress = () => {
-        navigation.navigate('Registration')
-    }
 
     const onLoginPress = () => {
         signInWithEmailAndPassword(FIREBASE_AUTH, email, password)

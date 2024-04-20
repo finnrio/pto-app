@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import { User } from "@firebase/auth"
+import { User } from "firebase/auth"
 import { LoginScreen, HomeScreen } from './src/screens'
 import {decode, encode} from 'base-64'
 import { FIREBASE_AUTH } from './src/firebase/config';
