@@ -1,26 +1,23 @@
 import React, { useState } from 'react'
-import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Image, Text, TextInput, TouchableOpacity, View, Alert } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { FIREBASE_AUTH } from '../../firebase/config';
+import { FIREBASE_AUTH } from '../../firebase/firebaseConfig';
 import styles from './styles';
 
 export default function LoginScreen({navigation}: any) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const onLoginPress = () => {
+    const HandleLogin = () => {
         signInWithEmailAndPassword(FIREBASE_AUTH, email, password)
-            .then((response) => {
-                const user = response.user;
-                if(!user){
-                    alert("User does not exist anymore.")
-                    return;
-                }
-            })
-            .catch(error => {
-                alert(error)
-            })
+        .then((userCredential) => {
+            console.log('user %s signed in', userCredential.user.uid);
+        })
+        .catch(error => {
+            console.error(error.code)
+            Alert.alert(error.code)
+        });
     }
 
     return (
@@ -53,7 +50,7 @@ export default function LoginScreen({navigation}: any) {
                 />
                 <TouchableOpacity
                     style={styles.button}
-                    onPress={() => onLoginPress()}>
+                    onPress={() => HandleLogin()}>
                     <Text style={styles.buttonTitle}>Log in</Text>
                 </TouchableOpacity>
             </KeyboardAwareScrollView>
