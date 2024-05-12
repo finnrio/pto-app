@@ -4,8 +4,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { User } from "firebase/auth";
 import { decode, encode } from "base-64";
-import { LoginScreen, HomeScreen } from "./src/screens";
+import { LoginScreen } from "./src/screens";
 import { FIREBASE_AUTH } from "./src/firebase/firebaseConfig";
+import EmployeeDrawerNavigator from "./src/navigators/EmployeeDrawerNavigator";
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -19,7 +20,8 @@ const Stack = createStackNavigator();
 export default function App() {
   const [user, setUser] = useState<User | null>(null);
 
-  function onAuthStateChanged() {
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  function onAuthStateChanged(user: User | null) {
     setUser(user);
   }
 
@@ -32,8 +34,8 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         {user ? (
-          <Stack.Screen name="Home">
-            {(props) => <HomeScreen {...props} extraData={user} />}
+          <Stack.Screen name="Home" options={{ headerShown: false }}>
+            {(props) => <EmployeeDrawerNavigator {...props} extraData={user} />}
           </Stack.Screen>
         ) : (
           <Stack.Screen name="Login" component={LoginScreen} />
