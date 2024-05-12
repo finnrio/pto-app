@@ -1,0 +1,122 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginScreen renders correctly 1`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+      "flex": 1,
+    }
+  }
+>
+  <Image
+    source={1}
+    style={
+      {
+        "alignSelf": "center",
+        "flex": 1,
+        "height": 120,
+        "margin": 30,
+        "width": 90,
+      }
+    }
+  />
+  <TextInput
+    autoCapitalize="none"
+    onChangeText={[Function]}
+    placeholder="E-mail"
+    placeholderTextColor="#aaaaaa"
+    style={
+      {
+        "backgroundColor": "white",
+        "borderRadius": 5,
+        "height": 48,
+        "marginBottom": 10,
+        "marginLeft": 30,
+        "marginRight": 30,
+        "marginTop": 10,
+        "overflow": "hidden",
+        "paddingLeft": 16,
+      }
+    }
+    underlineColorAndroid="transparent"
+    value=""
+  />
+  <TextInput
+    autoCapitalize="none"
+    onChangeText={[Function]}
+    placeholder="Password"
+    placeholderTextColor="#aaaaaa"
+    secureTextEntry={true}
+    style={
+      {
+        "backgroundColor": "white",
+        "borderRadius": 5,
+        "height": 48,
+        "marginBottom": 10,
+        "marginLeft": 30,
+        "marginRight": 30,
+        "marginTop": 10,
+        "overflow": "hidden",
+        "paddingLeft": 16,
+      }
+    }
+    underlineColorAndroid="transparent"
+    value=""
+  />
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#788eec",
+        "borderRadius": 5,
+        "height": 48,
+        "justifyContent": "center",
+        "marginLeft": 30,
+        "marginRight": 30,
+        "marginTop": 20,
+        "opacity": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "color": "white",
+          "fontSize": 16,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      Log in
+    </Text>
+  </View>
+</View>
+`;

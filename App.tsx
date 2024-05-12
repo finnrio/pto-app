@@ -1,24 +1,46 @@
-import 'react-native-gesture-handler';
-import React from 'react'
-import { NavigationContainer } from '@react-navigation/native'
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { CalendarScreen, EmployeeActivityScreen } from './src/screens'
-import {decode, encode} from 'base-64'
-import { PaperProvider } from 'react-native-paper';
-if (!global.btoa) {  global.btoa = encode }
-if (!global.atob) { global.atob = decode }
+import "react-native-gesture-handler";
+import React, { useEffect, useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { User } from "firebase/auth";
+import { decode, encode } from "base-64";
+import { LoginScreen } from "./src/screens";
+import { FIREBASE_AUTH } from "./src/firebase/firebaseConfig";
+import EmployeeDrawerNavigator from "./src/navigators/EmployeeDrawerNavigator";
+
+if (!global.btoa) {
+  global.btoa = encode;
+}
+if (!global.atob) {
+  global.atob = decode;
+}
+
+const Stack = createStackNavigator();
 
 export default function App() {
+  const [user, setUser] = useState<User | null>(null);
 
-  const Drawer = createDrawerNavigator();
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  function onAuthStateChanged(user: User | null) {
+    setUser(user);
+  }
+
+  useEffect(() => {
+    const subscriber = FIREBASE_AUTH.onAuthStateChanged(onAuthStateChanged);
+    return subscriber;
+  }, []);
+
   return (
-    <PaperProvider>
-    <NavigationContainer independent={true}>
-      <Drawer.Navigator>
-            <Drawer.Screen name="Activity" component={EmployeeActivityScreen} />
-            <Drawer.Screen name="Calendar" component={CalendarScreen} />
-      </Drawer.Navigator>
+    <NavigationContainer>
+      <Stack.Navigator>
+        {user ? (
+          <Stack.Screen name="Home" options={{ headerShown: false }}>
+            {(props) => <EmployeeDrawerNavigator {...props} extraData={user} />}
+          </Stack.Screen>
+        ) : (
+          <Stack.Screen name="Login" component={LoginScreen} />
+        )}
+      </Stack.Navigator>
     </NavigationContainer>
-    </PaperProvider>
   );
 }
