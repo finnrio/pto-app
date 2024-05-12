@@ -5,9 +5,5 @@
     "esModuleInterop": true,
     "jsx": "react"
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "src/screens/HomeScreen/HomeScreen.js"
-  ]
+  "include": ["**/*.ts", "**/*.tsx", "src/screens/HomeScreen/HomeScreen.js"]
 }

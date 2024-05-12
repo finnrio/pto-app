@@ -1,5 +1,7 @@
 # Testing
+
 ## Firebase emulators
+
 Setup firebase emulators:
 
 `firebase emulators:start`

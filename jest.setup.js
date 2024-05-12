@@ -1,5 +1,5 @@
 // include this line for mocking react-native-gesture-handler
-import 'react-native-gesture-handler/jestSetup';
+import "react-native-gesture-handler/jestSetup";
 
 const { resolve } = require("path");
 
