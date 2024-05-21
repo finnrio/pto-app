@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { User } from "firebase/auth";
 import { decode, encode } from "base-64";
+import { UserContext } from "./src/context/UserContext";
 import { LoginScreen } from "./src/screens";
 import { FIREBASE_AUTH } from "./src/firebase/firebaseConfig";
 import EmployeeDrawerNavigator from "./src/navigators/EmployeeDrawerNavigator";
@@ -32,15 +33,17 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        {user ? (
-          <Stack.Screen name="Home" options={{ headerShown: false }}>
-            {(props) => <EmployeeDrawerNavigator {...props} extraData={user} />}
-          </Stack.Screen>
-        ) : (
-          <Stack.Screen name="Login" component={LoginScreen} />
-        )}
-      </Stack.Navigator>
+      <UserContext.Provider value={user}>
+        <Stack.Navigator>
+          {user ? (
+            <Stack.Screen name="Home" options={{ headerShown: false }}>
+              {(props) => <EmployeeDrawerNavigator {...props} />}
+            </Stack.Screen>
+          ) : (
+            <Stack.Screen name="Login" component={LoginScreen} />
+          )}
+        </Stack.Navigator>
+      </UserContext.Provider>
     </NavigationContainer>
   );
 }

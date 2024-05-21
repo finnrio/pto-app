@@ -1,5 +1,5 @@
-import { initializeApp } from "firebase/app";
-import { connectAuthEmulator, getAuth } from "firebase/auth";
+import { initializeApp, getApp } from "firebase/app";
+import { connectAuthEmulator, getAuth, initializeAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 // Initialize Firebase
@@ -16,7 +16,7 @@ const firebaseConfig = {
 
 const FIREBASE_APP = initializeApp(firebaseConfig);
 
-const FIREBASE_AUTH = getAuth(FIREBASE_APP);
+const FIREBASE_AUTH = initializeAuth(FIREBASE_APP);
 const FIRESTORE_DB = getFirestore(FIREBASE_APP);
 
 if (process.env.NODE_ENV === "test") {
@@ -24,4 +24,11 @@ if (process.env.NODE_ENV === "test") {
   connectAuthEmulator(FIREBASE_AUTH, "http://127.0.0.1:9099");
 }
 
-export { FIREBASE_APP, FIREBASE_AUTH, FIRESTORE_DB };
+export {
+  FIREBASE_APP,
+  FIREBASE_AUTH,
+  FIRESTORE_DB,
+  getApp,
+  getAuth,
+  getFirestore,
+};
