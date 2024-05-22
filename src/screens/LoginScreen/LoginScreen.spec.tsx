@@ -26,7 +26,7 @@ describe("LoginScreen", () => {
   });
 
   it("renders correctly", () => {
-    const tree = renderer.create(<LoginScreen navigation={{}} />).toJSON();
+    const tree = renderer.create(<LoginScreen />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
@@ -39,7 +39,7 @@ describe("LoginScreen", () => {
   });
 
   it("should update email and password state when input changes", () => {
-    const { getByPlaceholderText } = render(<LoginScreen navigation={{}} />);
+    const { getByPlaceholderText } = render(<LoginScreen />);
     const emailInput = getByPlaceholderText("E-mail");
     const passwordInput = getByPlaceholderText("Password");
 
