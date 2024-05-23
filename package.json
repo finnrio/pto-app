@@ -3,12 +3,6 @@
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-<<<<<<< HEAD
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web"
-=======
     "start": "NODE_ENV=development expo start",
     "start:prod": "NODE_ENV=production expo start",
     "android": "NODE_ENV=development expo start --android",
@@ -18,7 +12,6 @@
     "test:watch": "npm run test --watch",
     "test:ci": "npm run test --coverage",
     "ts:check": "tsc"
->>>>>>> 591a59a591e38081932864d3688548cbb43dc9ae
   },
   "dependencies": {
     "expo": "~50.0.14",
@@ -31,17 +24,12 @@
     "@eslint/eslintrc": "^3.0.2",
     "@eslint/js": "^9.0.0",
     "@types/react": "~18.2.45",
-<<<<<<< HEAD
-    "@typescript-eslint/eslint-plugin": "^6.21.0",
-    "@typescript-eslint/parser": "^7.6.0",
-=======
     "@types/react-test-renderer": "^18.0.7",
     "@typescript-eslint/eslint-plugin": "^7.8.0",
     "@typescript-eslint/parser": "^7.8.0",
     "babel-jest": "^29.7.0",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
->>>>>>> 591a59a591e38081932864d3688548cbb43dc9ae
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-standard-with-typescript": "^43.0.1",
