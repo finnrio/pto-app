@@ -1,6 +1,17 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
+<<<<<<< HEAD
     "strict": true
   }
+=======
+    "strict": true,
+    "esModuleInterop": true,
+    "jsx": "react",
+    "paths": {
+      "@firebase/auth": ["./node_modules/@firebase/auth/dist/index.rn.d.ts"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx", "src/screens/HomeScreen/HomeScreen.js"]
+>>>>>>> 591a59a591e38081932864d3688548cbb43dc9ae
 }
