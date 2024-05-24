@@ -9,7 +9,11 @@ import {
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { FIREBASE_AUTH } from "../../firebase/firebaseConfig";
+import {
+  FIREBASE_AUTH,
+  // getAuth,
+  // signInWithEmailAndPassword,
+} from "../../firebase/firebaseConfig";
 import styles from "./styles";
 
 const iconImage = require("../../../assets/icon.png");

@@ -36,9 +36,11 @@ export default function App() {
       <UserContext.Provider value={user}>
         <Stack.Navigator>
           {user ? (
-            <Stack.Screen name="Home" options={{ headerShown: false }}>
-              {(props) => <EmployeeDrawerNavigator {...props} />}
-            </Stack.Screen>
+            <Stack.Screen
+              name="Home"
+              options={{ headerShown: false }}
+              component={EmployeeDrawerNavigator}
+            />
           ) : (
             <Stack.Screen name="Login" component={LoginScreen} />
           )}

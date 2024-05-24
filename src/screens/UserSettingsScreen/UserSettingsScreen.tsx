@@ -56,9 +56,13 @@ export default function UserSettingsScreen() {
         ],
         { cancelable: true },
       );
-    } catch (e) {
+    } catch (e: unknown) {
       console.error(e);
-      Alert.alert(e);
+      if (e instanceof Error) {
+        Alert.alert(e.name, e.message);
+      } else {
+        Alert.alert("Error", "An error has occured");
+      }
     }
   }
 

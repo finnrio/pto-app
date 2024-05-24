@@ -9,6 +9,9 @@ jest.mock("react-native-keyboard-aware-scroll-view", () => ({
     props.children,
 }));
 
+// solution from https://github.com/expo/expo/issues/21434#issuecomment-1450781966
+jest.mock("expo-font");
+
 jest.mock("./src/firebase/firebaseConfig", () => ({
   FIREBASE_AUTH: {
     onAuthStateChanged: jest.fn(),
@@ -27,13 +30,15 @@ describe("App", () => {
     ).toHaveBeenCalled();
   });
 
-  it("renders HomeScreen if user is authenticated", () => {
+  // This is no longer the case as the app pages have changed
+  it("renders UserActivityScreen if user is authenticated", () => {
+    console.log("NODE_ENV:", process.env.NODE_ENV);
     require("./src/firebase/firebaseConfig").FIREBASE_AUTH.onAuthStateChanged.mockImplementationOnce(
       (handler: any) =>
         handler({ uid: "123", displayName: "Test User" } as any),
     );
-    const { getByText } = render(<App />);
-    expect(getByText("Home")).toBeTruthy();
+    const { getAllByText } = render(<App />);
+    expect(getAllByText("Activity")).toBeTruthy();
   });
 
   it("renders LoginScreen if user is not authenticated", () => {
