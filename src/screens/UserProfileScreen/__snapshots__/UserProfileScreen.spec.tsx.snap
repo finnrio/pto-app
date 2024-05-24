@@ -1,0 +1,234 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserProfileScreen renders correctly 1`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+      "flex": 1,
+    }
+  }
+>
+  <Text
+    style={
+      {
+        "marginBottom": 10,
+        "marginLeft": 30,
+        "marginRight": 30,
+        "marginTop": 10,
+        "paddingLeft": 16,
+      }
+    }
+  >
+    User ID
+  </Text>
+  <TextInput
+    editable={false}
+    placeholder="Failed to load User ID"
+    placeholderTextColor="#aaaaaa"
+    style={
+      {
+        "backgroundColor": "white",
+        "borderRadius": 5,
+        "height": 48,
+        "marginBottom": 10,
+        "marginLeft": 30,
+        "marginRight": 30,
+        "marginTop": 10,
+        "overflow": "hidden",
+        "paddingLeft": 16,
+      }
+    }
+    underlineColorAndroid="transparent"
+  />
+  <Text
+    style={
+      {
+        "marginBottom": 10,
+        "marginLeft": 30,
+        "marginRight": 30,
+        "marginTop": 10,
+        "paddingLeft": 16,
+      }
+    }
+  >
+    First Name
+  </Text>
+  <TextInput
+    autoCapitalize="none"
+    onChangeText={[Function]}
+    placeholder="First Name"
+    placeholderTextColor="#aaaaaa"
+    style={
+      {
+        "backgroundColor": "white",
+        "borderRadius": 5,
+        "height": 48,
+        "marginBottom": 10,
+        "marginLeft": 30,
+        "marginRight": 30,
+        "marginTop": 10,
+        "overflow": "hidden",
+        "paddingLeft": 16,
+      }
+    }
+    underlineColorAndroid="transparent"
+    value=""
+  />
+  <Text
+    style={
+      {
+        "marginBottom": 10,
+        "marginLeft": 30,
+        "marginRight": 30,
+        "marginTop": 10,
+        "paddingLeft": 16,
+      }
+    }
+  >
+    Surname
+  </Text>
+  <TextInput
+    autoCapitalize="none"
+    onChangeText={[Function]}
+    placeholder="Surname"
+    placeholderTextColor="#aaaaaa"
+    style={
+      {
+        "backgroundColor": "white",
+        "borderRadius": 5,
+        "height": 48,
+        "marginBottom": 10,
+        "marginLeft": 30,
+        "marginRight": 30,
+        "marginTop": 10,
+        "overflow": "hidden",
+        "paddingLeft": 16,
+      }
+    }
+    underlineColorAndroid="transparent"
+    value=""
+  />
+  <Text
+    style={
+      {
+        "marginBottom": 10,
+        "marginLeft": 30,
+        "marginRight": 30,
+        "marginTop": 10,
+        "paddingLeft": 16,
+      }
+    }
+  >
+    Email
+  </Text>
+  <TextInput
+    autoCapitalize="none"
+    onChangeText={[Function]}
+    placeholder="E-mail"
+    placeholderTextColor="#aaaaaa"
+    style={
+      {
+        "backgroundColor": "white",
+        "borderRadius": 5,
+        "height": 48,
+        "marginBottom": 10,
+        "marginLeft": 30,
+        "marginRight": 30,
+        "marginTop": 10,
+        "overflow": "hidden",
+        "paddingLeft": 16,
+      }
+    }
+    underlineColorAndroid="transparent"
+    value=""
+  />
+  <Text
+    style={
+      {
+        "marginBottom": 10,
+        "marginLeft": 30,
+        "marginRight": 30,
+        "marginTop": 10,
+        "paddingLeft": 16,
+      }
+    }
+  >
+    Role
+  </Text>
+  <TextInput
+    editable={false}
+    placeholder="User Role"
+    placeholderTextColor="#aaaaaa"
+    style={
+      {
+        "backgroundColor": "white",
+        "borderRadius": 5,
+        "height": 48,
+        "marginBottom": 10,
+        "marginLeft": 30,
+        "marginRight": 30,
+        "marginTop": 10,
+        "overflow": "hidden",
+        "paddingLeft": 16,
+      }
+    }
+    underlineColorAndroid="transparent"
+    value=""
+  />
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#788eec",
+        "borderRadius": 5,
+        "height": 48,
+        "justifyContent": "center",
+        "marginLeft": 30,
+        "marginRight": 30,
+        "marginTop": 20,
+        "opacity": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "color": "white",
+          "fontSize": 16,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      Update Profile
+    </Text>
+  </View>
+</View>
+`;
