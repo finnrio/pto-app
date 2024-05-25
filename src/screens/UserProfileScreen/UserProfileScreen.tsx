@@ -1,21 +1,24 @@
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
+import { updateEmail } from "firebase/auth";
 
 import { UserContext } from "../../context/UserContext";
-import GetUserProfileData from "../../firebase/firestore/GetUserProfileData";
+import GetCurrentUserData from "../../firebase/firestore/GetCurrentUserData";
 import SetUserProfileData from "../../firebase/firestore/SetUserProfileData";
 import styles from "./styles";
+import { FIREBASE_AUTH } from "../../firebase/firebaseConfig";
+import { AppUser } from "../../types/AppUser";
 
 export default function UserProfileScreen() {
-  const userID = useContext(UserContext)?.uid;
+  const currentUser = useContext(UserContext);
   const [firstName, setFirstName] = useState("");
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
 
-  async function RenderUserData(id: any) {
-    const res = await GetUserProfileData(id);
+  async function RenderUserData(/* id: any */) {
+    const res: AppUser = await GetCurrentUserData(); // this should use an ID if used by admin
     setFirstName(res?.first_name);
     setSurname(res?.surname);
     setEmail(res?.email);
@@ -39,14 +42,22 @@ export default function UserProfileScreen() {
           {
             text: "Update",
             onPress: () => {
-              SetUserProfileData(createUserDataObject(), userID);
-              RenderUserData(userID);
+              SetUserProfileData(createUserDataObject(), currentUser?.uid);
+              if (email !== FIREBASE_AUTH.currentUser?.email) {
+                console.log("updating email on auth system");
+                try {
+                  updateEmail(currentUser!, email!); // TODO THIS IS NOT WORKING
+                } catch (e) {
+                  console.error(e);
+                }
+              }
+              RenderUserData();
             },
             style: "default",
           },
           {
             text: "Reset Changes",
-            onPress: () => RenderUserData(userID),
+            onPress: () => RenderUserData(),
             style: "cancel",
           },
           {
@@ -67,7 +78,7 @@ export default function UserProfileScreen() {
   }
 
   useEffect(() => {
-    RenderUserData(userID);
+    RenderUserData();
   }, []);
 
   return (
@@ -81,7 +92,7 @@ export default function UserProfileScreen() {
           style={styles.input}
           placeholder="Failed to load User ID"
           placeholderTextColor="#aaaaaa"
-          value={userID}
+          value={currentUser!.uid}
           underlineColorAndroid="transparent"
           editable={false}
         />
@@ -117,7 +128,7 @@ export default function UserProfileScreen() {
           onChangeText={(text) => {
             setEmail(text);
           }}
-          value={email}
+          value={email!}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
@@ -126,7 +137,7 @@ export default function UserProfileScreen() {
           style={styles.input}
           placeholder="User Role"
           placeholderTextColor="#aaaaaa"
-          value={role}
+          value={role?.toString()}
           underlineColorAndroid="transparent"
           editable={false}
         />
