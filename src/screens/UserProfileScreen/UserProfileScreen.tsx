@@ -44,12 +44,9 @@ export default function UserProfileScreen() {
             onPress: () => {
               SetUserProfileData(createUserDataObject(), currentUser?.uid);
               if (email !== FIREBASE_AUTH.currentUser?.email) {
-                console.log("updating email on auth system");
-                try {
-                  updateEmail(currentUser!, email!); // TODO THIS IS NOT WORKING
-                } catch (e) {
-                  console.error(e);
-                }
+                updateEmail(currentUser!, email!).catch((error) =>
+                  Alert.alert("Error", error.code),
+                );
               }
               RenderUserData();
             },
@@ -92,7 +89,7 @@ export default function UserProfileScreen() {
           style={styles.input}
           placeholder="Failed to load User ID"
           placeholderTextColor="#aaaaaa"
-          value={currentUser!.uid}
+          value={currentUser?.uid}
           underlineColorAndroid="transparent"
           editable={false}
         />

@@ -20,9 +20,9 @@ export default function LoginScreen() {
 
   const HandleLogin = () => {
     signInWithEmailAndPassword(FIREBASE_AUTH, email, password)
-      .then((userCredential) => {
-        console.log("user %s signed in", userCredential.user.uid);
-      })
+      .then((userCredentials) =>
+        console.log("Logging in as user: ", userCredentials.user.uid),
+      )
       .catch((error) => {
         console.error(error.code);
         Alert.alert(error.code);

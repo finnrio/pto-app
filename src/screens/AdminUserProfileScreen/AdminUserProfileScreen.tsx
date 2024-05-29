@@ -1,0 +1,281 @@
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { updateEmail } from "firebase/auth";
+import { SelectList } from "react-native-dropdown-select-list";
+import { SegmentedButtons } from "react-native-paper";
+
+import { UserContext } from "../../context/UserContext";
+import SetUserProfileData from "../../firebase/firestore/SetUserProfileData";
+import styles from "./styles";
+import { FIREBASE_AUTH } from "../../firebase/firebaseConfig";
+import { AppUser } from "../../types/AppUser";
+import GetAllManagers from "../../firebase/firestore/GetAllManagers";
+import GetAllUsers from "../../firebase/firestore/GetAllUsers";
+import GetUserDataById from "../../firebase/firestore/GetUserDataById";
+import DeleteUser from "../../firebase/firestore/DeleteUser";
+
+export default function AdminUserProfileScreen() {
+  const currentUser = useContext(UserContext);
+  const [firstName, setFirstName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState("");
+  const [manager, setManager] = useState("");
+  const [managerList, setManagerList] = useState<any[]>([]);
+  const [userList, setUserList] = useState<any[]>([]);
+  const [ptoUsed, setPTOUsed] = useState("");
+  const [ptoAllowance, setPTOAllowance] = useState("");
+  const [allUserList, setAllUserList] = useState<any[]>([]);
+  const [selectedUser, setSelectedUser] = useState("");
+
+  async function RenderUserData(id: string) {
+    const res: AppUser = await GetUserDataById(id);
+    setFirstName(res?.first_name);
+    setSurname(res?.surname);
+    setEmail(res?.email);
+    setRole(res?.role);
+    setManager(res?.manager_id ? res.manager_id : "");
+    setPTOUsed(res?.pto_used);
+    setPTOAllowance(res?.pto_allowance);
+  }
+
+  async function RenderUserLists() {
+    await GetAllUsers()
+      .then((response) => setUserList(response))
+      .catch((e) => Alert.alert(e.code, e.message));
+    await GetAllManagers()
+      .then((response) => setManagerList(response))
+      .catch((e) => Alert.alert(e.code, e.message));
+  }
+
+  function createUserDataObject() {
+    return {
+      first_name: firstName,
+      surname,
+      email,
+    };
+  }
+
+  function HandleUpdateBtn() {
+    try {
+      Alert.alert(
+        "Update users profile details",
+        "Are you sure you want to update your profile details?",
+        [
+          {
+            text: "Update",
+            onPress: () => {
+              SetUserProfileData(createUserDataObject(), currentUser?.uid);
+              if (email !== FIREBASE_AUTH.currentUser?.email) {
+                updateEmail(currentUser!, email!).catch((error) =>
+                  Alert.alert("Error", error.code),
+                );
+              }
+              RenderUserData("");
+            },
+            style: "default",
+          },
+          {
+            text: "Reset Changes",
+            onPress: () => {
+              RenderUserData(selectedUser);
+              RenderUserLists();
+            },
+            style: "cancel",
+          },
+          {
+            text: "Cancel",
+            style: "cancel",
+          },
+        ],
+        { cancelable: true },
+      );
+    } catch (e: unknown) {
+      console.error(e);
+      if (e instanceof Error) {
+        Alert.alert(e.name, e.message);
+      } else {
+        Alert.alert("Error", "An error has occured");
+      }
+    }
+  }
+
+  function HandleRemoveUserBtn() {
+    Alert.alert(
+      "Warning",
+      `Are you sure you want to delete ${firstName} ${surname} from the system?`,
+      [
+        {
+          text: "Delete",
+          onPress: () => {
+            DeleteUser(selectedUser);
+            setSelectedUser("");
+            RenderUserData(selectedUser);
+          },
+          style: "default",
+        },
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+      ],
+      { cancelable: true },
+    );
+  }
+
+  useEffect(() => {
+    RenderUserLists();
+  }, []);
+
+  useEffect(() => {
+    setAllUserList(userList.concat(managerList));
+  }, [userList, managerList]);
+
+  useEffect(() => {
+    RenderUserData(selectedUser);
+    RenderUserLists();
+  }, [selectedUser]);
+
+  return (
+    <View style={styles.container}>
+      <KeyboardAwareScrollView
+        style={{ flex: 1, width: "100%" }}
+        keyboardShouldPersistTaps="always"
+      >
+        <SelectList
+          setSelected={setSelectedUser}
+          data={allUserList}
+          save="key"
+          placeholder="Select User"
+          defaultOption={
+            selectedUser
+              ? allUserList.find((user) => user.key === selectedUser)
+              : { key: "", value: "" }
+          }
+        />
+        <Text style={styles.text}>User ID</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="No user selected"
+          placeholderTextColor="#aaaaaa"
+          value={selectedUser}
+          underlineColorAndroid="transparent"
+          editable={false}
+        />
+        <Text style={styles.text}>First Name</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="First Name"
+          placeholderTextColor="#aaaaaa"
+          onChangeText={(text) => {
+            setFirstName(text);
+          }}
+          value={firstName}
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+          editable={!!selectedUser}
+        />
+        <Text style={styles.text}>Surname</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Surname"
+          placeholderTextColor="#aaaaaa"
+          onChangeText={(text) => {
+            setSurname(text);
+          }}
+          value={surname}
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+          editable={!!selectedUser}
+        />
+        <Text style={styles.text}>Email</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="E-mail"
+          placeholderTextColor="#aaaaaa"
+          onChangeText={(text) => {
+            setEmail(text);
+          }}
+          value={email!}
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+          editable={!!selectedUser}
+        />
+        <Text style={styles.text}>Role</Text>
+        <SegmentedButtons
+          value={role}
+          onValueChange={setRole}
+          buttons={[
+            {
+              value: "User",
+              label: "User",
+              disabled: !!selectedUser,
+            },
+            {
+              value: "Manager",
+              label: "Manager",
+              disabled: !!selectedUser,
+            },
+          ]}
+        />
+        <Text style={styles.text}>Manager</Text>
+        <SelectList
+          setSelected={setManager}
+          data={managerList}
+          save="key"
+          placeholder="Select Manager"
+          defaultOption={
+            manager
+              ? managerList.find((man) => man.key === manager)
+              : { key: "", value: "" }
+          }
+        />
+        <Text style={styles.text}>PTO Allowance</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="PTO Allowance"
+          placeholderTextColor="#aaaaaa"
+          onChangeText={(text) => {
+            setPTOAllowance(text);
+          }}
+          value={ptoAllowance?.toString()}
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+          editable={!!selectedUser}
+        />
+        <Text style={styles.text}>PTO Used</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="PTO Used"
+          placeholderTextColor="#aaaaaa"
+          onChangeText={(text) => {
+            setPTOUsed(text);
+          }}
+          value={ptoUsed?.toString()}
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+          editable={!!selectedUser}
+        />
+        <TouchableOpacity
+          style={selectedUser ? styles.button : styles.buttonUnavailable}
+          onPress={() =>
+            selectedUser ? HandleUpdateBtn() : Alert.alert("No user selected")
+          }
+        >
+          <Text style={styles.buttonTitle}>Update Profile</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={selectedUser ? styles.button : styles.buttonUnavailable}
+          onPress={() =>
+            selectedUser
+              ? HandleRemoveUserBtn()
+              : Alert.alert("No user selected")
+          }
+        >
+          <Text style={styles.buttonTitle}>Remove User</Text>
+        </TouchableOpacity>
+      </KeyboardAwareScrollView>
+    </View>
+  );
+}

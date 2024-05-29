@@ -16,11 +16,14 @@ export default async function GetCurrentUserData(): Promise<AppUser> {
       uid: currentUser?.uid,
       first_name: docRef.data()?.first_name,
       surname: docRef.data()?.surname,
-      email: currentUser?.email,
+      email: docRef.data()?.email,
       role: docRef.data()?.role,
+      manager_id: docRef.data()?.manager_id,
+      pto_allowance: docRef.data()?.pto_allowance,
+      pto_used: docRef.data()?.pto_used,
     };
   } catch (e) {
-    console.error("Error adding document: ", e);
+    console.error("Error retrieving current user information: ", e);
     throw e;
   }
 }

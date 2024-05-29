@@ -2,8 +2,11 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SegmentedButtons } from "react-native-paper";
+import { SelectList } from "react-native-dropdown-select-list";
 import styles from "./styles";
 import AddUser from "../../firebase/firestore/AddUser";
+import GetCurrentUserData from "../../firebase/firestore/GetCurrentUserData";
+import GetAllManagers from "../../firebase/firestore/GetAllManagers";
 
 export default function RegistrationScreen() {
   const [formComplete, setFormComplete] = useState(false);
@@ -12,25 +15,50 @@ export default function RegistrationScreen() {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
+  const [manager, setManager] = useState("");
+  const [managerList, setManagerList] = useState<any[]>([]);
 
-  function HandleAddUserBtn() {
-    AddUser(
-      {
-        first_name: firstName,
-        surname,
-        email,
-        role,
-      },
-      password,
-    )
-      .then(() =>
-        Alert.alert(
-          "Success",
-          "A new user has been successfully added to the system.",
-        ),
-      )
-      .catch((error) => Alert.alert("Error", error.code));
+  function ResetForm() {
+    setFirstName("");
+    setSurname("");
+    setEmail("");
+    setPassword("");
+    setRole("");
+    setManager("");
   }
+
+  async function HandleAddUserBtn() {
+    if ((await GetCurrentUserData()).role === "Administrator") {
+      AddUser(
+        {
+          first_name: firstName,
+          surname,
+          email,
+          role,
+          manager_id: manager,
+        },
+        password,
+      )
+        .then(() => {
+          Alert.alert(
+            "Success",
+            "A new user has been successfully added to the system.",
+          );
+          ResetForm();
+        })
+        .catch((error) => Alert.alert(error.code, error.message));
+    } else {
+      Alert.alert("Permissions", "You do not have permissions for this action");
+    }
+  }
+
+  useEffect(() => {
+    if (!formComplete) {
+      GetAllManagers()
+        .then((response) => setManagerList(response))
+        .catch((e) => Alert.alert(e.code, e.message));
+    }
+  }, [formComplete]);
 
   // ensure form is complete before attempting to create and add a new user to the system
   useEffect(() => {
@@ -39,7 +67,7 @@ export default function RegistrationScreen() {
     } else {
       setFormComplete(false);
     }
-  }, [firstName, surname, email, role, password]);
+  }, [firstName, surname, email, role, password, manager]);
 
   return (
     <View style={styles.container}>
@@ -109,11 +137,18 @@ export default function RegistrationScreen() {
               value: "Manager",
               label: "Manager",
             },
-            {
-              value: "Administrator",
-              label: "Administrator",
-            },
           ]}
+        />
+        <Text style={styles.text}>Manager</Text>
+        <SelectList
+          setSelected={setManager}
+          data={managerList}
+          save="key"
+          defaultOption={
+            manager
+              ? managerList.find((man) => man.key === manager)
+              : { key: "", value: "" }
+          }
         />
         <TouchableOpacity
           style={formComplete ? styles.button : styles.buttonUnavailable}
@@ -122,6 +157,9 @@ export default function RegistrationScreen() {
           }
         >
           <Text style={styles.buttonTitle}>Add to System</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => ResetForm()}>
+          <Text style={styles.buttonTitle}>Reset Form</Text>
         </TouchableOpacity>
       </KeyboardAwareScrollView>
     </View>
