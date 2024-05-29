@@ -210,12 +210,12 @@ export default function AdminUserProfileScreen() {
             {
               value: "User",
               label: "User",
-              disabled: !!selectedUser,
+              disabled: !selectedUser,
             },
             {
               value: "Manager",
               label: "Manager",
-              disabled: !!selectedUser,
+              disabled: !selectedUser,
             },
           ]}
         />
