@@ -39,6 +39,7 @@
     "@babel/eslint-parser": "^7.24.5",
     "@babel/preset-env": "^7.24.4",
     "@babel/preset-typescript": "^7.24.1",
+    "@golevelup/ts-jest": "^0.5.0",
     "@testing-library/react-native": "^12.5.0",
     "@types/base-64": "^1.0.2",
     "@types/jest": "^29.5.12",
