@@ -1,7 +1,6 @@
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
-import { updateEmail } from "firebase/auth";
 import { SelectList } from "react-native-dropdown-select-list";
 import { SegmentedButtons } from "react-native-paper";
 
@@ -68,8 +67,11 @@ export default function AdminUserProfileScreen() {
             onPress: () => {
               SetUserProfileData(createUserDataObject(), currentUser?.uid);
               if (email !== FIREBASE_AUTH.currentUser?.email) {
-                updateEmail(currentUser!, email!).catch((error) =>
-                  Alert.alert("Error", error.code),
+                // updateEmail(currentUser!, email!).catch((error) =>
+                //   Alert.alert("Error", error.code),
+                // );
+                Alert.alert(
+                  "This email will not be upated for the auth system",
                 );
               }
               RenderUserData("");

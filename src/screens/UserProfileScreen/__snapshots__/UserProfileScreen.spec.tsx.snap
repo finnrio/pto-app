@@ -39,6 +39,7 @@ exports[`UserProfileScreen renders correctly 1`] = `
         "paddingLeft": 16,
       }
     }
+    testID="uid_input"
     underlineColorAndroid="transparent"
   />
   <Text
@@ -72,6 +73,7 @@ exports[`UserProfileScreen renders correctly 1`] = `
         "paddingLeft": 16,
       }
     }
+    testID="firstName_input"
     underlineColorAndroid="transparent"
     value=""
   />
@@ -106,6 +108,7 @@ exports[`UserProfileScreen renders correctly 1`] = `
         "paddingLeft": 16,
       }
     }
+    testID="surname_input"
     underlineColorAndroid="transparent"
     value=""
   />
@@ -140,6 +143,7 @@ exports[`UserProfileScreen renders correctly 1`] = `
         "paddingLeft": 16,
       }
     }
+    testID="email_input"
     underlineColorAndroid="transparent"
     value=""
   />
@@ -173,6 +177,7 @@ exports[`UserProfileScreen renders correctly 1`] = `
         "paddingLeft": 16,
       }
     }
+    testID="role_input"
     underlineColorAndroid="transparent"
     value=""
   />
@@ -217,6 +222,7 @@ exports[`UserProfileScreen renders correctly 1`] = `
         "opacity": 1,
       }
     }
+    testID="update_btn"
   >
     <Text
       style={
