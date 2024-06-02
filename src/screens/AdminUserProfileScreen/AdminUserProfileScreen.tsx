@@ -1,8 +1,8 @@
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
-import { SelectList } from "react-native-dropdown-select-list";
 import { SegmentedButtons } from "react-native-paper";
+import DropDownPicker from "react-native-dropdown-picker";
 
 import { UserContext } from "../../context/UserContext";
 import SetUserProfileData from "../../firebase/firestore/SetUserProfileData";
@@ -27,6 +27,8 @@ export default function AdminUserProfileScreen() {
   const [ptoAllowance, setPTOAllowance] = useState("");
   const [allUserList, setAllUserList] = useState<any[]>([]);
   const [selectedUser, setSelectedUser] = useState("");
+  const [openUser, setOpenUser] = useState(false);
+  const [openManager, setOpenManager] = useState(false);
 
   async function RenderUserData(id: string) {
     const res: AppUser = await GetUserDataById(id);
@@ -145,16 +147,15 @@ export default function AdminUserProfileScreen() {
         style={{ flex: 1, width: "100%" }}
         keyboardShouldPersistTaps="always"
       >
-        <SelectList
-          setSelected={setSelectedUser}
-          data={allUserList}
-          save="key"
-          placeholder="Select User"
-          defaultOption={
-            selectedUser
-              ? allUserList.find((user) => user.key === selectedUser)
-              : { key: "", value: "" }
-          }
+        <DropDownPicker
+          open={openUser}
+          value={selectedUser}
+          items={allUserList}
+          setOpen={setOpenUser}
+          setValue={setSelectedUser}
+          setItems={setAllUserList}
+          searchable={true}
+          testID="user_dropdown"
         />
         <Text style={styles.text}>User ID</Text>
         <TextInput
@@ -164,6 +165,7 @@ export default function AdminUserProfileScreen() {
           value={selectedUser}
           underlineColorAndroid="transparent"
           editable={false}
+          testID="uid_input"
         />
         <Text style={styles.text}>First Name</Text>
         <TextInput
@@ -177,6 +179,7 @@ export default function AdminUserProfileScreen() {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
           editable={!!selectedUser}
+          testID="firstName_input"
         />
         <Text style={styles.text}>Surname</Text>
         <TextInput
@@ -190,6 +193,7 @@ export default function AdminUserProfileScreen() {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
           editable={!!selectedUser}
+          testID="surname_input"
         />
         <Text style={styles.text}>Email</Text>
         <TextInput
@@ -203,6 +207,7 @@ export default function AdminUserProfileScreen() {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
           editable={!!selectedUser}
+          testID="email_input"
         />
         <Text style={styles.text}>Role</Text>
         <SegmentedButtons
@@ -213,25 +218,26 @@ export default function AdminUserProfileScreen() {
               value: "User",
               label: "User",
               disabled: !selectedUser,
+              testID: "user_button",
             },
             {
               value: "Manager",
               label: "Manager",
               disabled: !selectedUser,
+              testID: "manager_button",
             },
           ]}
         />
         <Text style={styles.text}>Manager</Text>
-        <SelectList
-          setSelected={setManager}
-          data={managerList}
-          save="key"
-          placeholder="Select Manager"
-          defaultOption={
-            manager
-              ? managerList.find((man) => man.key === manager)
-              : { key: "", value: "" }
-          }
+        <DropDownPicker
+          open={openManager}
+          value={manager}
+          items={managerList}
+          setOpen={setOpenManager}
+          setValue={setManager}
+          setItems={setManagerList}
+          searchable={true}
+          testID="manager_dropdown"
         />
         <Text style={styles.text}>PTO Allowance</Text>
         <TextInput
@@ -245,6 +251,7 @@ export default function AdminUserProfileScreen() {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
           editable={!!selectedUser}
+          testID="pto_allowance_input"
         />
         <Text style={styles.text}>PTO Used</Text>
         <TextInput
@@ -258,12 +265,14 @@ export default function AdminUserProfileScreen() {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
           editable={!!selectedUser}
+          testID="pto_used_input"
         />
         <TouchableOpacity
           style={selectedUser ? styles.button : styles.buttonUnavailable}
           onPress={() =>
             selectedUser ? HandleUpdateBtn() : Alert.alert("No user selected")
           }
+          testID="update_button"
         >
           <Text style={styles.buttonTitle}>Update Profile</Text>
         </TouchableOpacity>
@@ -274,6 +283,7 @@ export default function AdminUserProfileScreen() {
               ? HandleRemoveUserBtn()
               : Alert.alert("No user selected")
           }
+          testID="remove_button"
         >
           <Text style={styles.buttonTitle}>Remove User</Text>
         </TouchableOpacity>

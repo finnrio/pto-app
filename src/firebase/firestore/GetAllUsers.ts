@@ -13,8 +13,10 @@ export default async function GetAllUsers(): Promise<any[]> {
 
     querySnapshot.forEach((user) => {
       res.push({
-        key: user.id,
-        value: `${user.data().first_name} ${user.data().surname}`,
+        value: user.id,
+        label: `${user.data().first_name} ${user.data().surname}`,
+        testID: user.id, // unsure if this is necessary
+        key: user.id, // unsure if this is necessary
       });
     });
     return res;

@@ -35,47 +35,39 @@ export default function UserProfileScreen() {
   }
 
   function HandleUpdateBtn() {
-    try {
-      Alert.alert(
-        "Update users profile details",
-        "Are you sure you want to update your profile details?",
-        [
-          {
-            text: "Update",
-            onPress: () => {
-              SetUserProfileData(createUserDataObject(), currentUser?.uid);
-              if (email !== FIREBASE_AUTH.currentUser?.email) {
-                // updateEmail(currentUser!, email!).catch((error) =>
-                //   Alert.alert("Error", error.code),
-                // );
-                Alert.alert(
-                  "This email will not be upated for the auth system",
-                );
-              }
-              RenderUserData();
-            },
-            style: "default",
+    Alert.alert(
+      "Update users profile details",
+      "Are you sure you want to update your profile details?",
+      [
+        {
+          text: "Update",
+          onPress: () => {
+            SetUserProfileData(createUserDataObject(), currentUser?.uid);
+            if (email !== FIREBASE_AUTH.currentUser?.email) {
+              // updateEmail(currentUser!, email!).catch((error) =>
+              //   Alert.alert("Error", error.code),
+              // );
+              Alert.alert(
+                "Warning",
+                "This email will not be upated for the auth system. Please contact system Administrators",
+              );
+            }
+            RenderUserData();
           },
-          {
-            text: "Reset Changes",
-            onPress: () => RenderUserData(),
-            style: "cancel",
-          },
-          {
-            text: "Cancel",
-            style: "cancel",
-          },
-        ],
-        { cancelable: true },
-      );
-    } catch (e: unknown) {
-      console.error(e);
-      if (e instanceof Error) {
-        Alert.alert(e.name, e.message);
-      } else {
-        Alert.alert("Error", "An error has occured");
-      }
-    }
+          style: "default",
+        },
+        {
+          text: "Reset Changes",
+          onPress: () => RenderUserData(),
+          style: "cancel",
+        },
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+      ],
+      { cancelable: true },
+    );
   }
 
   useEffect(() => {
