@@ -4,6 +4,7 @@ import {
   AdminUserProfileScreen,
   CalendarScreen,
   EmployeeActivityScreen,
+  PTORequestFormScreen,
   RegistrationScreen,
   UserProfileScreen,
 } from "../screens";
@@ -47,6 +48,11 @@ export default function AppDrawerNavigator() {
           // TODO manager versions that have subordinate inforamtion
           <Drawer.Screen name="Calendar" component={CalendarScreen} />
           <Drawer.Screen name="Profile" component={UserProfileScreen} />
+          <Drawer.Screen
+            name="PTO Request Form"
+            component={PTORequestFormScreen}
+            options={{ drawerItemStyle: { display: "none" } }}
+          />
         </Drawer.Navigator>
       );
     case "User":
@@ -58,6 +64,11 @@ export default function AppDrawerNavigator() {
           <Drawer.Screen name="Activity" component={EmployeeActivityScreen} />
           <Drawer.Screen name="Calendar" component={CalendarScreen} />
           <Drawer.Screen name="Profile" component={UserProfileScreen} />
+          <Drawer.Screen
+            name="PTO Request Form"
+            component={PTORequestFormScreen}
+            options={{ drawerItemStyle: { display: "none" } }}
+          />
         </Drawer.Navigator>
       );
     default: {

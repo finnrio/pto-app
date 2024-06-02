@@ -1,107 +1,100 @@
 import { Alert, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { CalendarList } from "react-native-calendars";
+import { MarkedDates } from "react-native-calendars/src/types";
+import { useFocusEffect } from "@react-navigation/native";
 import styles from "./styles";
 import GetCurrentUserPTO from "../../firebase/firestore/GetCurrentUserPTO";
 import GetMarkedDates from "./GetMarkedDates";
+import GetCurrentUserData from "../../firebase/firestore/GetCurrentUserData";
 
-export default function CalendarScreen() {
-  const [selected, setSelected] = useState("");
+export default function CalendarScreen({ navigation: { navigate } }: any) {
   const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [ptoEvents, setPtoEvents] = useState<any[]>();
+  const [markedDates, setMarkedDates] = useState<MarkedDates>();
+  const [managerId, setManagerId] = useState("");
 
   function getPTOEvents() {
     GetCurrentUserPTO().then((events) => {
-      setPtoEvents(events);
+      setMarkedDates(GetMarkedDates(events));
     });
   }
 
-  const startAlert = () =>
+  function resetScreen() {
+    setStartDate("");
+    getPTOEvents();
+    GetCurrentUserData().then((data) =>
+      data.manager_id
+        ? setManagerId(data.manager_id)
+        : Alert.alert("Error", "Manager ID not found"),
+    );
+  }
+
+  const startAlert = (date: string) =>
     Alert.alert(
       "PTO Request",
-      `Create a PTO request starting on ${selected}`,
+      `Create a PTO request starting on ${date}`,
       [
         {
           text: "Start Request",
           onPress: () => {
-            setStartDate(selected);
-            setSelected("");
+            setStartDate(date);
           },
           style: "default",
         },
         {
           text: "Cancel",
-          onPress: () => setSelected(""),
           style: "cancel",
         },
       ],
       { cancelable: true },
     );
 
-  const endAlert = () =>
+  const endAlert = (date: string) =>
     Alert.alert(
       "PTO Request",
-      `End PTO on ${selected}`,
+      `End PTO on ${date}`,
       [
         {
           text: "Complete Request",
-          onPress: () => setEndDate(selected),
+          onPress: () => {
+            navigate("PTO Request Form", {
+              startDate,
+              endDate: date,
+              managerId,
+            });
+            resetScreen();
+          },
           style: "default",
         },
         {
           text: "Cancel Request",
           onPress: () => {
             setStartDate("");
-            setSelected("");
           },
           style: "destructive",
         },
         {
           text: "Cancel",
-          onPress: () => setSelected(""),
           style: "cancel",
         },
       ],
       { cancelable: true },
     );
 
-  useEffect(() => {
-    console.log("Rendering users PTO events");
-    getPTOEvents();
-  }, []);
-
-  // TODO API call to create PTO request, this might not need to be an effect hook
-  useEffect(() => {
-    if (endDate) {
-      console.log(
-        "Creating api request for PTO starting: ",
-        startDate,
-        " ending: ",
-        endDate,
-      );
-      Alert.alert("PTO Request Sent");
-      setStartDate("");
-      setEndDate("");
-    }
-  }, [endDate]);
-
-  useEffect(() => {
-    if (selected) {
-      if (startDate) {
-        endAlert();
-      } else {
-        startAlert();
-      }
-    }
-  }, [selected]);
+  useFocusEffect(
+    React.useCallback(() => {
+      resetScreen();
+    }, []),
+  );
 
   return (
     <View style={styles.container}>
       <CalendarList
-        onDayPress={(day) => setSelected(day.dateString)}
+        onDayPress={(day) =>
+          startDate ? endAlert(day.dateString) : startAlert(day.dateString)
+        }
         markingType={"period"}
-        markedDates={GetMarkedDates(ptoEvents)}
+        markedDates={markedDates}
       />
     </View>
   );
