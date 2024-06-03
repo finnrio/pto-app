@@ -15,12 +15,11 @@ const firebaseConfig = {
 };
 
 const FIREBASE_APP = initializeApp(firebaseConfig);
-
 const FIREBASE_AUTH = getAuth(FIREBASE_APP);
 const FIRESTORE_DB = getFirestore(FIREBASE_APP);
 
 if (process.env.NODE_ENV === "test") {
-  console.log("connecting to emulator");
+  console.log("Attempting to connect to emulators, make sure they are running");
   connectAuthEmulator(FIREBASE_AUTH, "http://127.0.0.1:9099");
   connectFirestoreEmulator(FIRESTORE_DB, "http://127.0.0.1", 8080);
 }
