@@ -3,7 +3,8 @@ import React from "react";
 import {
   CalendarScreen,
   EmployeeActivityScreen,
-  UserSettingsScreen,
+  RegistrationScreen,
+  UserProfileScreen,
 } from "../screens";
 import LogoutDrawerContent from "./LogoutDrawerContent";
 
@@ -16,7 +17,8 @@ export default function EmployeeDrawerNavigator() {
     >
       <Drawer.Screen name="Activity" component={EmployeeActivityScreen} />
       <Drawer.Screen name="Calendar" component={CalendarScreen} />
-      <Drawer.Screen name="Settings" component={UserSettingsScreen} />
+      <Drawer.Screen name="Settings" component={UserProfileScreen} />
+      <Drawer.Screen name="Register a User" component={RegistrationScreen} />
     </Drawer.Navigator>
   );
 }

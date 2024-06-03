@@ -19,14 +19,6 @@ export default StyleSheet.create({
     flex: 1,
     marginRight: 5,
   },
-  // button: {
-  //     height: 47,
-  //     borderRadius: 5,
-  //     backgroundColor: '#788eec',
-  //     width: 80,
-  //     alignItems: "center",
-  //     justifyContent: 'center'
-  // },
   buttonText: {
     color: "white",
     fontSize: 16,
@@ -45,8 +37,7 @@ export default StyleSheet.create({
     fontSize: 20,
     color: "#333333",
   },
-
-  // modal bits
+  // Modal styling
   centeredView: {
     flex: 1,
     justifyContent: "center",

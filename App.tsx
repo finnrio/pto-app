@@ -7,7 +7,8 @@ import { decode, encode } from "base-64";
 import { UserContext } from "./src/context/UserContext";
 import { LoginScreen } from "./src/screens";
 import { FIREBASE_AUTH } from "./src/firebase/firebaseConfig";
-import EmployeeDrawerNavigator from "./src/navigators/EmployeeDrawerNavigator";
+import EmployeeDrawerNavigator from "./src/navigation/EmployeeDrawerNavigator";
+import { UserContext } from "./src/context/UserContext";
 
 if (!global.btoa) {
   global.btoa = encode;
