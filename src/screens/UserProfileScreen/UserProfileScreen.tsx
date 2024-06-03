@@ -1,7 +1,6 @@
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
-import { updateEmail } from "firebase/auth";
 
 import { UserContext } from "../../context/UserContext";
 import GetCurrentUserData from "../../firebase/firestore/GetCurrentUserData";
@@ -17,12 +16,13 @@ export default function UserProfileScreen() {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
 
-  async function RenderUserData(/* id: any */) {
-    const res: AppUser = await GetCurrentUserData(); // this should use an ID if used by admin
-    setFirstName(res?.first_name);
-    setSurname(res?.surname);
-    setEmail(res?.email);
-    setRole(res?.role);
+  async function RenderUserData() {
+    await GetCurrentUserData().then((res: AppUser) => {
+      setFirstName(res.first_name);
+      setSurname(res.surname);
+      setEmail(res.email);
+      setRole(res.role);
+    });
   }
 
   function createUserDataObject() {
@@ -30,51 +30,44 @@ export default function UserProfileScreen() {
       first_name: firstName,
       surname,
       email,
+      role,
     };
   }
 
   function HandleUpdateBtn() {
-    try {
-      Alert.alert(
-        "Update users profile details",
-        "Are you sure you want to update your profile details?",
-        [
-          {
-            text: "Update",
-            onPress: () => {
-              SetUserProfileData(createUserDataObject(), currentUser?.uid);
-              if (email !== FIREBASE_AUTH.currentUser?.email) {
-                console.log("updating email on auth system");
-                try {
-                  updateEmail(currentUser!, email!); // TODO THIS IS NOT WORKING
-                } catch (e) {
-                  console.error(e);
-                }
-              }
-              RenderUserData();
-            },
-            style: "default",
+    Alert.alert(
+      "Update users profile details",
+      "Are you sure you want to update your profile details?",
+      [
+        {
+          text: "Update",
+          onPress: () => {
+            SetUserProfileData(createUserDataObject(), currentUser?.uid);
+            if (email !== FIREBASE_AUTH.currentUser?.email) {
+              // updateEmail(currentUser!, email!).catch((error) =>
+              //   Alert.alert("Error", error.code),
+              // );
+              Alert.alert(
+                "Warning",
+                "This email will not be upated for the auth system. Please contact system Administrators",
+              );
+            }
+            RenderUserData();
           },
-          {
-            text: "Reset Changes",
-            onPress: () => RenderUserData(),
-            style: "cancel",
-          },
-          {
-            text: "Cancel",
-            style: "cancel",
-          },
-        ],
-        { cancelable: true },
-      );
-    } catch (e: unknown) {
-      console.error(e);
-      if (e instanceof Error) {
-        Alert.alert(e.name, e.message);
-      } else {
-        Alert.alert("Error", "An error has occured");
-      }
-    }
+          style: "default",
+        },
+        {
+          text: "Reset Changes",
+          onPress: () => RenderUserData(),
+          style: "cancel",
+        },
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+      ],
+      { cancelable: true },
+    );
   }
 
   useEffect(() => {
@@ -92,9 +85,10 @@ export default function UserProfileScreen() {
           style={styles.input}
           placeholder="Failed to load User ID"
           placeholderTextColor="#aaaaaa"
-          value={currentUser!.uid}
+          value={currentUser?.uid}
           underlineColorAndroid="transparent"
           editable={false}
+          testID="uid_input"
         />
         <Text style={styles.text}>First Name</Text>
         <TextInput
@@ -107,6 +101,7 @@ export default function UserProfileScreen() {
           value={firstName}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
+          testID="firstName_input"
         />
         <Text style={styles.text}>Surname</Text>
         <TextInput
@@ -119,6 +114,7 @@ export default function UserProfileScreen() {
           value={surname}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
+          testID="surname_input"
         />
         <Text style={styles.text}>Email</Text>
         <TextInput
@@ -131,6 +127,7 @@ export default function UserProfileScreen() {
           value={email!}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
+          testID="email_input"
         />
         <Text style={styles.text}>Role</Text>
         <TextInput
@@ -140,12 +137,14 @@ export default function UserProfileScreen() {
           value={role?.toString()}
           underlineColorAndroid="transparent"
           editable={false}
+          testID="role_input"
         />
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
             HandleUpdateBtn();
           }}
+          testID="update_btn"
         >
           <Text style={styles.buttonTitle}>Update Profile</Text>
         </TouchableOpacity>

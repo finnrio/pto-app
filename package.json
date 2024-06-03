@@ -9,8 +9,8 @@
     "ios": "NODE_ENV=development expo start --ios",
     "web": "NODE_ENV=development expo start --web",
     "test": "jest",
-    "test:watch": "npm run test --watch",
-    "test:ci": "npm run test --coverage",
+    "test:watch": "yarn run test -- --watch",
+    "test:ci": "yarn run test -- --coverage",
     "ts:check": "tsc"
   },
   "dependencies": {
@@ -26,6 +26,7 @@
     "react": "18.2.0",
     "react-native": "0.73.6",
     "react-native-calendars": "^1.1304.1",
+    "react-native-dropdown-picker": "^5.4.6",
     "react-native-gesture-handler": "~2.14.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-paper": "^5.12.3",
@@ -39,6 +40,7 @@
     "@babel/eslint-parser": "^7.24.5",
     "@babel/preset-env": "^7.24.4",
     "@babel/preset-typescript": "^7.24.1",
+    "@golevelup/ts-jest": "^0.5.0",
     "@testing-library/react-native": "^12.5.0",
     "@types/base-64": "^1.0.2",
     "@types/jest": "^29.5.12",

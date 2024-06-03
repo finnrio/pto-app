@@ -39,6 +39,7 @@ exports[`LoginScreen renders correctly 1`] = `
         "paddingLeft": 16,
       }
     }
+    testID="email_input"
     underlineColorAndroid="transparent"
     value=""
   />
@@ -61,6 +62,7 @@ exports[`LoginScreen renders correctly 1`] = `
         "paddingLeft": 16,
       }
     }
+    testID="password_input"
     underlineColorAndroid="transparent"
     value=""
   />
@@ -105,6 +107,7 @@ exports[`LoginScreen renders correctly 1`] = `
         "opacity": 1,
       }
     }
+    testID="login_button"
   >
     <Text
       style={

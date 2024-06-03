@@ -8,12 +8,7 @@ import {
   Alert,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import {
-  FIREBASE_AUTH,
-  // getAuth,
-  // signInWithEmailAndPassword,
-} from "../../firebase/firebaseConfig";
+import SignInWithEmailAndPassword from "../../firebase/auth/SignInWithEmailAndPassword";
 import styles from "./styles";
 
 const iconImage = require("../../../assets/icon.png");
@@ -23,14 +18,10 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
 
   const HandleLogin = () => {
-    signInWithEmailAndPassword(FIREBASE_AUTH, email, password)
-      .then((userCredential) => {
-        console.log("user %s signed in", userCredential.user.uid);
-      })
-      .catch((error) => {
-        console.error(error.code);
-        Alert.alert(error.code);
-      });
+    SignInWithEmailAndPassword(email, password).catch((error) => {
+      console.error(error.code);
+      Alert.alert(error.code);
+    });
   };
 
   return (
@@ -50,6 +41,7 @@ export default function LoginScreen() {
           value={email}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
+          testID="email_input"
         />
         <TextInput
           style={styles.input}
@@ -62,12 +54,14 @@ export default function LoginScreen() {
           value={password}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
+          testID="password_input"
         />
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
             HandleLogin();
           }}
+          testID="login_button"
         >
           <Text style={styles.buttonTitle}>Log in</Text>
         </TouchableOpacity>
