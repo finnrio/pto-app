@@ -44,8 +44,7 @@ export default function AppDrawerNavigator() {
           drawerContent={(props) => <LogoutDrawerContent {...props} />}
           detachInactiveScreens={true}
         >
-          <Drawer.Screen name="Activity" component={EmployeeActivityScreen} />{" "}
-          // TODO manager versions that have subordinate inforamtion
+          <Drawer.Screen name="Activity" component={EmployeeActivityScreen} />
           <Drawer.Screen name="Calendar" component={CalendarScreen} />
           <Drawer.Screen name="Profile" component={UserProfileScreen} />
           <Drawer.Screen

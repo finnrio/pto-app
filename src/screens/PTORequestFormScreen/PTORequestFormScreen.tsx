@@ -18,6 +18,7 @@ export default function PTORequestFormScreen({ route, navigation }: any) {
       "PTO request submitted",
       "Your PTO request has been sent to you manager for review",
     );
+    setPurpose("");
     navigation.navigate("Calendar");
   }
 

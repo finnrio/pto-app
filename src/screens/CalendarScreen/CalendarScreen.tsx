@@ -1,32 +1,85 @@
-import { Alert, View } from "react-native";
-import React, { useState } from "react";
+import { Alert } from "react-native";
+import React, { useContext, useState } from "react";
 import { CalendarList } from "react-native-calendars";
-import { MarkedDates } from "react-native-calendars/src/types";
 import { useFocusEffect } from "@react-navigation/native";
-import styles from "./styles";
-import GetCurrentUserPTO from "../../firebase/firestore/GetCurrentUserPTO";
-import GetMarkedDates from "./GetMarkedDates";
 import GetCurrentUserData from "../../firebase/firestore/GetCurrentUserData";
+import { GetPTOEventsByUserID } from "../../firebase/firestore/GetPTOEvent";
+import GetSubordinates from "../../firebase/firestore/GetSubordinates";
+import { UserContext } from "../../context/UserContext";
+import GetUsersProfileColor from "../../firebase/firestore/GetUsersProfileColor";
+import { GetDottedDatesFromEvents, MergeEvents } from "./helper";
 
 export default function CalendarScreen({ navigation: { navigate } }: any) {
+  const currentUser = useContext(UserContext);
+  const [markedDates, setMarkedDates] = useState<any>({});
   const [startDate, setStartDate] = useState("");
-  const [markedDates, setMarkedDates] = useState<MarkedDates>();
   const [managerId, setManagerId] = useState("");
 
-  function getPTOEvents() {
-    GetCurrentUserPTO().then((events) => {
-      setMarkedDates(GetMarkedDates(events));
+  function managerRender() {
+    let mergedEvents: any = {};
+    // Get the current user's PTO events
+    if (!currentUser) return;
+    GetPTOEventsByUserID(currentUser.uid).then(async (events) => {
+      const color = await GetUsersProfileColor(currentUser.uid);
+      mergedEvents = GetDottedDatesFromEvents(events, {
+        key: currentUser.uid,
+        color,
+        selected: true,
+        selectedColor: color,
+      });
+    });
+    // Get the current user's subordinates' PTO events
+    GetSubordinates(currentUser.uid)
+      .then((subordinates) => {
+        const promises = subordinates.map(async (subordinate: any) => {
+          const color = await GetUsersProfileColor(subordinate.id);
+          const subordinateDotKey = { key: subordinate.id, color };
+          return GetPTOEventsByUserID(subordinate.id).then((events) => {
+            mergedEvents = MergeEvents(
+              mergedEvents,
+              GetDottedDatesFromEvents(events, subordinateDotKey),
+            );
+          });
+        });
+
+        Promise.all(promises).then(() => {
+          setMarkedDates(mergedEvents);
+        });
+      })
+      .catch((error) => {
+        console.log("Error getting subordinates: ", error);
+      });
+  }
+
+  function userRender() {
+    if (!currentUser) return;
+    GetPTOEventsByUserID(currentUser.uid).then(async (events) => {
+      const color = await GetUsersProfileColor(currentUser.uid!);
+      setMarkedDates(
+        GetDottedDatesFromEvents(events, {
+          key: currentUser.uid,
+          color,
+          selected: true,
+          selectedColor: color,
+        }),
+      );
     });
   }
 
-  function resetScreen() {
+  function render() {
     setStartDate("");
-    getPTOEvents();
-    GetCurrentUserData().then((data) =>
-      data.manager_id
-        ? setManagerId(data.manager_id)
-        : Alert.alert("Error", "Manager ID not found"),
-    );
+    GetCurrentUserData().then(async (data) => {
+      if (data.manager_id) {
+        setManagerId(data.manager_id);
+      } else {
+        Alert.alert("Error", "Manager ID not found");
+      }
+      if (data.role === "Manager") {
+        managerRender();
+      } else {
+        userRender();
+      }
+    });
   }
 
   const startAlert = (date: string) =>
@@ -36,9 +89,7 @@ export default function CalendarScreen({ navigation: { navigate } }: any) {
       [
         {
           text: "Start Request",
-          onPress: () => {
-            setStartDate(date);
-          },
+          onPress: () => setStartDate(date),
           style: "default",
         },
         {
@@ -62,15 +113,13 @@ export default function CalendarScreen({ navigation: { navigate } }: any) {
               endDate: date,
               managerId,
             });
-            resetScreen();
+            render();
           },
           style: "default",
         },
         {
           text: "Cancel Request",
-          onPress: () => {
-            setStartDate("");
-          },
+          onPress: () => setStartDate(""),
           style: "destructive",
         },
         {
@@ -83,19 +132,17 @@ export default function CalendarScreen({ navigation: { navigate } }: any) {
 
   useFocusEffect(
     React.useCallback(() => {
-      resetScreen();
+      render();
     }, []),
   );
 
   return (
-    <View style={styles.container}>
-      <CalendarList
-        onDayPress={(day) =>
-          startDate ? endAlert(day.dateString) : startAlert(day.dateString)
-        }
-        markingType={"period"}
-        markedDates={markedDates}
-      />
-    </View>
+    <CalendarList
+      onDayPress={(day) =>
+        startDate ? endAlert(day.dateString) : startAlert(day.dateString)
+      }
+      markingType={"multi-dot"}
+      markedDates={markedDates}
+    />
   );
 }
