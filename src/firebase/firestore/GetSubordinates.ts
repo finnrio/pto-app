@@ -1,24 +1,22 @@
-import { doc, getDoc } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { FIRESTORE_DB } from "../firebaseConfig";
 import { AppUser } from "../../types/AppUser";
-import GetUserDataById from "./GetUserDataById";
 
 export default async function GetSubordinates(
   managerId: string,
 ): Promise<AppUser[]> {
   try {
-    const docRef = await getDoc(
-      doc(FIRESTORE_DB, `${process.env.NODE_ENV}`, managerId),
+    const q = query(
+      collection(FIRESTORE_DB, `${process.env.NODE_ENV}`),
+      where("manager_id", "==", managerId),
     );
+    const querySnapshot = await getDocs(q);
 
     const res: any[] = [];
 
-    await docRef.data()?.subordinates?.forEach(async (subordinateId: any) => {
-      GetUserDataById(subordinateId).then((userData) => {
-        res.push({
-          key: subordinateId,
-          value: `${userData.first_name} ${userData.surname}`,
-        });
+    querySnapshot.forEach((subordinate) => {
+      res.push({
+        id: subordinate.id,
       });
     });
     return res;

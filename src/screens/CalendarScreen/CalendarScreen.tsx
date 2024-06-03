@@ -1,99 +1,148 @@
-import { Alert, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import { Alert } from "react-native";
+import React, { useContext, useState } from "react";
 import { CalendarList } from "react-native-calendars";
-import styles from "./styles";
+import { useFocusEffect } from "@react-navigation/native";
+import GetCurrentUserData from "../../firebase/firestore/GetCurrentUserData";
+import { GetPTOEventsByUserID } from "../../firebase/firestore/GetPTOEvent";
+import GetSubordinates from "../../firebase/firestore/GetSubordinates";
+import { UserContext } from "../../context/UserContext";
+import GetUsersProfileColor from "../../firebase/firestore/GetUsersProfileColor";
+import { GetDottedDatesFromEvents, MergeEvents } from "./helper";
 
-export default function CalendarScreen() {
-  const [selected, setSelected] = useState("");
+export default function CalendarScreen({ navigation: { navigate } }: any) {
+  const currentUser = useContext(UserContext);
+  const [markedDates, setMarkedDates] = useState<any>({});
   const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [managerId, setManagerId] = useState("");
 
-  useEffect(() => {
-    if (endDate) {
-      console.log(
-        "Creating api request for PTO starting: ",
-        startDate,
-        " ending: ",
-        endDate,
+  function managerRender() {
+    let mergedEvents: any = {};
+    // Get the current user's PTO events
+    if (!currentUser) return;
+    GetPTOEventsByUserID(currentUser.uid).then(async (events) => {
+      const color = await GetUsersProfileColor(currentUser.uid);
+      mergedEvents = GetDottedDatesFromEvents(events, {
+        key: currentUser.uid,
+        color,
+        selected: true,
+        selectedColor: color,
+      });
+    });
+    // Get the current user's subordinates' PTO events
+    GetSubordinates(currentUser.uid)
+      .then((subordinates) => {
+        const promises = subordinates.map(async (subordinate: any) => {
+          const color = await GetUsersProfileColor(subordinate.id);
+          const subordinateDotKey = { key: subordinate.id, color };
+          return GetPTOEventsByUserID(subordinate.id).then((events) => {
+            mergedEvents = MergeEvents(
+              mergedEvents,
+              GetDottedDatesFromEvents(events, subordinateDotKey),
+            );
+          });
+        });
+
+        Promise.all(promises).then(() => {
+          setMarkedDates(mergedEvents);
+        });
+      })
+      .catch((error) => {
+        console.log("Error getting subordinates: ", error);
+      });
+  }
+
+  function userRender() {
+    if (!currentUser) return;
+    GetPTOEventsByUserID(currentUser.uid).then(async (events) => {
+      const color = await GetUsersProfileColor(currentUser.uid!);
+      setMarkedDates(
+        GetDottedDatesFromEvents(events, {
+          key: currentUser.uid,
+          color,
+          selected: true,
+          selectedColor: color,
+        }),
       );
-      Alert.alert("PTO Request Sent");
-      setStartDate("");
-      setEndDate("");
-    }
-  }, [endDate]);
+    });
+  }
 
-  const startAlert = () =>
+  function render() {
+    setStartDate("");
+    GetCurrentUserData().then(async (data) => {
+      if (data.manager_id) {
+        setManagerId(data.manager_id);
+      } else {
+        Alert.alert("Error", "Manager ID not found");
+      }
+      if (data.role === "Manager") {
+        managerRender();
+      } else {
+        userRender();
+      }
+    });
+  }
+
+  const startAlert = (date: string) =>
     Alert.alert(
       "PTO Request",
-      `Create a PTO request starting on ${selected}`,
+      `Create a PTO request starting on ${date}`,
       [
         {
           text: "Start Request",
-          onPress: () => {
-            setStartDate(selected);
-            setSelected("");
-          },
+          onPress: () => setStartDate(date),
           style: "default",
         },
         {
           text: "Cancel",
-          onPress: () => setSelected(""),
           style: "cancel",
         },
       ],
       { cancelable: true },
     );
 
-  const endAlert = () =>
+  const endAlert = (date: string) =>
     Alert.alert(
       "PTO Request",
-      `End PTO on ${selected}`,
+      `End PTO on ${date}`,
       [
         {
           text: "Complete Request",
-          onPress: () => setEndDate(selected),
+          onPress: () => {
+            navigate("PTO Request Form", {
+              startDate,
+              endDate: date,
+              managerId,
+            });
+            render();
+          },
           style: "default",
         },
         {
           text: "Cancel Request",
-          onPress: () => {
-            setStartDate("");
-            setSelected("");
-          },
+          onPress: () => setStartDate(""),
           style: "destructive",
         },
         {
           text: "Cancel",
-          onPress: () => setSelected(""),
           style: "cancel",
         },
       ],
       { cancelable: true },
     );
 
-  useEffect(() => {
-    if (selected) {
-      if (startDate) {
-        endAlert();
-      } else {
-        startAlert();
-      }
-    }
-  }, [selected]);
+  useFocusEffect(
+    React.useCallback(() => {
+      render();
+    }, []),
+  );
 
   return (
-    <View style={styles.container}>
-      <CalendarList
-        onDayPress={(day) => setSelected(day.dateString)}
-        markingType={"period"}
-        markedDates={{
-          "2024-04-03": { startingDay: true, color: "#8ad4ff" },
-          "2024-04-04": { color: "#8ad4ff" },
-          "2024-04-05": { color: "#8ad4ff" },
-          "2024-04-06": { endingDay: true, color: "#8ad4ff" },
-          [startDate]: { color: "#2196F3", startingDay: true, endingDay: true },
-        }} // testing marking style with hard coded dates
-      />
-    </View>
+    <CalendarList
+      onDayPress={(day) =>
+        startDate ? endAlert(day.dateString) : startAlert(day.dateString)
+      }
+      markingType={"multi-dot"}
+      markedDates={markedDates}
+    />
   );
 }
