@@ -44,7 +44,11 @@ export default function AppDrawerNavigator() {
           drawerContent={(props) => <LogoutDrawerContent {...props} />}
           detachInactiveScreens={true}
         >
-          <Drawer.Screen name="Activity" component={EmployeeActivityScreen} />
+          <Drawer.Screen
+            name="PTO Activity"
+            component={EmployeeActivityScreen}
+          />
+          {/* <Drawer.Screen name="Team Activity" component={TeamActivityScreen} /> */}
           <Drawer.Screen name="Calendar" component={CalendarScreen} />
           <Drawer.Screen name="Profile" component={UserProfileScreen} />
           <Drawer.Screen
@@ -60,7 +64,10 @@ export default function AppDrawerNavigator() {
           drawerContent={(props) => <LogoutDrawerContent {...props} />}
           detachInactiveScreens={true}
         >
-          <Drawer.Screen name="Activity" component={EmployeeActivityScreen} />
+          <Drawer.Screen
+            name="PTO Activity"
+            component={EmployeeActivityScreen}
+          />
           <Drawer.Screen name="Calendar" component={CalendarScreen} />
           <Drawer.Screen name="Profile" component={UserProfileScreen} />
           <Drawer.Screen

@@ -100,7 +100,15 @@ export default function CalendarScreen({ navigation: { navigate } }: any) {
       { cancelable: true },
     );
 
-  const endAlert = (date: string) =>
+  const endAlert = (date: string) => {
+    // Check if end date is after start date
+    const start = new Date(startDate);
+    const end = new Date(date);
+    if (start > end) {
+      Alert.alert("Error", "End date must be after start date");
+      return;
+    }
+
     Alert.alert(
       "PTO Request",
       `End PTO on ${date}`,
@@ -129,6 +137,7 @@ export default function CalendarScreen({ navigation: { navigate } }: any) {
       ],
       { cancelable: true },
     );
+  };
 
   useFocusEffect(
     React.useCallback(() => {
