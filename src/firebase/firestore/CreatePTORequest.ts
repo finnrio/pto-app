@@ -1,18 +1,13 @@
-import { addDoc, collection, doc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import { FIREBASE_AUTH, FIRESTORE_DB } from "../firebaseConfig";
 
 function calculateHours(startDate: Date, endDate: Date): number {
-  // Parse the start and end dates
   const start = new Date(startDate);
   const end = new Date(endDate);
-
-  // Ensure the start date is before the end date
   if (start > end) {
     throw new Error("Start date must be before end date.");
   }
-
-  let count = 0; // Counter for weekdays
-
+  let count = 0;
   while (start <= end) {
     const dayOfWeek = start.getDay();
     if (dayOfWeek > 0 && dayOfWeek < 6) {
@@ -20,8 +15,7 @@ function calculateHours(startDate: Date, endDate: Date): number {
     }
     start.setDate(start.getDate() + 1);
   }
-
-  return count * 8;
+  return count * 8; // assumed 8 hours per day
 }
 
 export default async function CreatePTORequest(
@@ -33,15 +27,31 @@ export default async function CreatePTORequest(
   const { currentUser } = FIREBASE_AUTH;
   const { NODE_ENV } = process.env;
 
+  // assert not null currentUser
   if (!currentUser) {
     throw new Error("No user logged in");
   }
 
-  const hours = calculateHours(startDate, endDate);
+  // Calculate the number of hours requested
+  const requestedHours = calculateHours(startDate, endDate);
 
+  // get the user's data
   const userDoc = doc(FIRESTORE_DB, `${NODE_ENV}`, currentUser.uid);
+  const loadedDoc = await getDoc(userDoc);
+  if (!loadedDoc.exists()) {
+    console.log("No user data found");
+    throw new Error("No user data found!");
+  }
 
-  // check user has enough available pto
+  // eslint-disable-next-line camelcase
+  const { pto_allowance, pto_pending, pto_used } = loadedDoc.data();
+
+  // check if the user has enough PTO hours available
+  // eslint-disable-next-line camelcase
+  if (pto_pending + pto_used + requestedHours > pto_allowance) {
+    console.log("Not enough PTO hours available");
+    throw new Error("Not enough PTO hours available");
+  }
 
   const ptoCollection = collection(userDoc, "pto");
 
@@ -52,24 +62,18 @@ export default async function CreatePTORequest(
     reason,
     status: "Pending",
     user_id: currentUser.uid,
-    hours,
-  }).catch((error) => {
-    console.error("Error adding pto event:\n", error);
-    throw error;
+    hours: requestedHours,
   });
 
   // Notify manager of new PTO request
   await addDoc(
     collection(FIRESTORE_DB, `${NODE_ENV}`, managerId, "notifications"),
     { user: currentUser.uid, message: "New PTO request" },
-  ).catch((error) => {
-    console.error("Error adding notification for manager:\n", error);
-    throw error;
-  });
+  );
 
   // Update pto_pending in the user's document and remove from pto_available
-  // await setDoc(
-  //   doc(FIRESTORE_DB, `${NODE_ENV}`, currentUser.uid),
-  //   { pto_pending: pto_pending + hours}
-  // )
+  await updateDoc(
+    userDoc,
+    { pto_pending: pto_pending + requestedHours }, // eslint-disable-line camelcase
+  );
 }

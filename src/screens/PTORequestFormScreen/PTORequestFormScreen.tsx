@@ -13,11 +13,16 @@ export default function PTORequestFormScreen({ route, navigation }: any) {
       new Date(route.params.endDate),
       purpose,
       route.params.managerId,
-    );
-    Alert.alert(
-      "PTO request submitted",
-      "Your PTO request has been sent to you manager for review",
-    );
+    )
+      .then(() => {
+        Alert.alert(
+          "PTO request submitted",
+          "Your PTO request has been sent to you manager for review",
+        );
+      })
+      .catch((error) => {
+        Alert.alert("Error", error.message);
+      });
     setPurpose("");
     navigation.navigate("Calendar");
   }

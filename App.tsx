@@ -8,7 +8,6 @@ import { decode, encode } from "base-64";
 import { UserContext } from "./src/context/UserContext";
 import { LoginScreen } from "./src/screens";
 import { FIREBASE_AUTH } from "./src/firebase/firebaseConfig";
-import { UserContext } from "./src/context/UserContext";
 import VerifyUser from "./src/firebase/firestore/VerifyUser";
 import AppDrawerNavigator from "./src/navigation/AppDrawerNavigator";
 
