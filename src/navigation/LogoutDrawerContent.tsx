@@ -16,7 +16,7 @@ export default function LogoutDrawerContent(props: any) {
         label="Logout"
         onPress={() => {
           signOut(FIREBASE_AUTH)
-            .then(() => Alert.alert("Logged Out", "You are now logged out"))
+            .then(() => console.log("User signed out"))
             .catch((error) => {
               Alert.alert(error);
             });
