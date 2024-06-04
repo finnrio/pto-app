@@ -1,113 +1,61 @@
-import { View } from "react-native";
-import React from "react";
+import { Alert, View } from "react-native";
+import React, { useState } from "react";
 import { List } from "react-native-paper";
+import { useFocusEffect } from "@react-navigation/native";
 import styles from "./styles";
+import GetUserDataById from "../../firebase/firestore/GetUserDataById";
+import GetCurrentUsersPTOByStatus from "../../firebase/firestore/pto/GetCurrentUsersPTOByStatus";
 
 export default function EmployeeActivityScreen() {
-  const pendingtestdata = [
-    {
-      id: "1",
-      start_date: "2024-04-06",
-      end_date: "2024-04-26",
-    },
-    {
-      id: "2",
-      start_date: "2024-05-13",
-      end_date: "2024-05-14",
-    },
-    {
-      id: "3",
-      start_date: "2024-05-16",
-      end_date: "2024-05-17",
-    },
-    {
-      id: "4",
-      start_date: "2024-05-16",
-      end_date: "2024-05-17",
-    },
-  ];
+  const [pendingPTO, setPendingPTO] = useState<any[]>([]);
+  const [approvedPTO, setApprovedPTO] = useState<any[]>([]);
+  const [deniedPTO, setDeniedPTO] = useState<any[]>([]);
 
-  const approvedtestdata = [
-    {
-      id: "1",
-      start_date: "2024-04-06",
-      end_date: "2024-04-26",
-    },
-    {
-      id: "2",
-      start_date: "2024-05-13",
-      end_date: "2024-05-14",
-    },
-    {
-      id: "3",
-      start_date: "2024-05-16",
-      end_date: "2024-05-17",
-    },
-    {
-      id: "4",
-      start_date: "2024-05-16",
-      end_date: "2024-05-17",
-    },
-  ];
+  useFocusEffect(
+    React.useCallback(() => {
+      GetCurrentUsersPTOByStatus("Pending").then((data) => {
+        setPendingPTO(data);
+      });
+      GetCurrentUsersPTOByStatus("Approved").then((data) => {
+        setApprovedPTO(data);
+      });
+      GetCurrentUsersPTOByStatus("Denied").then((data) => {
+        setDeniedPTO(data);
+      });
+    }, []),
+  );
 
-  const deniedtestdata = [
-    {
-      id: "1",
-      start_date: "2024-04-06",
-      end_date: "2024-04-26",
-    },
-    {
-      id: "2",
-      start_date: "2024-05-13",
-      end_date: "2024-05-14",
-    },
-    {
-      id: "3",
-      start_date: "2024-05-16",
-      end_date: "2024-05-17",
-    },
-    {
-      id: "4",
-      start_date: "2024-05-16",
-      end_date: "2024-05-17",
-    },
-  ];
+  async function queryAlert(data: any) {
+    const user = await GetUserDataById(data.user_id);
+    Alert.alert(
+      "PTO Request",
+      `Employee: ${user.first_name} ${user.surname}\nReason: ${data.reason}\nStarting: ${data.start_date}\nEnding: ${data.end_date}\nHours Requested: ${data.hours}`,
+    );
+  }
 
   function createListItem(data: any) {
     return (
       <List.Item
         title={`${data.start_date} to ${data.end_date}`}
-        key={data.id} // this should be unique from the database entry
-        // onPress={ //some sort of alert or modal or dialog with more information
-        //     Alert.alert("ddd", "This request was created by xxx and is from date xxx-xx-xx to date xxxx-xx-xx")
-        // }
+        key={data.id}
+        onPress={() => queryAlert(data)}
       />
     );
   }
 
   return (
     <View style={styles.container}>
-      {/* <View style={styles.listContainer}> */}
-      {/* prevents all being open at once */}
       <List.AccordionGroup>
         <List.Accordion title="Pending" id="1">
-          {/* {pendingtestdata.map((x, i) => (
-                        <List.Item title={`${x.start_date} to ${x.end_date}`} key={i} />
-                    ))} */}
-          {pendingtestdata.map((data) => createListItem(data))}
+          {pendingPTO.map((data) => createListItem(data))}
         </List.Accordion>
         <List.Accordion title="Approved" id="2">
-          {approvedtestdata.map((x, i) => (
-            <List.Item title={`${x.start_date} to ${x.end_date}`} key={i} />
-          ))}
+          {approvedPTO.map((data) => createListItem(data))}
         </List.Accordion>
         <List.Accordion title="Denied" id="3">
-          {deniedtestdata.map((x, i) => (
-            <List.Item title={`${x.start_date} to ${x.end_date}`} key={i} />
-          ))}
+          {deniedPTO.map((data) => createListItem(data))}
         </List.Accordion>
       </List.AccordionGroup>
-      {/* </View> */}
     </View>
   );
 }
