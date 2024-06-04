@@ -1,16 +1,19 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import React, { useEffect, useState } from "react";
 import {
+  AdminDashboardScreen,
   AdminUserProfileScreen,
   CalendarScreen,
   EmployeeActivityScreen,
+  ManagerActivityScreen,
+  ManagerDashboardScreen,
   PTORequestFormScreen,
   RegistrationScreen,
+  UserDashboardScreen,
   UserProfileScreen,
 } from "../screens";
 import LogoutDrawerContent from "./LogoutDrawerContent";
 import GetCurrentUserData from "../firebase/firestore/GetCurrentUserData";
-import ManagerActivityScreen from "../screens/ManagerActivityScreen/ManagerActivityScreen";
 
 export default function AppDrawerNavigator() {
   const [role, setRole] = useState("");
@@ -28,7 +31,7 @@ export default function AppDrawerNavigator() {
           drawerContent={(props) => <LogoutDrawerContent {...props} />}
           detachInactiveScreens={true}
         >
-          <Drawer.Screen name="Profile" component={UserProfileScreen} />
+          <Drawer.Screen name="Dashboard" component={AdminDashboardScreen} />
           <Drawer.Screen
             name="Register a User"
             component={RegistrationScreen}
@@ -37,6 +40,7 @@ export default function AppDrawerNavigator() {
             name="Admin User Management"
             component={AdminUserProfileScreen}
           />
+          <Drawer.Screen name="Profile" component={UserProfileScreen} />
         </Drawer.Navigator>
       );
     case "Manager":
@@ -45,8 +49,9 @@ export default function AppDrawerNavigator() {
           drawerContent={(props) => <LogoutDrawerContent {...props} />}
           detachInactiveScreens={true}
         >
+          <Drawer.Screen name="Dashboard" component={ManagerDashboardScreen} />
           <Drawer.Screen
-            name="PTO Activity"
+            name="My Activity"
             component={EmployeeActivityScreen}
           />
           <Drawer.Screen
@@ -68,8 +73,9 @@ export default function AppDrawerNavigator() {
           drawerContent={(props) => <LogoutDrawerContent {...props} />}
           detachInactiveScreens={true}
         >
+          <Drawer.Screen name="Dashboard" component={UserDashboardScreen} />
           <Drawer.Screen
-            name="PTO Activity"
+            name="My Activity"
             component={EmployeeActivityScreen}
           />
           <Drawer.Screen name="Calendar" component={CalendarScreen} />
