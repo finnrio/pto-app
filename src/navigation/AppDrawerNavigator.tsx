@@ -10,6 +10,7 @@ import {
 } from "../screens";
 import LogoutDrawerContent from "./LogoutDrawerContent";
 import GetCurrentUserData from "../firebase/firestore/GetCurrentUserData";
+import ManagerActivityScreen from "../screens/ManagerActivityScreen/ManagerActivityScreen";
 
 export default function AppDrawerNavigator() {
   const [role, setRole] = useState("");
@@ -48,7 +49,10 @@ export default function AppDrawerNavigator() {
             name="PTO Activity"
             component={EmployeeActivityScreen}
           />
-          {/* <Drawer.Screen name="Team Activity" component={TeamActivityScreen} /> */}
+          <Drawer.Screen
+            name="Team Activity"
+            component={ManagerActivityScreen}
+          />
           <Drawer.Screen name="Calendar" component={CalendarScreen} />
           <Drawer.Screen name="Profile" component={UserProfileScreen} />
           <Drawer.Screen
