@@ -22,7 +22,6 @@ export default async function CreatePTORequest(
   startDate: Date,
   endDate: Date,
   reason: string,
-  managerId: string,
 ) {
   const { currentUser } = FIREBASE_AUTH;
   const { NODE_ENV } = process.env;
@@ -64,12 +63,6 @@ export default async function CreatePTORequest(
     user_id: currentUser.uid,
     hours: requestedHours,
   });
-
-  // Notify manager of new PTO request
-  await addDoc(
-    collection(FIRESTORE_DB, `${NODE_ENV}`, managerId, "notifications"),
-    { user: currentUser.uid, message: "New PTO request" },
-  );
 
   // Update pto_pending in the user's document and remove from pto_available
   await updateDoc(

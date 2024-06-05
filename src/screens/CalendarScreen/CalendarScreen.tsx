@@ -1,6 +1,7 @@
-import { Alert } from "react-native";
+import { Alert, View } from "react-native";
 import React, { useContext, useState } from "react";
 import { CalendarList } from "react-native-calendars";
+import { ActivityIndicator } from "react-native-paper";
 import { useFocusEffect } from "@react-navigation/native";
 import GetCurrentUserData from "../../firebase/firestore/GetCurrentUserData";
 import { GetPTOEventsByUserID } from "../../firebase/firestore/GetPTOEvent";
@@ -13,7 +14,7 @@ export default function CalendarScreen({ navigation: { navigate } }: any) {
   const currentUser = useContext(UserContext);
   const [markedDates, setMarkedDates] = useState<any>({});
   const [startDate, setStartDate] = useState("");
-  const [managerId, setManagerId] = useState("");
+  const [loading, setLoading] = useState(true);
 
   function managerRender() {
     let mergedEvents: any = {};
@@ -44,6 +45,7 @@ export default function CalendarScreen({ navigation: { navigate } }: any) {
 
         Promise.all(promises).then(() => {
           setMarkedDates(mergedEvents);
+          setLoading(false);
         });
       })
       .catch((error) => {
@@ -67,13 +69,9 @@ export default function CalendarScreen({ navigation: { navigate } }: any) {
   }
 
   function render() {
+    setLoading(true);
     setStartDate("");
     GetCurrentUserData().then(async (data) => {
-      if (data.manager_id) {
-        setManagerId(data.manager_id);
-      } else {
-        Alert.alert("Error", "Manager ID not found");
-      }
       if (data.role === "Manager") {
         managerRender();
       } else {
@@ -119,7 +117,6 @@ export default function CalendarScreen({ navigation: { navigate } }: any) {
             navigate("PTO Request Form", {
               startDate,
               endDate: date,
-              managerId,
             });
             render();
           },
@@ -145,7 +142,11 @@ export default function CalendarScreen({ navigation: { navigate } }: any) {
     }, []),
   );
 
-  return (
+  return loading ? (
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <ActivityIndicator />
+    </View>
+  ) : (
     <CalendarList
       onDayPress={(day) =>
         startDate ? endAlert(day.dateString) : startAlert(day.dateString)
