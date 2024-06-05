@@ -12,7 +12,6 @@ export default function PTORequestFormScreen({ route, navigation }: any) {
       new Date(route.params.startDate),
       new Date(route.params.endDate),
       purpose,
-      route.params.managerId,
     )
       .then(() => {
         Alert.alert(
