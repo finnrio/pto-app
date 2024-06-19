@@ -39,8 +39,9 @@ exports[`UserProfileScreen renders correctly 1`] = `
         "paddingLeft": 16,
       }
     }
-    testID="uid_input"
+    testID="user_id_input"
     underlineColorAndroid="transparent"
+    value="mock_uid"
   />
   <Text
     style={

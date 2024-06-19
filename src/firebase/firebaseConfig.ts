@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { connectAuthEmulator, getAuth } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { connectFirestoreEmulator, getFirestore } from "firebase/firestore";
 
 // Initialize Firebase
@@ -19,9 +19,10 @@ const FIREBASE_AUTH = getAuth(FIREBASE_APP);
 const FIRESTORE_DB = getFirestore(FIREBASE_APP);
 
 if (process.env.NODE_ENV === "test") {
-  console.log("Attempting to connect to emulators, make sure they are running");
-  connectAuthEmulator(FIREBASE_AUTH, "http://127.0.0.1:9099");
-  connectFirestoreEmulator(FIRESTORE_DB, "http://127.0.0.1", 8080);
+  console.log("Firebase app initialised in test mode, connecting to emulators...");
+  // connectAuthEmulator(getAuth(FIREBASE_APP), "http://localhost:9099"); // TODO come back to this 
+  connectFirestoreEmulator(getFirestore(FIREBASE_APP), "localhost", 8080);
 }
 
-export { FIREBASE_APP, FIREBASE_AUTH, FIRESTORE_DB };
+// export { FIREBASE_APP, FIRESTORE_DB};
+export { FIREBASE_AUTH, FIRESTORE_DB};

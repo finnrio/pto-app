@@ -5,9 +5,11 @@
   "scripts": {
     "start": "NODE_ENV=development expo start",
     "start:prod": "NODE_ENV=production expo start",
+    "start:test": "NODE_ENV=test expo start",
     "android": "NODE_ENV=development expo start --android",
     "ios": "NODE_ENV=development expo start --ios",
     "web": "NODE_ENV=development expo start --web",
+    "start-firebase-emulators": "firebase emulators:start --import=./src/firebase/emulators",
     "test": "jest",
     "test:watch": "yarn run test -- --watch",
     "test:ci": "yarn run test -- --coverage",
@@ -36,12 +38,13 @@
     "react-native-vector-icons": "^10.0.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.4",
+    "@babel/core": "^7.24.7",
     "@babel/eslint-parser": "^7.24.5",
-    "@babel/preset-env": "^7.24.4",
+    "@babel/preset-env": "^7.24.7",
     "@babel/preset-typescript": "^7.24.1",
+    "@faker-js/faker": "^8.4.1",
     "@golevelup/ts-jest": "^0.5.0",
-    "@testing-library/react-native": "^12.5.0",
+    "@testing-library/react-native": "^12.5.1",
     "@types/base-64": "^1.0.2",
     "@types/jest": "^29.5.12",
     "@types/react": "~18.2.45",

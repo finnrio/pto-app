@@ -1,32 +1,34 @@
 import { Alert, View } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { List } from "react-native-paper";
 import { useFocusEffect } from "@react-navigation/native";
 import styles from "./styles";
-import GetUserDataById from "../../firebase/firestore/GetUserDataById";
-import GetCurrentUsersPTOByStatus from "../../firebase/firestore/pto/GetCurrentUsersPTOByStatus";
+import GetUserData from "../../firebase/operations/GetUserData";
+import GetPTOByStatus from "../../firebase/operations/GetPTOByStatus";
+import { UserContext } from "../../context/UserContext";
 
 export default function EmployeeActivityScreen() {
+  const currentUser = useContext(UserContext);
   const [pendingPTO, setPendingPTO] = useState<any[]>([]);
   const [approvedPTO, setApprovedPTO] = useState<any[]>([]);
   const [deniedPTO, setDeniedPTO] = useState<any[]>([]);
 
   useFocusEffect(
     React.useCallback(() => {
-      GetCurrentUsersPTOByStatus("Pending").then((data) => {
+      GetPTOByStatus(currentUser!.uid, "Pending").then((data) => {
         setPendingPTO(data);
       });
-      GetCurrentUsersPTOByStatus("Approved").then((data) => {
+      GetPTOByStatus(currentUser!.uid, "Approved").then((data) => {
         setApprovedPTO(data);
       });
-      GetCurrentUsersPTOByStatus("Denied").then((data) => {
+      GetPTOByStatus(currentUser!.uid, "Denied").then((data) => {
         setDeniedPTO(data);
       });
     }, []),
   );
 
   async function queryAlert(data: any) {
-    const user = await GetUserDataById(data.user_id);
+    const user = await GetUserData(data.user_id);
     Alert.alert(
       "PTO Request",
       `Employee: ${user.first_name} ${user.surname}\nReason: ${data.reason}\nStarting: ${data.start_date}\nEnding: ${data.end_date}\nHours Requested: ${data.hours}`,

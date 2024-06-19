@@ -1,0 +1,140 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AdminDashboardScreen matches the snapshot 1`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+      "flex": 1,
+    }
+  }
+>
+  <Text
+    style={
+      {
+        "marginBottom": 10,
+        "marginLeft": 30,
+        "marginRight": 30,
+        "marginTop": 10,
+        "paddingLeft": 16,
+      }
+    }
+  >
+    Welcome to the Admin dashboard. Here you can register and manage users.
+  </Text>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#788eec",
+        "borderRadius": 5,
+        "height": 48,
+        "justifyContent": "center",
+        "marginBottom": 10,
+        "marginLeft": 30,
+        "marginRight": 30,
+        "marginTop": 20,
+        "opacity": 1,
+      }
+    }
+    testID="user_management_btn"
+  >
+    <Text
+      style={
+        {
+          "color": "white",
+          "fontSize": 18,
+          "fontWeight": "bold",
+          "padding": 10,
+        }
+      }
+    >
+      Manage Users
+    </Text>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#788eec",
+        "borderRadius": 5,
+        "height": 48,
+        "justifyContent": "center",
+        "marginBottom": 10,
+        "marginLeft": 30,
+        "marginRight": 30,
+        "marginTop": 20,
+        "opacity": 1,
+      }
+    }
+    testID="register_user_btn"
+  >
+    <Text
+      style={
+        {
+          "color": "white",
+          "fontSize": 18,
+          "fontWeight": "bold",
+          "padding": 10,
+        }
+      }
+    >
+      Register a User
+    </Text>
+  </View>
+</View>
+`;

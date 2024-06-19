@@ -5,14 +5,14 @@ import { SegmentedButtons } from "react-native-paper";
 import DropDownPicker from "react-native-dropdown-picker";
 
 import { UserContext } from "../../context/UserContext";
-import SetUserProfileData from "../../firebase/firestore/SetUserProfileData";
+import UpdateUserData from "../../firebase/operations/UpdateUserData";
 import styles from "./styles";
 import { FIREBASE_AUTH } from "../../firebase/firebaseConfig";
 import { AppUser } from "../../types/AppUser";
-import GetAllManagers from "../../firebase/firestore/GetAllManagers";
-import GetAllUsers from "../../firebase/firestore/GetAllUsers";
-import GetUserDataById from "../../firebase/firestore/GetUserDataById";
-import DeleteUser from "../../firebase/firestore/DeleteUser";
+import GetAllManagers from "../../firebase/operations/GetAllManagers";
+import GetAllUsers from "../../firebase/operations/GetAllUsers";
+import DeleteUser from "../../firebase/operations/DeleteUser";
+import GetUserData from "../../firebase/operations/GetUserData";
 
 export default function AdminUserProfileScreen() {
   const currentUser = useContext(UserContext);
@@ -31,7 +31,7 @@ export default function AdminUserProfileScreen() {
   const [openManager, setOpenManager] = useState(false);
 
   async function RenderUserData(id: string) {
-    const res: AppUser = await GetUserDataById(id);
+    const res: AppUser = await GetUserData(id);
     setFirstName(res?.first_name);
     setSurname(res?.surname);
     setEmail(res?.email);
@@ -67,7 +67,7 @@ export default function AdminUserProfileScreen() {
           {
             text: "Update",
             onPress: () => {
-              SetUserProfileData(createUserDataObject(), currentUser?.uid);
+              UpdateUserData(createUserDataObject(), currentUser?.uid);
               if (email !== FIREBASE_AUTH.currentUser?.email) {
                 // updateEmail(currentUser!, email!).catch((error) =>
                 //   Alert.alert("Error", error.code),

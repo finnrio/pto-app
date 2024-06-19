@@ -12,6 +12,7 @@ export default function UserDashboardScreen({ navigation }: any) {
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate("My Activity")}
+        testID="my_activity_btn"
       >
         <Text style={styles.buttonTitle}>My Activity</Text>
       </TouchableOpacity>
@@ -19,6 +20,7 @@ export default function UserDashboardScreen({ navigation }: any) {
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate("Calendar")}
+        testID="calendar_btn"
       >
         <Text style={styles.buttonTitle}>Calendar</Text>
       </TouchableOpacity>

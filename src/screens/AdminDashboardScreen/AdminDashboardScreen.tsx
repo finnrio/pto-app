@@ -11,6 +11,7 @@ export default function AdminDashboardScreen({ navigation }: any) {
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate("Admin User Management")}
+        testID="user_management_btn"
       >
         <Text style={styles.buttonTitle}>Manage Users</Text>
       </TouchableOpacity>
@@ -18,6 +19,7 @@ export default function AdminDashboardScreen({ navigation }: any) {
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate("Register a User")}
+        testID="register_user_btn"
       >
         <Text style={styles.buttonTitle}>Register a User</Text>
       </TouchableOpacity>

@@ -7,11 +7,10 @@ import {
   View,
   Alert,
 } from "react-native";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import SignInWithEmailAndPassword from "../../firebase/auth/SignInWithEmailAndPassword";
+import SignInWithEmailAndPassword from "../../firebase/operations/SignInWithEmailAndPassword";
 import styles from "./styles";
-
-const iconImage = require("../../../assets/icon.png");
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -30,7 +29,7 @@ export default function LoginScreen() {
         style={{ flex: 1, width: "100%" }}
         keyboardShouldPersistTaps="always"
       >
-        <Image style={styles.logo} source={iconImage} />
+        <MaterialCommunityIcons name="timetable" size={120} style={styles.logo} />
         <TextInput
           style={styles.input}
           placeholder="E-mail"

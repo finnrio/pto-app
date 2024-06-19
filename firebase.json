@@ -8,7 +8,7 @@
     },
     "singleProjectMode": true,
     "ui": {
-      "enabled": false
+      "enabled": true
     }
   }
 }

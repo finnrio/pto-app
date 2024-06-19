@@ -6,7 +6,7 @@ import {
   render,
   screen,
 } from "@testing-library/react-native";
-import SignInWithEmailAndPassword from "../../firebase/auth/SignInWithEmailAndPassword";
+import SignInWithEmailAndPassword from "../../firebase/operations/SignInWithEmailAndPassword";
 import LoginScreen from "./LoginScreen";
 
 // solution from https://github.com/APSL/react-native-keyboard-aware-scroll-view/issues/493#issuecomment-1023551697
@@ -15,7 +15,7 @@ jest.mock("react-native-keyboard-aware-scroll-view", () => ({
     props.children,
 }));
 
-jest.mock("../../firebase/auth/SignInWithEmailAndPassword", () => {
+jest.mock("../../firebase/operations/SignInWithEmailAndPassword", () => {
   return jest.fn().mockImplementation(() => {
     return Promise.resolve();
   });
@@ -50,7 +50,7 @@ describe("LoginScreen", () => {
   });
 
   it("should display an alert if an error occurs during sign in", async () => {
-    require("../../firebase/auth/SignInWithEmailAndPassword").mockRejectedValueOnce(
+    require("../../firebase/operations/SignInWithEmailAndPassword").mockRejectedValueOnce(
       {
         code: "auth/invalid-email",
       },

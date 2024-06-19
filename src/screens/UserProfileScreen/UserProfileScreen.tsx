@@ -3,8 +3,8 @@ import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 
 import { UserContext } from "../../context/UserContext";
-import GetCurrentUserData from "../../firebase/firestore/GetCurrentUserData";
-import SetUserProfileData from "../../firebase/firestore/SetUserProfileData";
+import GetUserData from "../../firebase/operations/GetUserData";
+import UpdateUserData from "../../firebase/operations/UpdateUserData";
 import styles from "./styles";
 import { FIREBASE_AUTH } from "../../firebase/firebaseConfig";
 import { AppUser } from "../../types/AppUser";
@@ -17,7 +17,7 @@ export default function UserProfileScreen() {
   const [role, setRole] = useState("");
 
   async function RenderUserData() {
-    await GetCurrentUserData().then((res: AppUser) => {
+    await GetUserData(currentUser!.uid).then((res: AppUser) => {
       setFirstName(res.first_name);
       setSurname(res.surname);
       setEmail(res.email);
@@ -42,7 +42,7 @@ export default function UserProfileScreen() {
         {
           text: "Update",
           onPress: () => {
-            SetUserProfileData(createUserDataObject(), currentUser?.uid);
+            UpdateUserData(createUserDataObject(), currentUser?.uid);
             if (email !== FIREBASE_AUTH.currentUser?.email) {
               // updateEmail(currentUser!, email!).catch((error) =>
               //   Alert.alert("Error", error.code),
@@ -88,7 +88,7 @@ export default function UserProfileScreen() {
           value={currentUser?.uid}
           underlineColorAndroid="transparent"
           editable={false}
-          testID="uid_input"
+          testID="user_id_input"
         />
         <Text style={styles.text}>First Name</Text>
         <TextInput

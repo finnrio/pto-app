@@ -1,5 +1,5 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   AdminDashboardScreen,
   AdminUserProfileScreen,
@@ -13,13 +13,17 @@ import {
   UserProfileScreen,
 } from "../screens";
 import LogoutDrawerContent from "./LogoutDrawerContent";
-import GetCurrentUserData from "../firebase/firestore/GetCurrentUserData";
+import GetUserData from "../firebase/operations/GetUserData";
+import { UserContext } from "../context/UserContext";
 
 export default function AppDrawerNavigator() {
+  const currentUser = useContext(UserContext);
   const [role, setRole] = useState("");
 
   useEffect(() => {
-    GetCurrentUserData().then((data) => setRole(data.role));
+    GetUserData(currentUser!.uid).then((data) => {
+      console.log(data.role)
+      setRole(data.role)});
   }, []);
 
   const Drawer = createDrawerNavigator();

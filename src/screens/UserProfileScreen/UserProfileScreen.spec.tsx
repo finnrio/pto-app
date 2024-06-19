@@ -11,7 +11,7 @@ import { User } from "firebase/auth";
 import { createMock } from "@golevelup/ts-jest";
 import UserProfileScreen from "./UserProfileScreen";
 import { UserContext } from "../../context/UserContext";
-import SetUserProfileData from "../../firebase/firestore/SetUserProfileData";
+import UpdateUserData from "../../firebase/operations/UpdateUserData";
 
 // solution from https://github.com/APSL/react-native-keyboard-aware-scroll-view/issues/493#issuecomment-1023551697
 jest.mock("react-native-keyboard-aware-scroll-view", () => ({
@@ -19,9 +19,7 @@ jest.mock("react-native-keyboard-aware-scroll-view", () => ({
     props.children,
 }));
 
-const mockAuthUser: User = createMock<User>({ uid: "mock_uid" });
-
-jest.mock("../../firebase/firestore/GetCurrentUserData", () => {
+jest.mock("../../firebase/operations/GetUserData", () => {
   return jest.fn(() => {
     return Promise.resolve({
       first_name: "mock_first_name",
@@ -32,9 +30,11 @@ jest.mock("../../firebase/firestore/GetCurrentUserData", () => {
   });
 });
 
-jest.mock("../../firebase/firestore/SetUserProfileData", () => {
+jest.mock("../../firebase/operations/UpdateUserData", () => {
   return jest.fn();
 });
+
+const mockAuthUser: User = createMock<User>({ uid: "mock_uid" });
 
 const spyAlert = jest.spyOn(Alert, "alert");
 
@@ -45,7 +45,11 @@ describe("UserProfileScreen", () => {
   });
 
   it("renders correctly", () => {
-    const { toJSON } = render(<UserProfileScreen />);
+    const { toJSON } = render(
+      <UserContext.Provider value={mockAuthUser}>
+        <UserProfileScreen/>
+      </UserContext.Provider>
+    );
     expect(toJSON()).toMatchSnapshot();
   });
 
@@ -61,7 +65,15 @@ describe("UserProfileScreen", () => {
     expect(await screen.findByDisplayValue("mock_email")).toBeTruthy();
     expect(await screen.findByDisplayValue("mock_role")).toBeTruthy();
   });
-
+  it("user id and role should not be editable", async () => {
+    render(
+      <UserContext.Provider value={mockAuthUser}>
+        <UserProfileScreen />
+      </UserContext.Provider>
+    );
+    expect(screen.getByTestId("user_id_input").props.editable).toBeFalsy();
+    expect(screen.getByTestId("role_input").props.editable).toBeFalsy();
+  });
   it("updates the user's data when the update button is pressed", async () => {
     render(
       <UserContext.Provider value={mockAuthUser}>
@@ -82,7 +94,7 @@ describe("UserProfileScreen", () => {
       // @ts-ignore
       spyAlert.mock.calls[0][2][0].onPress();
     });
-    expect(SetUserProfileData).toHaveBeenCalled();
+    expect(UpdateUserData).toHaveBeenCalled();
   });
 
   it("resets the user's data when the reset button is pressed", async () => {
@@ -133,8 +145,9 @@ describe("UserProfileScreen", () => {
       // @ts-ignore
       spyAlert.mock.calls[0][2][0].onPress();
     });
-    expect(spyAlert).toHaveBeenCalledWith(
-      "This email will not be upated for the auth system",
+    expect(spyAlert).toHaveBeenLastCalledWith(
+      "Warning",
+      "This email will not be upated for the auth system. Please contact system Administrators",
     );
   });
 });

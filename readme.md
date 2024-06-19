@@ -1,3 +1,8 @@
+# Development
+
+Yarn
+expo cli
+
 # Testing
 
 ## Firebase emulators

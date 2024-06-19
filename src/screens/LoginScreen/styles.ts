@@ -9,9 +9,11 @@ export default StyleSheet.create({
   logo: {
     flex: 1,
     height: 120,
-    width: 90,
     alignSelf: "center",
     margin: 30,
+    paddingLeft: 10,
+    color: "#788eec",
+    shadowColor: "#000",
   },
   input: {
     height: 48,
