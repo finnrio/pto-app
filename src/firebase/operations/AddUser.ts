@@ -17,7 +17,7 @@ export default async function AddUser(userData: any, password: string) {
       await FIREBASE_AUTH.updateCurrentUser(originalUser); // this is required as the createUser function from firebase logs in that user on creation
       await setDoc(doc(FIRESTORE_DB, `${NODE_ENV}`, uid), {
         ...userData,
-        pto_allowance: Number(process.env.defaultPTOAllowance),
+        pto_allowance: 185,
         pto_used: 0,
         pto_pending: 0,
         user_color: generateRandomColor(),
