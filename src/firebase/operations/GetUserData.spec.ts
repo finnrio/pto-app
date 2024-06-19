@@ -1,12 +1,13 @@
 import { faker } from "@faker-js/faker";
 import { deleteDoc, doc, setDoc } from "firebase/firestore";
+import { v4 as uuidV4 } from "uuid";
 import { FIRESTORE_DB } from "../firebaseConfig";
 import GetUserData from "./GetUserData";
 
 const { NODE_ENV } = process.env;
-const testUserID: string = "testManagerId";
+const testUserID= uuidV4();
 const randomTestUserData = {
-  uid: "testManagerId", // "testUid" is a placeholder for the user's ID
+  uid: testUserID,
   first_name: faker.person.firstName(),
   surname: faker.person.lastName(),
   email: faker.internet.email(),

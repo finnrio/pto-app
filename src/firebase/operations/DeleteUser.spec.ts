@@ -1,9 +1,10 @@
-import { setDoc, getDoc, collection, doc, deleteDoc } from "firebase/firestore";
+import { setDoc, getDoc, doc, deleteDoc } from "firebase/firestore";
+import { v4 as uuidV4 } from "uuid";
 import { FIRESTORE_DB } from "../firebaseConfig";
 import DeleteUser from "./DeleteUser";
 
 const { NODE_ENV } = process.env;
-const testUserId = "testUserId";
+const testUserId = uuidV4();
 const testUserDocRef = doc(FIRESTORE_DB, `${NODE_ENV}`, testUserId);
 
 describe("DeleteUser", () => {

@@ -1,10 +1,11 @@
 import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
+import { v4 as uuidV4 } from "uuid";
 import { FIRESTORE_DB } from "../firebaseConfig";
 import ApprovePTO from "./ApprovePTO";
 
 const { NODE_ENV } = process.env;
-const testUserId = "testUserId";
-const testPTOId = "testPtoId";
+const testUserId = uuidV4();
+const testPTOId = uuidV4();
 const testUserDocRef = doc(FIRESTORE_DB, `${NODE_ENV}`, testUserId);
 
 describe("ApprovePTO", () => {

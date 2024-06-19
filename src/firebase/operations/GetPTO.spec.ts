@@ -1,9 +1,10 @@
-import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
+import { deleteDoc, doc, setDoc } from "firebase/firestore";
+import { v4 as uuidV4 } from "uuid";
 import { FIRESTORE_DB } from "../firebaseConfig";
 import GetPTO from "./GetPTO";
 
 const { NODE_ENV } = process.env;
-const testUserId = "testUid";
+const testUserId = uuidV4();
 const testUserDocRef = doc(FIRESTORE_DB, `${NODE_ENV}`, testUserId);
 
 describe("GetPTO", () => {
@@ -24,7 +25,7 @@ describe("GetPTO", () => {
     await deleteDoc(doc(testUserDocRef, "pto", "testPTOId3"));
   });
   it("should return the user's PTO data", async () => {
-    expect(await GetPTO("testUid")).toEqual([
+    expect(await GetPTO(testUserId)).toEqual([
       { id: "testPTOId1", status: "Pending" },
       { id: "testPTOId2", status: "Approved" },
       { id: "testPTOId3", status: "Denied" },

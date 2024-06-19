@@ -1,11 +1,12 @@
 import { deleteDoc, doc, setDoc } from "firebase/firestore";
+import { v4 as uuidV4 } from "uuid";
 import { FIRESTORE_DB } from "../firebaseConfig";
 import GetPTOByStatus from "./GetPTOByStatus";
 
 const { NODE_ENV } = process.env;
-const testUserId = "testUid";
+const testUserId = uuidV4();
 const testUserDocRef = doc(FIRESTORE_DB, `${NODE_ENV}`, testUserId);
-const testPTOId = "testPTOId";
+const testPTOId = uuidV4();
 const testPtoDocRef = doc(testUserDocRef, "pto", testPTOId);
 
 describe("GetPTOByStatus", () => {
