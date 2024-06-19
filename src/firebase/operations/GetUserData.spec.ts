@@ -24,7 +24,7 @@ describe("GetUserData", () => {
     await setDoc(doc(FIRESTORE_DB, `${NODE_ENV}`, testUserID), randomTestUserData);
   })
   afterAll(async () => {
-    deleteDoc(doc(FIRESTORE_DB, `${NODE_ENV}`, testUserID));
+    await deleteDoc(doc(FIRESTORE_DB, `${NODE_ENV}`, testUserID));
   });
   it("should return the user's data", async () => {
     expect(await GetUserData(testUserID)).toEqual(randomTestUserData);

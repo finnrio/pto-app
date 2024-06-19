@@ -16,6 +16,7 @@ describe("CreatePTORequest", () => {
       userDocData = (await getDoc(testUserDocRef)).data()
     });
     afterAll(async () => {
+      await deleteDoc(doc(testUserDocRef, "pto", ptoUuid));
       await deleteDoc(testUserDocRef);
     });
     it("should generate a pto request", async () => {

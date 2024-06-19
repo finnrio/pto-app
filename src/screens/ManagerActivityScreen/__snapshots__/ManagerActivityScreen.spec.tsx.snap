@@ -63,6 +63,7 @@ exports[`ManagerActivityScreen renders correctly 1`] = `
             ],
           ]
         }
+        testID="pending_accordion"
       >
         <View
           pointerEvents="none"
@@ -188,6 +189,7 @@ exports[`ManagerActivityScreen renders correctly 1`] = `
             ],
           ]
         }
+        testID="approved_accordion"
       >
         <View
           pointerEvents="none"
@@ -313,6 +315,7 @@ exports[`ManagerActivityScreen renders correctly 1`] = `
             ],
           ]
         }
+        testID="denied_accordion"
       >
         <View
           pointerEvents="none"
