@@ -26,6 +26,9 @@ jest.mock("../../firebase/operations/GetUserData", () => {
       surname: "mock_surname",
       email: "mock_email",
       role: "mock_role",
+      pto_allowance: 185,
+      pto_used: 40,
+      pto_pending: 10,
     });
   });
 });
@@ -59,19 +62,21 @@ describe("UserProfileScreen", () => {
         <UserProfileScreen />
       </UserContext.Provider>,
     );
-    expect(await screen.findByDisplayValue("mock_uid")).toBeTruthy();
-    expect(await screen.findByDisplayValue("mock_first_name")).toBeTruthy();
-    expect(await screen.findByDisplayValue("mock_surname")).toBeTruthy();
-    expect(await screen.findByDisplayValue("mock_email")).toBeTruthy();
-    expect(await screen.findByDisplayValue("mock_role")).toBeTruthy();
+    expect(screen.getByTestId("user_id_input").props.value).toBe("mock_uid");
+    expect((await screen.getByTestId("firstName_input")).props.value).toBe("mock_first_name");
+    expect((await screen.getByTestId("surname_input")).props.value).toBe("mock_surname");
+    expect((await screen.getByTestId("email_input")).props.value).toBe("mock_email");
+    expect((await screen.getByTestId("role_input")).props.value).toBe("mock_role");
+    expect((await screen.getByTestId("ptoAvailable_input")).props.value).toBe("135");
   });
-  it("user id and role should not be editable", async () => {
+  it("user id, email and role should not be editable", async () => {
     render(
       <UserContext.Provider value={mockAuthUser}>
         <UserProfileScreen />
       </UserContext.Provider>,
     );
     expect(screen.getByTestId("user_id_input").props.editable).toBeFalsy();
+    expect(screen.getByTestId("email_input").props.editable).toBeFalsy();
     expect(screen.getByTestId("role_input").props.editable).toBeFalsy();
   });
   it("updates the user's data when the update button is pressed", async () => {
@@ -80,11 +85,6 @@ describe("UserProfileScreen", () => {
         <UserProfileScreen />
       </UserContext.Provider>,
     );
-    expect(await screen.findByDisplayValue("mock_uid")).toBeTruthy();
-    expect(await screen.findByDisplayValue("mock_first_name")).toBeTruthy();
-    expect(await screen.findByDisplayValue("mock_surname")).toBeTruthy();
-    expect(await screen.findByDisplayValue("mock_email")).toBeTruthy();
-    expect(await screen.findByDisplayValue("mock_role")).toBeTruthy();
     await act(async () => {
       fireEvent.changeText(
         screen.getByTestId("firstName_input"),
@@ -103,11 +103,6 @@ describe("UserProfileScreen", () => {
         <UserProfileScreen />
       </UserContext.Provider>,
     );
-    expect(await screen.findByDisplayValue("mock_uid")).toBeTruthy();
-    expect(await screen.findByDisplayValue("mock_first_name")).toBeTruthy();
-    expect(await screen.findByDisplayValue("mock_surname")).toBeTruthy();
-    expect(await screen.findByDisplayValue("mock_email")).toBeTruthy();
-    expect(await screen.findByDisplayValue("mock_role")).toBeTruthy();
     await act(async () => {
       fireEvent.changeText(
         screen.getByTestId("firstName_input"),
@@ -121,33 +116,21 @@ describe("UserProfileScreen", () => {
       // @ts-ignore
       spyAlert.mock.calls[0][2][1].onPress();
     });
-    expect(await screen.findByDisplayValue("mock_uid")).toBeTruthy();
-    expect(await screen.findByDisplayValue("mock_first_name")).toBeTruthy();
-    expect(await screen.findByDisplayValue("mock_surname")).toBeTruthy();
-    expect(await screen.findByDisplayValue("mock_email")).toBeTruthy();
-    expect(await screen.findByDisplayValue("mock_role")).toBeTruthy();
+    expect((await screen.findByTestId("firstName_input")).props.value).toBe("mock_first_name");
+    expect((await screen.findByTestId("surname_input")).props.value).toBe("mock_surname");
   });
-
-  it("alerts the user when the email is updated", async () => {
+  it("alerts the user that the email cannot be updated", async () => {
     render(
       <UserContext.Provider value={mockAuthUser}>
         <UserProfileScreen />
       </UserContext.Provider>,
     );
-    expect(await screen.findByDisplayValue("mock_uid")).toBeTruthy();
-    expect(await screen.findByDisplayValue("mock_first_name")).toBeTruthy();
-    expect(await screen.findByDisplayValue("mock_surname")).toBeTruthy();
-    expect(await screen.findByDisplayValue("mock_email")).toBeTruthy();
-    expect(await screen.findByDisplayValue("mock_role")).toBeTruthy();
     await act(async () => {
-      fireEvent.changeText(screen.getByTestId("email_input"), "new_email");
-      fireEvent.press(screen.getByTestId("update_btn"));
-      // @ts-ignore
-      spyAlert.mock.calls[0][2][0].onPress();
+      fireEvent.press(screen.getByTestId("email_touchable"));
     });
-    expect(spyAlert).toHaveBeenLastCalledWith(
-      "Warning",
-      "This email will not be upated for the auth system. Please contact system Administrators",
+    expect(spyAlert).toHaveBeenCalledWith(
+      "Email cannot be updated",
+      "Contact an administrator to update your email"
     );
   });
 });

@@ -6,7 +6,6 @@ import { UserContext } from "../../context/UserContext";
 import GetUserData from "../../firebase/operations/GetUserData";
 import UpdateUserData from "../../firebase/operations/UpdateUserData";
 import styles from "./styles";
-import { FIREBASE_AUTH } from "../../firebase/firebaseConfig";
 import { AppUser } from "../../types/AppUser";
 
 export default function UserProfileScreen() {
@@ -15,6 +14,7 @@ export default function UserProfileScreen() {
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
+  const [ptoAvailable, setPtoAvailable] = useState(0);
 
   async function RenderUserData() {
     await GetUserData(currentUser!.uid).then((res: AppUser) => {
@@ -22,6 +22,7 @@ export default function UserProfileScreen() {
       setSurname(res.surname);
       setEmail(res.email);
       setRole(res.role);
+      setPtoAvailable(res.pto_allowance - res.pto_used - res.pto_pending);
     });
   }
 
@@ -43,15 +44,6 @@ export default function UserProfileScreen() {
           text: "Update",
           onPress: () => {
             UpdateUserData(createUserDataObject(), currentUser?.uid);
-            if (email !== FIREBASE_AUTH.currentUser?.email) {
-              // updateEmail(currentUser!, email!).catch((error) =>
-              //   Alert.alert("Error", error.code),
-              // );
-              Alert.alert(
-                "Warning",
-                "This email will not be upated for the auth system. Please contact system Administrators",
-              );
-            }
             RenderUserData();
           },
           style: "default",
@@ -116,19 +108,22 @@ export default function UserProfileScreen() {
           autoCapitalize="none"
           testID="surname_input"
         />
-        <Text style={styles.text}>Email</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="E-mail"
-          placeholderTextColor="#aaaaaa"
-          onChangeText={(text) => {
-            setEmail(text);
-          }}
-          value={email!}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
-          testID="email_input"
-        />
+        <TouchableOpacity
+          onPress={() => Alert.alert("Email cannot be updated", "Contact an administrator to update your email")}
+          testID="email_touchable"
+          >
+          <Text style={styles.text}>Email</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="E-mail"
+            placeholderTextColor="#aaaaaa"
+            value={email!}
+            underlineColorAndroid="transparent"
+            autoCapitalize="none"
+            testID="email_input"
+            editable={false}
+          />
+        </TouchableOpacity>
         <Text style={styles.text}>Role</Text>
         <TextInput
           style={styles.input}
@@ -138,6 +133,16 @@ export default function UserProfileScreen() {
           underlineColorAndroid="transparent"
           editable={false}
           testID="role_input"
+        />
+        <Text style={styles.text}>PTO Available</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="PTO Available"
+          placeholderTextColor="#aaaaaa"
+          value={ptoAvailable?.toString()}
+          underlineColorAndroid="transparent"
+          editable={false}
+          testID="ptoAvailable_input"
         />
         <TouchableOpacity
           style={styles.button}
