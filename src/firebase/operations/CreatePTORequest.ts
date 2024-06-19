@@ -1,13 +1,6 @@
-import {
-  addDoc,
-  collection,
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
-import { FIRESTORE_DB } from "../firebaseConfig";
+import { collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { faker } from "@faker-js/faker";
+import { FIRESTORE_DB } from "../firebaseConfig";
 
 function calculateHours(startDate: Date, endDate: Date): number {
   const start = new Date(startDate);

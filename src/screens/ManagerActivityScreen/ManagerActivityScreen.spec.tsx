@@ -1,17 +1,10 @@
-import {
-  act,
-  cleanup,
-  fireEvent,
-  render,
-  screen,
-  within,
-} from "@testing-library/react-native";
-import ManagerActivityScreen from "./ManagerActivityScreen";
+import { cleanup, render, screen } from "@testing-library/react-native";
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { UserContext } from "../../context/UserContext";
 import { User } from "firebase/auth";
 import { createMock } from "@golevelup/ts-jest";
+import { NavigationContainer } from "@react-navigation/native";
+import ManagerActivityScreen from "./ManagerActivityScreen";
+import { UserContext } from "../../context/UserContext";
 
 jest.mock("../../firebase/operations/GetSubordinates", () => {
   return jest.fn().mockImplementation(() => {
@@ -75,19 +68,5 @@ describe("ManagerActivityScreen", () => {
       screen.getByTestId("denied_accordion").children.length,
     ).toBeGreaterThan(0);
   });
-  // it("handles approving a pending PTO request", async () => {
-  //   render(
-  //     <NavigationContainer>
-  //       <UserContext.Provider value={mockAuthUser}>
-  //         <ManagerActivityScreen />
-  //       </UserContext.Provider>
-  //     </NavigationContainer>
-  //   );
-  //   await act(async () => {
-  //     await fireEvent.press(screen.getByTestId("pending_accordion"))
-  //     fireEvent.press(within(screen.getByTestId("pending_accordion")).getByText("2024-01-01"))
-  //   })
-  // })
-
   // TODO working out how to select a child of the accordion
 });

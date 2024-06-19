@@ -1,9 +1,9 @@
 import { cleanup, render } from "@testing-library/react-native";
 import React from "react";
-import AdminUserProfileScreen from "./AdminUserProfileScreen";
-import { UserContext } from "../../context/UserContext";
 import { User } from "firebase/auth";
 import { createMock } from "@golevelup/ts-jest";
+import AdminUserProfileScreen from "./AdminUserProfileScreen";
+import { UserContext } from "../../context/UserContext";
 
 // solution from https://github.com/APSL/react-native-keyboard-aware-scroll-view/issues/493#issuecomment-1023551697
 jest.mock("react-native-keyboard-aware-scroll-view", () => ({

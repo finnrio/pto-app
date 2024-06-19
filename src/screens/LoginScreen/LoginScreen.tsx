@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  Image,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-  Alert,
-} from "react-native";
+import { Text, TextInput, TouchableOpacity, View, Alert } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import SignInWithEmailAndPassword from "../../firebase/operations/SignInWithEmailAndPassword";

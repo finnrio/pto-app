@@ -1,7 +1,7 @@
 import { deleteDoc, doc, setDoc } from "firebase/firestore";
+import { createMock } from "@golevelup/ts-jest";
 import { FIRESTORE_DB } from "../firebaseConfig";
 import { AppUser } from "../../types/AppUser";
-import { createMock } from "@golevelup/ts-jest";
 import VerifyUser from "./VerifyUser";
 
 const { NODE_ENV } = process.env;
