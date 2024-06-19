@@ -47,8 +47,8 @@ describe("UserProfileScreen", () => {
   it("renders correctly", () => {
     const { toJSON } = render(
       <UserContext.Provider value={mockAuthUser}>
-        <UserProfileScreen/>
-      </UserContext.Provider>
+        <UserProfileScreen />
+      </UserContext.Provider>,
     );
     expect(toJSON()).toMatchSnapshot();
   });
@@ -69,7 +69,7 @@ describe("UserProfileScreen", () => {
     render(
       <UserContext.Provider value={mockAuthUser}>
         <UserProfileScreen />
-      </UserContext.Provider>
+      </UserContext.Provider>,
     );
     expect(screen.getByTestId("user_id_input").props.editable).toBeFalsy();
     expect(screen.getByTestId("role_input").props.editable).toBeFalsy();

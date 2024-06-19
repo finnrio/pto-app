@@ -3,10 +3,10 @@ import { AppUser } from "../../types/AppUser";
 import { FIRESTORE_DB } from "../firebaseConfig";
 
 export default async function GetUserData(id: string): Promise<AppUser> {
-  return getDoc(doc(FIRESTORE_DB, `${process.env.NODE_ENV}`, id))
-    .then((docRef) => {
-      if (docRef.exists()){ 
-        return <AppUser> {
+  return getDoc(doc(FIRESTORE_DB, `${process.env.NODE_ENV}`, id)).then(
+    (docRef) => {
+      if (docRef.exists()) {
+        return <AppUser>{
           uid: id,
           first_name: docRef.data().first_name,
           surname: docRef.data().surname,
@@ -17,8 +17,11 @@ export default async function GetUserData(id: string): Promise<AppUser> {
           pto_used: docRef.data().pto_used,
           pto_pending: docRef.data().pto_pending,
           user_color: docRef.data().user_color,
-        }
+        };
       }
-      throw new Error(`Error retrieving current user information: User not found`);
-    });
+      throw new Error(
+        `Error retrieving current user information: User not found`,
+      );
+    },
+  );
 }

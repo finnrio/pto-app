@@ -35,8 +35,8 @@ const endDate = "2024-01-02";
 const route = {
   params: {
     startDate,
-    endDate
-  }
+    endDate,
+  },
 };
 
 const spyAlert = jest.spyOn(Alert, "alert");
@@ -50,16 +50,16 @@ describe("PTORequestFormScreen", () => {
   it("renders correctly", () => {
     const { toJSON } = render(
       <UserContext.Provider value={mockAuthUser}>
-        <PTORequestFormScreen navigation={navigation} route={route}/>
-      </UserContext.Provider>
-      );
+        <PTORequestFormScreen navigation={navigation} route={route} />
+      </UserContext.Provider>,
+    );
     expect(toJSON()).toMatchSnapshot();
   });
   it("renders the PTO request form with passed in dates", async () => {
     render(
       <UserContext.Provider value={mockAuthUser}>
-        <PTORequestFormScreen navigation={navigation} route={route}/>
-      </UserContext.Provider>
+        <PTORequestFormScreen navigation={navigation} route={route} />
+      </UserContext.Provider>,
     );
     expect(screen.getByTestId("startDate_input").props.value).toBe(startDate);
     expect(screen.getByTestId("endDate_input").props.value).toBe(endDate);
@@ -71,49 +71,56 @@ describe("PTORequestFormScreen", () => {
     const purpose = "mock purpose";
     render(
       <UserContext.Provider value={mockAuthUser}>
-        <PTORequestFormScreen navigation={navigation} route={route}/>
-      </UserContext.Provider>
+        <PTORequestFormScreen navigation={navigation} route={route} />
+      </UserContext.Provider>,
     );
     fireEvent.changeText(screen.getByTestId("purpose_input"), purpose);
     fireEvent.press(screen.getByTestId("submit_btn"));
-    expect(require("../../firebase/operations/CreatePTORequest")).toHaveBeenCalledWith(
+    expect(
+      require("../../firebase/operations/CreatePTORequest"),
+    ).toHaveBeenCalledWith(
       "mock_uid",
       new Date(startDate),
       new Date(endDate),
-      purpose
+      purpose,
     );
     expect(navigation.navigate).toHaveBeenCalledWith("Calendar");
   });
   it("alerts the user if CreatePTOEvent fails", async () => {
     const purpose = "mock purpose";
-    require("../../firebase/operations/CreatePTORequest").mockImplementationOnce( () => {
-      return Promise.reject(new Error("mock error"));
-    });
+    require("../../firebase/operations/CreatePTORequest").mockImplementationOnce(
+      () => {
+        return Promise.reject(new Error("mock error"));
+      },
+    );
     render(
       <UserContext.Provider value={mockAuthUser}>
-        <PTORequestFormScreen navigation={navigation} route={route}/>
-      </UserContext.Provider>
+        <PTORequestFormScreen navigation={navigation} route={route} />
+      </UserContext.Provider>,
     );
     await act(async () => {
       await fireEvent.changeText(screen.getByTestId("purpose_input"), purpose);
       await fireEvent.press(screen.getByTestId("submit_btn"));
-    })
+    });
     expect(spyAlert).toHaveBeenCalledWith("Error", "mock error");
   });
   it("should alert the user when purpose is empty", async () => {
     render(
       <UserContext.Provider value={mockAuthUser}>
-        <PTORequestFormScreen navigation={navigation} route={route}/>
-      </UserContext.Provider>
+        <PTORequestFormScreen navigation={navigation} route={route} />
+      </UserContext.Provider>,
     );
     fireEvent.press(screen.getByTestId("submit_btn"));
-    expect(spyAlert).toHaveBeenCalledWith("Purpose is required", "Please enter a purpose for your PTO request");
+    expect(spyAlert).toHaveBeenCalledWith(
+      "Purpose is required",
+      "Please enter a purpose for your PTO request",
+    );
   });
   it("should return the user to the calendar screen on cancel", async () => {
     render(
       <UserContext.Provider value={mockAuthUser}>
-        <PTORequestFormScreen navigation={navigation} route={route}/>
-      </UserContext.Provider>
+        <PTORequestFormScreen navigation={navigation} route={route} />
+      </UserContext.Provider>,
     );
     fireEvent.press(screen.getByTestId("cancel_btn"));
     expect(navigation.navigate).toHaveBeenCalledWith("Calendar");

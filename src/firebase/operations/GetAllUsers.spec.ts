@@ -12,9 +12,21 @@ const testUser3DocRef = doc(FIRESTORE_DB, `${NODE_ENV}`, testUserId3);
 
 describe("GetAllUsers", () => {
   beforeAll(async () => {
-    await setDoc(testUser1DocRef, { first_name: "testUser", surname: "1", role: "User"});
-    await setDoc(testUser2DocRef, { first_name: "testUser", surname: "2", role: "User"});
-    await setDoc(testUser3DocRef, { first_name: "testUser", surname: "3", role: "NotUser"});
+    await setDoc(testUser1DocRef, {
+      first_name: "testUser",
+      surname: "1",
+      role: "User",
+    });
+    await setDoc(testUser2DocRef, {
+      first_name: "testUser",
+      surname: "2",
+      role: "User",
+    });
+    await setDoc(testUser3DocRef, {
+      first_name: "testUser",
+      surname: "3",
+      role: "NotUser",
+    });
   });
   afterAll(async () => {
     await deleteDoc(testUser1DocRef);
@@ -26,12 +38,10 @@ describe("GetAllUsers", () => {
       expect.arrayContaining([
         expect.objectContaining({ value: testUserId1 }),
         expect.objectContaining({ value: testUserId2 }),
-      ])
+      ]),
     );
     expect(await GetAllUsers()).not.toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({ value: testUserId3 }),
-      ])
+      expect.arrayContaining([expect.objectContaining({ value: testUserId3 })]),
     );
   });
 });

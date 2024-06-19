@@ -9,7 +9,7 @@ export default async function GetSubordinates(
     collection(FIRESTORE_DB, `${process.env.NODE_ENV}`),
     where("manager_id", "==", managerId),
   );
-  
+
   const querySnapshot = await getDocs(q);
 
   const res: any[] = [];

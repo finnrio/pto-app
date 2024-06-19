@@ -1,4 +1,11 @@
-import { addDoc, collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { FIRESTORE_DB } from "../firebaseConfig";
 import { faker } from "@faker-js/faker";
 

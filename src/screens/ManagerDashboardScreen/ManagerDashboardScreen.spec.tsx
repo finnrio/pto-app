@@ -1,4 +1,9 @@
-import { cleanup, fireEvent, render, screen } from "@testing-library/react-native";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+} from "@testing-library/react-native";
 import React from "react";
 import ManagerDashboardScreen from "./ManagerDashboardScreen";
 
@@ -29,7 +34,7 @@ describe("ManagerDashboardScreen", () => {
       expect(navigation.navigate).toHaveBeenCalledWith("Calendar");
     });
   });
-  describe("Team Actvity Button", () =>{
+  describe("Team Actvity Button", () => {
     it("takes the user to the 'Team Activity' screen", () => {
       render(<ManagerDashboardScreen navigation={navigation} />);
       fireEvent.press(screen.getByTestId("team_activity_btn"));

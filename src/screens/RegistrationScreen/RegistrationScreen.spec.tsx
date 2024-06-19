@@ -14,7 +14,6 @@ import { UserContext } from "../../context/UserContext";
 import { User } from "firebase/auth";
 import { createMock } from "@golevelup/ts-jest";
 
-
 // solution from https://github.com/APSL/react-native-keyboard-aware-scroll-view/issues/493#issuecomment-1023551697
 jest.mock("react-native-keyboard-aware-scroll-view", () => ({
   KeyboardAwareScrollView: (props: { children: React.ReactNode }) =>
@@ -61,7 +60,7 @@ describe("RegistrationScreen", () => {
     render(
       <UserContext.Provider value={mockAuthUser}>
         <RegistrationScreen />
-      </UserContext.Provider>
+      </UserContext.Provider>,
     );
     expect(screen.getByTestId("firstName_input").props.value).toBe("");
     expect(screen.getByTestId("surname_input").props.value).toBe("");
@@ -78,7 +77,7 @@ describe("RegistrationScreen", () => {
     render(
       <UserContext.Provider value={mockAuthUser}>
         <RegistrationScreen />
-      </UserContext.Provider>
+      </UserContext.Provider>,
     );
     fireEvent.changeText(screen.getByTestId("firstName_input"), "John");
     fireEvent.press(screen.getByTestId("reset_button"));
@@ -91,7 +90,7 @@ describe("RegistrationScreen", () => {
         render(
           <UserContext.Provider value={mockAuthUser}>
             <RegistrationScreen />
-          </UserContext.Provider>
+          </UserContext.Provider>,
         );
         fireEvent.changeText(screen.getByTestId("firstName_input"), "John");
         fireEvent.changeText(screen.getByTestId("surname_input"), "Doe");
@@ -140,7 +139,7 @@ describe("RegistrationScreen", () => {
         render(
           <UserContext.Provider value={mockAuthUser}>
             <RegistrationScreen />
-          </UserContext.Provider>
+          </UserContext.Provider>,
         );
         fireEvent.changeText(screen.getByTestId("firstName_input"), "John");
         fireEvent.changeText(screen.getByTestId("surname_input"), "Doe");
@@ -168,7 +167,7 @@ describe("RegistrationScreen", () => {
         render(
           <UserContext.Provider value={mockAuthUser}>
             <RegistrationScreen />
-          </UserContext.Provider>
+          </UserContext.Provider>,
         );
         fireEvent.changeText(screen.getByTestId("firstName_input"), "John");
         fireEvent.changeText(screen.getByTestId("surname_input"), "Doe");
@@ -202,7 +201,7 @@ describe("RegistrationScreen", () => {
           render(
             <UserContext.Provider value={mockAuthUser}>
               <RegistrationScreen />
-            </UserContext.Provider>
+            </UserContext.Provider>,
           );
           fireEvent.changeText(screen.getByTestId("firstName_input"), "John");
           fireEvent.changeText(screen.getByTestId("surname_input"), "Doe");
@@ -237,7 +236,7 @@ describe("RegistrationScreen", () => {
           render(
             <UserContext.Provider value={mockAuthUser}>
               <RegistrationScreen />
-            </UserContext.Provider>
+            </UserContext.Provider>,
           );
           fireEvent.changeText(screen.getByTestId("firstName_input"), "John");
           fireEvent.changeText(screen.getByTestId("surname_input"), "Doe");

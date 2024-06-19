@@ -17,7 +17,7 @@ module.exports = {
   ],
   moduleFileExtensions: ["tsx", "ts", "js", ...defaults.moduleFileExtensions],
   moduleNameMapper: {
-    '^firebase/auth$': '<rootDir>/__mocks__/firebase/auth.js',
+    "^firebase/auth$": "<rootDir>/__mocks__/firebase/auth.js",
   },
   transformIgnorePatterns: [
     "node_modules/(?!(jest-)?react-native|@react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|sentry-expo|native-base)",

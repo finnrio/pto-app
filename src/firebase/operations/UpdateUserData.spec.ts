@@ -1,5 +1,5 @@
 import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
-import { faker } from '@faker-js/faker';
+import { faker } from "@faker-js/faker";
 import UpdateUserData from "./UpdateUserData";
 import { FIRESTORE_DB } from "../firebaseConfig";
 import { AppUser } from "../../types/AppUser";
@@ -27,11 +27,17 @@ describe("UpdateUserData", () => {
     await deleteDoc(testUserDocRef);
   });
   it("should update the user's data", async () => {
-    expect((await getDoc(testUserDocRef)).data()).not.toEqual(randomTestUserData);
-    await UpdateUserData(randomTestUserData, testUserId)
-    await expect((await getDoc(testUserDocRef)).data()).toEqual(randomTestUserData);
+    expect((await getDoc(testUserDocRef)).data()).not.toEqual(
+      randomTestUserData,
+    );
+    await UpdateUserData(randomTestUserData, testUserId);
+    await expect((await getDoc(testUserDocRef)).data()).toEqual(
+      randomTestUserData,
+    );
   });
   it("should not throw an error if the user does not exist", async () => {
-    await expect(UpdateUserData(randomTestUserData, "nonExistentUser")).resolves.not.toThrow();
+    await expect(
+      UpdateUserData(randomTestUserData, "nonExistentUser"),
+    ).resolves.not.toThrow();
   });
 });

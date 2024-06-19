@@ -1,7 +1,4 @@
-import {
-  cleanup,
-  render,
-} from "@testing-library/react-native";
+import { cleanup, render } from "@testing-library/react-native";
 import React from "react";
 import AdminUserProfileScreen from "./AdminUserProfileScreen";
 import { UserContext } from "../../context/UserContext";
@@ -81,42 +78,42 @@ describe("AdminUserProfileScreen", () => {
     const { toJSON } = render(
       <UserContext.Provider value={mockAuthUser}>
         <AdminUserProfileScreen />
-      </UserContext.Provider>
+      </UserContext.Provider>,
     );
     expect(toJSON()).toMatchSnapshot();
   });
   // describe("when a user is selected", () => {
-    // it("renders the user's data", async () => {
-    //   // await act(async () => {
-    //     render(<AdminUserProfileScreen />);
-    //   // });
-    //   const hook = renderHook(() => AdminUserProfileScreen());
-    //   // await waitFor(() => expect(hook.result.current.allUsersList).toBe("User One"));
-    //   // await act(async () => {
-    //   //   await fireEvent.press(screen.getByText("Select a User"));
-    //   // });
-    //   // await act(async () => {
-    //   //   await fireEvent.press(await screen.getByText("User One"));
-    //   // });
-    //   // get the data in the selected user SelectList component
-    //   // await act(() => {
-    //     // fireEvent.press(screen.getByTestId("user_dropdown").props.value);
-    //   // });
-    //   console.log(screen.getByTestId("user_dropdown").props.value);
-    //   // await act(() => {
-    //   //   fireEvent.press(screen.getByTestId("User One"));
-    //   // });
-    //   // await screen.getByTestId("user_dropdown").props.setValue("User One");
-    //   // fireEvent.press(screen.getByTestId("User One"));
-    //   // await fireEvent(userDropdown, 'onValueChange', 'User One');
-    //   // console.log(screen.getByTestId("user_dropdown").children[0]);
-    //   // console.log(screen.getByTestId("user_dropdown").children[0]);
-    //   expect(screen.getByTestId("first_name_input")).toBeTruthy();
-    //   // expect(screen.getByTestId("surname_input")).toBeTruthy();
-    //   // expect(screen.getByTestId("email_input")).toBeTruthy();
-    //   // expect(screen.getByTestId("role_input")).toBeTruthy();
-    //   // expect(screen.getByTestId("update_button")).toBeTruthy();
-    //   // expect(screen.getByTestId("delete_button")).toBeTruthy();
-    // });
+  // it("renders the user's data", async () => {
+  //   // await act(async () => {
+  //     render(<AdminUserProfileScreen />);
+  //   // });
+  //   const hook = renderHook(() => AdminUserProfileScreen());
+  //   // await waitFor(() => expect(hook.result.current.allUsersList).toBe("User One"));
+  //   // await act(async () => {
+  //   //   await fireEvent.press(screen.getByText("Select a User"));
+  //   // });
+  //   // await act(async () => {
+  //   //   await fireEvent.press(await screen.getByText("User One"));
+  //   // });
+  //   // get the data in the selected user SelectList component
+  //   // await act(() => {
+  //     // fireEvent.press(screen.getByTestId("user_dropdown").props.value);
+  //   // });
+  //   console.log(screen.getByTestId("user_dropdown").props.value);
+  //   // await act(() => {
+  //   //   fireEvent.press(screen.getByTestId("User One"));
+  //   // });
+  //   // await screen.getByTestId("user_dropdown").props.setValue("User One");
+  //   // fireEvent.press(screen.getByTestId("User One"));
+  //   // await fireEvent(userDropdown, 'onValueChange', 'User One');
+  //   // console.log(screen.getByTestId("user_dropdown").children[0]);
+  //   // console.log(screen.getByTestId("user_dropdown").children[0]);
+  //   expect(screen.getByTestId("first_name_input")).toBeTruthy();
+  //   // expect(screen.getByTestId("surname_input")).toBeTruthy();
+  //   // expect(screen.getByTestId("email_input")).toBeTruthy();
+  //   // expect(screen.getByTestId("role_input")).toBeTruthy();
+  //   // expect(screen.getByTestId("update_button")).toBeTruthy();
+  //   // expect(screen.getByTestId("delete_button")).toBeTruthy();
+  // });
   // });
 });

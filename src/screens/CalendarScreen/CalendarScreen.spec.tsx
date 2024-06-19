@@ -31,8 +31,8 @@ describe("CalendarScreen", () => {
         <UserContext.Provider value={mockAuthUser}>
           <CalendarScreen navigation={navigation} />
         </UserContext.Provider>
-      </NavigationContainer>
-    )
+      </NavigationContainer>,
+    );
     expect(toJSON()).toMatchSnapshot();
   });
 });

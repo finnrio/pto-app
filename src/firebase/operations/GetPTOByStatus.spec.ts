@@ -16,6 +16,8 @@ describe("GetPTOByStatus", () => {
     await deleteDoc(testPtoDocRef);
   });
   it("should return an array of PTO requests with the specified status", async () => {
-    expect(await GetPTOByStatus(testUserId, "Pending")).toEqual([{ id: testPTOId, status: "Pending" }]);
+    expect(await GetPTOByStatus(testUserId, "Pending")).toEqual([
+      { id: testPTOId, status: "Pending" },
+    ]);
   });
 });

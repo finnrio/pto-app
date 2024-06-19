@@ -20,6 +20,8 @@ describe("VerifyUser", () => {
     expect(await VerifyUser(testUserId)).toBe(true);
   });
   it("should throw an error if the user does not exist", async () => {
-    await expect(VerifyUser("nonExistentUser")).rejects.toThrow("User not found");
+    await expect(VerifyUser("nonExistentUser")).rejects.toThrow(
+      "User not found",
+    );
   });
 });

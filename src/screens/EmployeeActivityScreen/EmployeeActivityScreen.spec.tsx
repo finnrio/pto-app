@@ -19,7 +19,7 @@ describe("EmployeeActivityScreen", () => {
         <UserContext.Provider value={mockAuthUser}>
           <EmployeeActivityScreen />
         </UserContext.Provider>
-      </NavigationContainer>
+      </NavigationContainer>,
     );
     expect(toJSON()).toMatchSnapshot();
   });

@@ -53,16 +53,18 @@ export default function CalendarScreen({ navigation: { navigate } }: any) {
   }
 
   function userRender() {
-    if (!currentUser) return ;
-    GetPTO(currentUser.uid).then(async (events: any) => {
-      const color = (await GetUserData(currentUser.uid)).user_color;
-      setMarkedDates(
-        GetDottedDatesFromEvents(events, {
-          key: currentUser.uid,
-          color,
-        }),
-      );
-    }).then(() => setLoading(false));
+    if (!currentUser) return;
+    GetPTO(currentUser.uid)
+      .then(async (events: any) => {
+        const color = (await GetUserData(currentUser.uid)).user_color;
+        setMarkedDates(
+          GetDottedDatesFromEvents(events, {
+            key: currentUser.uid,
+            color,
+          }),
+        );
+      })
+      .then(() => setLoading(false));
   }
 
   function render() {

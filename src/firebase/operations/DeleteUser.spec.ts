@@ -14,7 +14,9 @@ describe("DeleteUser", () => {
     await deleteDoc(testUserDocRef);
   });
   it("should delete the user", async () => {
-    expect((await getDoc(testUserDocRef)).data()).toStrictEqual({ first_name: "toBeDeleted" });
+    expect((await getDoc(testUserDocRef)).data()).toStrictEqual({
+      first_name: "toBeDeleted",
+    });
     await DeleteUser(testUserId);
     expect((await getDoc(testUserDocRef)).data()).toBeUndefined();
   });

@@ -10,14 +10,13 @@ export default async function GetPTO(userId: string): Promise<any[]> {
     userId,
     "pto",
   );
-  await getDocs(ptoCollection)
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) =>
-        returnData.push({
-          ...doc.data(),
-          id: doc.id,
-        }),
-      );
-    })
+  await getDocs(ptoCollection).then((querySnapshot) => {
+    querySnapshot.forEach((doc) =>
+      returnData.push({
+        ...doc.data(),
+        id: doc.id,
+      }),
+    );
+  });
   return returnData;
 }

@@ -13,7 +13,7 @@ export default async function GetAllManagers(): Promise<any[]> {
   querySnapshot.forEach((manager) => {
     res.push({
       value: manager.id,
-      label: `${manager.data().first_name} ${manager.data().surname}`
+      label: `${manager.data().first_name} ${manager.data().surname}`,
     });
   });
   return res;
