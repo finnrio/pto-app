@@ -3,11 +3,10 @@ import React, { useContext, useState } from "react";
 import { CalendarList } from "react-native-calendars";
 import { ActivityIndicator } from "react-native-paper";
 import { useFocusEffect } from "@react-navigation/native";
-import GetCurrentUserData from "../../firebase/firestore/GetCurrentUserData";
-import { GetPTOEventsByUserID } from "../../firebase/firestore/GetPTOEvent";
-import GetSubordinates from "../../firebase/firestore/GetSubordinates";
+import GetUserData from "../../firebase/operations/GetUserData";
+import GetPTO from "../../firebase/operations/GetPTO";
+import GetSubordinates from "../../firebase/operations/GetSubordinates";
 import { UserContext } from "../../context/UserContext";
-import GetUsersProfileColor from "../../firebase/firestore/GetUsersProfileColor";
 import { GetDottedDatesFromEvents, MergeEvents } from "./helper";
 
 export default function CalendarScreen({ navigation: { navigate } }: any) {
@@ -20,8 +19,8 @@ export default function CalendarScreen({ navigation: { navigate } }: any) {
     let mergedEvents: any = {};
     // Get the current user's PTO events
     if (!currentUser) return;
-    GetPTOEventsByUserID(currentUser.uid).then(async (events) => {
-      const color = await GetUsersProfileColor(currentUser.uid);
+    GetPTO(currentUser.uid).then(async (events: any) => {
+      const color = (await GetUserData(currentUser.uid)).user_color;
       mergedEvents = GetDottedDatesFromEvents(events, {
         key: currentUser.uid,
         color,
@@ -33,9 +32,9 @@ export default function CalendarScreen({ navigation: { navigate } }: any) {
     GetSubordinates(currentUser.uid)
       .then((subordinates) => {
         const promises = subordinates.map(async (subordinate: any) => {
-          const color = await GetUsersProfileColor(subordinate.id);
+          const color = (await GetUserData(subordinate.id)).user_color;
           const subordinateDotKey = { key: subordinate.id, color };
-          return GetPTOEventsByUserID(subordinate.id).then((events) => {
+          return GetPTO(subordinate.id).then((events: any) => {
             mergedEvents = MergeEvents(
               mergedEvents,
               GetDottedDatesFromEvents(events, subordinateDotKey),
@@ -55,23 +54,23 @@ export default function CalendarScreen({ navigation: { navigate } }: any) {
 
   function userRender() {
     if (!currentUser) return;
-    GetPTOEventsByUserID(currentUser.uid).then(async (events) => {
-      const color = await GetUsersProfileColor(currentUser.uid!);
-      setMarkedDates(
-        GetDottedDatesFromEvents(events, {
-          key: currentUser.uid,
-          color,
-          selected: true,
-          selectedColor: color,
-        }),
-      );
-    });
+    GetPTO(currentUser.uid)
+      .then(async (events: any) => {
+        const color = (await GetUserData(currentUser.uid)).user_color;
+        setMarkedDates(
+          GetDottedDatesFromEvents(events, {
+            key: currentUser.uid,
+            color,
+          }),
+        );
+      })
+      .then(() => setLoading(false));
   }
 
   function render() {
     setLoading(true);
     setStartDate("");
-    GetCurrentUserData().then(async (data) => {
+    GetUserData(currentUser!.uid).then(async (data) => {
       if (data.role === "Manager") {
         managerRender();
       } else {

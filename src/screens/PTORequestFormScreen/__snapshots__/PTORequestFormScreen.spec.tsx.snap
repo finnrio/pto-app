@@ -1,0 +1,226 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PTORequestFormScreen renders correctly 1`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+      "flex": 1,
+    }
+  }
+>
+  <Text
+    style={
+      {
+        "marginBottom": 10,
+        "marginLeft": 30,
+        "marginRight": 30,
+        "marginTop": 10,
+        "paddingLeft": 16,
+      }
+    }
+  >
+    Start Date
+  </Text>
+  <TextInput
+    editable={false}
+    placeholder="Start Date of PTO Request"
+    placeholderTextColor="#aaaaaa"
+    style={
+      {
+        "backgroundColor": "white",
+        "borderRadius": 5,
+        "height": 48,
+        "marginBottom": 10,
+        "marginLeft": 30,
+        "marginRight": 30,
+        "marginTop": 10,
+        "overflow": "hidden",
+        "paddingLeft": 16,
+      }
+    }
+    testID="startDate_input"
+    underlineColorAndroid="transparent"
+    value="2024-01-01"
+  />
+  <Text
+    style={
+      {
+        "marginBottom": 10,
+        "marginLeft": 30,
+        "marginRight": 30,
+        "marginTop": 10,
+        "paddingLeft": 16,
+      }
+    }
+  >
+    End Date
+  </Text>
+  <TextInput
+    editable={false}
+    placeholder="End Date of PTO Request"
+    placeholderTextColor="#aaaaaa"
+    style={
+      {
+        "backgroundColor": "white",
+        "borderRadius": 5,
+        "height": 48,
+        "marginBottom": 10,
+        "marginLeft": 30,
+        "marginRight": 30,
+        "marginTop": 10,
+        "overflow": "hidden",
+        "paddingLeft": 16,
+      }
+    }
+    testID="endDate_input"
+    underlineColorAndroid="transparent"
+    value="2024-01-02"
+  />
+  <Text
+    style={
+      {
+        "marginBottom": 10,
+        "marginLeft": 30,
+        "marginRight": 30,
+        "marginTop": 10,
+        "paddingLeft": 16,
+      }
+    }
+  >
+    Purpose
+  </Text>
+  <TextInput
+    autoCapitalize="none"
+    onChangeText={[Function]}
+    placeholder="Purpose of PTO Request"
+    placeholderTextColor="#aaaaaa"
+    style={
+      {
+        "backgroundColor": "white",
+        "borderRadius": 5,
+        "height": 48,
+        "marginBottom": 10,
+        "marginLeft": 30,
+        "marginRight": 30,
+        "marginTop": 10,
+        "overflow": "hidden",
+        "paddingLeft": 16,
+      }
+    }
+    testID="purpose_input"
+    underlineColorAndroid="transparent"
+    value=""
+  />
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#788eec",
+        "borderRadius": 5,
+        "height": 48,
+        "justifyContent": "center",
+        "marginLeft": 30,
+        "marginRight": 30,
+        "marginTop": 20,
+        "opacity": 1,
+      }
+    }
+    testID="submit_btn"
+  >
+    <Text
+      style={
+        {
+          "color": "white",
+          "fontSize": 16,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      Submit PTO Request
+    </Text>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#788eec",
+        "borderRadius": 5,
+        "height": 48,
+        "justifyContent": "center",
+        "marginLeft": 30,
+        "marginRight": 30,
+        "marginTop": 20,
+        "opacity": 1,
+      }
+    }
+    testID="cancel_btn"
+  >
+    <Text
+      style={
+        {
+          "color": "white",
+          "fontSize": 16,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      Cancel PTO Request
+    </Text>
+  </View>
+</View>
+`;

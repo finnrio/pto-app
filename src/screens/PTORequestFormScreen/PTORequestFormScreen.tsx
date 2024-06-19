@@ -1,19 +1,23 @@
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./styles";
-import CreatePTORequest from "../../firebase/firestore/CreatePTORequest";
+import CreatePTORequest from "../../firebase/operations/CreatePTORequest";
+import { UserContext } from "../../context/UserContext";
 
 export default function PTORequestFormScreen({ route, navigation }: any) {
+  const currentUser = useContext(UserContext);
   const [purpose, setPurpose] = useState("");
 
   function HandleCreatePTORequest() {
     CreatePTORequest(
+      currentUser!.uid,
       new Date(route.params.startDate),
       new Date(route.params.endDate),
       purpose,
     )
-      .then(() => {
+      .then((uid) => {
+        console.log("PTO request created: ", uid);
         Alert.alert(
           "PTO request submitted",
           "Your PTO request has been sent to you manager for review",

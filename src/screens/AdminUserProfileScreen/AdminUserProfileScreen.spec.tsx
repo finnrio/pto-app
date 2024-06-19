@@ -1,15 +1,9 @@
-import {
-  act,
-  cleanup,
-  fireEvent,
-  render,
-  renderHook,
-  screen,
-  waitFor,
-} from "@testing-library/react-native";
+import { cleanup, render } from "@testing-library/react-native";
 import React from "react";
-import { Alert } from "react-native";
+import { User } from "firebase/auth";
+import { createMock } from "@golevelup/ts-jest";
 import AdminUserProfileScreen from "./AdminUserProfileScreen";
+import { UserContext } from "../../context/UserContext";
 
 // solution from https://github.com/APSL/react-native-keyboard-aware-scroll-view/issues/493#issuecomment-1023551697
 jest.mock("react-native-keyboard-aware-scroll-view", () => ({
@@ -18,7 +12,7 @@ jest.mock("react-native-keyboard-aware-scroll-view", () => ({
 }));
 
 // mock the GetAllUsers function
-jest.mock("../../firebase/firestore/GetAllUsers", () => {
+jest.mock("../../firebase/operations/GetAllUsers", () => {
   return jest.fn(() => {
     return Promise.resolve([
       {
@@ -40,7 +34,7 @@ jest.mock("../../firebase/firestore/GetAllUsers", () => {
 });
 
 // mock the GetAllManagers function
-jest.mock("../../firebase/firestore/GetAllManagers", () => {
+jest.mock("../../firebase/operations/GetAllManagers", () => {
   return jest.fn(() => {
     return Promise.resolve([
       {
@@ -61,6 +55,19 @@ jest.mock("../../firebase/firestore/GetAllManagers", () => {
   });
 });
 
+jest.mock("../../firebase/operations/GetUserData", () => {
+  return jest.fn(() => {
+    return Promise.resolve({
+      first_name: "mock_first_name",
+      surname: "mock_surname",
+      email: "mock_email",
+      role: "mock_role",
+    });
+  });
+});
+
+const mockAuthUser: User = createMock<User>({ uid: "mock_uid" });
+
 describe("AdminUserProfileScreen", () => {
   afterEach(() => {
     cleanup();
@@ -68,41 +75,45 @@ describe("AdminUserProfileScreen", () => {
   });
 
   it("renders correctly", () => {
-    const { toJSON } = render(<AdminUserProfileScreen />);
+    const { toJSON } = render(
+      <UserContext.Provider value={mockAuthUser}>
+        <AdminUserProfileScreen />
+      </UserContext.Provider>,
+    );
     expect(toJSON()).toMatchSnapshot();
   });
-  describe("when a user is selected", () => {
-    // it("renders the user's data", async () => {
-    //   // await act(async () => {
-    //     render(<AdminUserProfileScreen />);
-    //   // });
-    //   const hook = renderHook(() => AdminUserProfileScreen());
-    //   // await waitFor(() => expect(hook.result.current.allUsersList).toBe("User One"));
-    //   // await act(async () => {
-    //   //   await fireEvent.press(screen.getByText("Select a User"));
-    //   // });
-    //   // await act(async () => {
-    //   //   await fireEvent.press(await screen.getByText("User One"));
-    //   // });
-    //   // get the data in the selected user SelectList component
-    //   // await act(() => {
-    //     // fireEvent.press(screen.getByTestId("user_dropdown").props.value);
-    //   // });
-    //   console.log(screen.getByTestId("user_dropdown").props.value);
-    //   // await act(() => {
-    //   //   fireEvent.press(screen.getByTestId("User One"));
-    //   // });
-    //   // await screen.getByTestId("user_dropdown").props.setValue("User One");
-    //   // fireEvent.press(screen.getByTestId("User One"));
-    //   // await fireEvent(userDropdown, 'onValueChange', 'User One');
-    //   // console.log(screen.getByTestId("user_dropdown").children[0]);
-    //   // console.log(screen.getByTestId("user_dropdown").children[0]);
-    //   expect(screen.getByTestId("first_name_input")).toBeTruthy();
-    //   // expect(screen.getByTestId("surname_input")).toBeTruthy();
-    //   // expect(screen.getByTestId("email_input")).toBeTruthy();
-    //   // expect(screen.getByTestId("role_input")).toBeTruthy();
-    //   // expect(screen.getByTestId("update_button")).toBeTruthy();
-    //   // expect(screen.getByTestId("delete_button")).toBeTruthy();
-    // });
-  });
+  // describe("when a user is selected", () => {
+  // it("renders the user's data", async () => {
+  //   // await act(async () => {
+  //     render(<AdminUserProfileScreen />);
+  //   // });
+  //   const hook = renderHook(() => AdminUserProfileScreen());
+  //   // await waitFor(() => expect(hook.result.current.allUsersList).toBe("User One"));
+  //   // await act(async () => {
+  //   //   await fireEvent.press(screen.getByText("Select a User"));
+  //   // });
+  //   // await act(async () => {
+  //   //   await fireEvent.press(await screen.getByText("User One"));
+  //   // });
+  //   // get the data in the selected user SelectList component
+  //   // await act(() => {
+  //     // fireEvent.press(screen.getByTestId("user_dropdown").props.value);
+  //   // });
+  //   console.log(screen.getByTestId("user_dropdown").props.value);
+  //   // await act(() => {
+  //   //   fireEvent.press(screen.getByTestId("User One"));
+  //   // });
+  //   // await screen.getByTestId("user_dropdown").props.setValue("User One");
+  //   // fireEvent.press(screen.getByTestId("User One"));
+  //   // await fireEvent(userDropdown, 'onValueChange', 'User One');
+  //   // console.log(screen.getByTestId("user_dropdown").children[0]);
+  //   // console.log(screen.getByTestId("user_dropdown").children[0]);
+  //   expect(screen.getByTestId("first_name_input")).toBeTruthy();
+  //   // expect(screen.getByTestId("surname_input")).toBeTruthy();
+  //   // expect(screen.getByTestId("email_input")).toBeTruthy();
+  //   // expect(screen.getByTestId("role_input")).toBeTruthy();
+  //   // expect(screen.getByTestId("update_button")).toBeTruthy();
+  //   // expect(screen.getByTestId("delete_button")).toBeTruthy();
+  // });
+  // });
 });

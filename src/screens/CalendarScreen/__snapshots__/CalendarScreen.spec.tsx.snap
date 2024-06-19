@@ -6,269 +6,204 @@ exports[`CalendarScreen renders correctly 1`] = `
     {
       "alignItems": "center",
       "flex": 1,
+      "justifyContent": "center",
     }
   }
 >
   <View
-    style={
+    accessibilityRole="progressbar"
+    accessibilityState={
       {
-        "flex": undefined,
+        "busy": true,
       }
     }
+    accessible={true}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "justifyContent": "center",
+        },
+        undefined,
+      ]
+    }
   >
-    <RCTScrollView
-      data={
-        [
-          "2020-03-24T16:44:34.749Z",
-          "2020-04-24T15:44:34.749Z",
-          "2020-05-24T15:44:34.749Z",
-          "2020-06-24T15:44:34.749Z",
-          "2020-07-24T15:44:34.749Z",
-          "2020-08-24T15:44:34.749Z",
-          "2020-09-24T15:44:34.749Z",
-          "2020-10-24T15:44:34.749Z",
-          "2020-11-24T16:44:34.749Z",
-          "2020-12-24T16:44:34.749Z",
-          "2021-01-24T16:44:34.749Z",
-          "2021-02-24T16:44:34.749Z",
-          "2021-03-24T16:44:34.749Z",
-          "2021-04-24T15:44:34.749Z",
-          "2021-05-24T15:44:34.749Z",
-          "2021-06-24T15:44:34.749Z",
-          "2021-07-24T15:44:34.749Z",
-          "2021-08-24T15:44:34.749Z",
-          "2021-09-24T15:44:34.749Z",
-          "2021-10-24T15:44:34.749Z",
-          "2021-11-24T16:44:34.749Z",
-          "2021-12-24T16:44:34.749Z",
-          "2022-01-24T16:44:34.749Z",
-          "2022-02-24T16:44:34.749Z",
-          "2022-03-24T16:44:34.749Z",
-          "2022-04-24T15:44:34.749Z",
-          "2022-05-24T15:44:34.749Z",
-          "2022-06-24T15:44:34.749Z",
-          "2022-07-24T15:44:34.749Z",
-          "2022-08-24T15:44:34.749Z",
-          "2022-09-24T15:44:34.749Z",
-          "2022-10-24T15:44:34.749Z",
-          "2022-11-24T16:44:34.749Z",
-          "2022-12-24T16:44:34.749Z",
-          "2023-01-24T16:44:34.749Z",
-          "2023-02-24T16:44:34.749Z",
-          "2023-03-24T16:44:34.749Z",
-          "2023-04-24T15:44:34.749Z",
-          "2023-05-24T15:44:34.749Z",
-          "2023-06-24T15:44:34.749Z",
-          "2023-07-24T15:44:34.749Z",
-          "2023-08-24T15:44:34.749Z",
-          "2023-09-24T15:44:34.749Z",
-          "2023-10-24T15:44:34.749Z",
-          "2023-11-24T16:44:34.749Z",
-          "2023-12-24T16:44:34.749Z",
-          "2024-01-24T16:44:34.749Z",
-          "2024-02-24T16:44:34.749Z",
-          "2024-03-24T16:44:34.749Z",
-          "2024-04-24T15:44:34.749Z",
-          "2024-05-24T15:44:34.749Z",
-          "2024-06-24T15:44:34.749Z",
-          "2024-07-24T15:44:34.749Z",
-          "2024-08-24T15:44:34.749Z",
-          "2024-09-24T15:44:34.749Z",
-          "2024-10-24T15:44:34.749Z",
-          "2024-11-24T16:44:34.749Z",
-          "2024-12-24T16:44:34.749Z",
-          "2025-01-24T16:44:34.749Z",
-          "2025-02-24T16:44:34.749Z",
-          "2025-03-24T16:44:34.749Z",
-          "2025-04-24T15:44:34.749Z",
-          "2025-05-24T15:44:34.749Z",
-          "2025-06-24T15:44:34.749Z",
-          "2025-07-24T15:44:34.749Z",
-          "2025-08-24T15:44:34.749Z",
-          "2025-09-24T15:44:34.749Z",
-          "2025-10-24T15:44:34.749Z",
-          "2025-11-24T16:44:34.749Z",
-          "2025-12-24T16:44:34.749Z",
-          "2026-01-24T16:44:34.749Z",
-          "2026-02-24T16:44:34.749Z",
-          "2026-03-24T16:44:34.749Z",
-          "2026-04-24T15:44:34.749Z",
-          "2026-05-24T15:44:34.749Z",
-          "2026-06-24T15:44:34.749Z",
-          "2026-07-24T15:44:34.749Z",
-          "2026-08-24T15:44:34.749Z",
-          "2026-09-24T15:44:34.749Z",
-          "2026-10-24T15:44:34.749Z",
-          "2026-11-24T16:44:34.749Z",
-          "2026-12-24T16:44:34.749Z",
-          "2027-01-24T16:44:34.749Z",
-          "2027-02-24T16:44:34.749Z",
-          "2027-03-24T16:44:34.749Z",
-          "2027-04-24T15:44:34.749Z",
-          "2027-05-24T15:44:34.749Z",
-          "2027-06-24T15:44:34.749Z",
-          "2027-07-24T15:44:34.749Z",
-          "2027-08-24T15:44:34.749Z",
-          "2027-09-24T15:44:34.749Z",
-          "2027-10-24T15:44:34.749Z",
-          "2027-11-24T16:44:34.749Z",
-          "2027-12-24T16:44:34.749Z",
-          "2028-01-24T16:44:34.749Z",
-          "2028-02-24T16:44:34.749Z",
-          "2028-03-24T16:44:34.749Z",
-          "2028-04-24T15:44:34.749Z",
-          "2028-05-24T15:44:34.749Z",
-          "2028-06-24T15:44:34.749Z",
-          "2028-07-24T15:44:34.749Z",
-        ]
-      }
-      getItem={[Function]}
-      getItemCount={[Function]}
-      getItemLayout={[Function]}
-      horizontal={false}
-      initialNumToRender={3}
-      initialScrollIndex={50}
-      keyExtractor={[Function]}
-      nestedScrollEnabled={true}
-      onContentSizeChange={[Function]}
-      onLayout={[Function]}
-      onMomentumScrollBegin={[Function]}
-      onMomentumScrollEnd={[Function]}
-      onScroll={[Function]}
-      onScrollBeginDrag={[Function]}
-      onScrollEndDrag={[Function]}
-      removeClippedSubviews={false}
-      renderItem={[Function]}
-      scrollEnabled={true}
-      scrollEventThrottle={0.0001}
-      scrollsToTop={false}
-      showsHorizontalScrollIndicator={false}
-      showsVerticalScrollIndicator={false}
-      stickyHeaderIndices={[]}
+    <View
+      collapsable={false}
       style={
-        [
-          {
-            "backgroundColor": "white",
-          },
-          undefined,
-        ]
-      }
-      testID="undefined.list"
-      viewabilityConfigCallbackPairs={
-        [
-          {
-            "onViewableItemsChanged": [Function],
-            "viewabilityConfig": {
-              "viewAreaCoveragePercentThreshold": 20,
-            },
-          },
-        ]
+        {
+          "height": 24,
+          "opacity": 1,
+          "width": 24,
+        }
       }
     >
-      <View>
+      <View
+        collapsable={false}
+        style={
+          {
+            "alignItems": "center",
+            "bottom": 0,
+            "justifyContent": "center",
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      >
         <View
+          collapsable={false}
           style={
             {
-              "height": 18000,
+              "height": 24,
+              "transform": [
+                {
+                  "rotate": "45deg",
+                },
+              ],
+              "width": 24,
             }
           }
-        />
-        <View
-          onFocusCapture={[Function]}
-          style={null}
         >
-          <Text
+          <View
+            collapsable={false}
             style={
-              [
-                [
-                  {
-                    "minHeight": 360,
-                    "width": 750,
-                  },
-                  {
-                    "paddingLeft": 15,
-                    "paddingRight": 15,
-                  },
-                  undefined,
-                ],
-                {
-                  "color": "#2d4150",
-                  "fontSize": 20,
-                  "fontWeight": "200",
-                },
-              ]
+              {
+                "height": 12,
+                "overflow": "hidden",
+                "width": 24,
+              }
             }
           >
-            2024-05-24
-          </Text>
-        </View>
-        <View
-          onFocusCapture={[Function]}
-          style={null}
-        >
-          <Text
-            style={
-              [
-                [
-                  {
-                    "minHeight": 360,
-                    "width": 750,
-                  },
-                  {
-                    "paddingLeft": 15,
-                    "paddingRight": 15,
-                  },
-                  undefined,
-                ],
+            <View
+              collapsable={false}
+              style={
                 {
-                  "color": "#2d4150",
-                  "fontSize": 20,
-                  "fontWeight": "200",
-                },
-              ]
-            }
-          >
-            2024-06-24
-          </Text>
-        </View>
-        <View
-          onFocusCapture={[Function]}
-          style={null}
-        >
-          <Text
-            style={
-              [
-                [
+                  "height": 24,
+                  "transform": [
+                    {
+                      "translateY": 0,
+                    },
+                    {
+                      "rotate": "-165deg",
+                    },
+                  ],
+                  "width": 24,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                style={
                   {
-                    "minHeight": 360,
-                    "width": 750,
-                  },
-                  {
-                    "paddingLeft": 15,
-                    "paddingRight": 15,
-                  },
-                  undefined,
-                ],
-                {
-                  "color": "#2d4150",
-                  "fontSize": 20,
-                  "fontWeight": "200",
-                },
-              ]
-            }
-          >
-            2024-07-24
-          </Text>
+                    "height": 12,
+                    "overflow": "hidden",
+                    "width": 24,
+                  }
+                }
+              >
+                <View
+                  collapsable={false}
+                  style={
+                    {
+                      "borderColor": "rgba(103, 80, 164, 1)",
+                      "borderRadius": 12,
+                      "borderWidth": 2.4,
+                      "height": 24,
+                      "width": 24,
+                    }
+                  }
+                />
+              </View>
+            </View>
+          </View>
         </View>
-        <View
-          style={
-            {
-              "height": 17280,
-            }
-          }
-        />
       </View>
-    </RCTScrollView>
+      <View
+        collapsable={false}
+        style={
+          {
+            "alignItems": "center",
+            "bottom": 0,
+            "justifyContent": "center",
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      >
+        <View
+          collapsable={false}
+          style={
+            {
+              "height": 24,
+              "transform": [
+                {
+                  "rotate": "45deg",
+                },
+              ],
+              "width": 24,
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "height": 12,
+                "overflow": "hidden",
+                "top": 12,
+                "width": 24,
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "height": 24,
+                  "transform": [
+                    {
+                      "translateY": -12,
+                    },
+                    {
+                      "rotate": "345deg",
+                    },
+                  ],
+                  "width": 24,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                style={
+                  {
+                    "height": 12,
+                    "overflow": "hidden",
+                    "width": 24,
+                  }
+                }
+              >
+                <View
+                  collapsable={false}
+                  style={
+                    {
+                      "borderColor": "rgba(103, 80, 164, 1)",
+                      "borderRadius": 12,
+                      "borderWidth": 2.4,
+                      "height": 24,
+                      "width": 24,
+                    }
+                  }
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
   </View>
 </View>
 `;

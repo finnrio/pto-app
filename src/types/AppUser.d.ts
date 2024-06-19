@@ -5,6 +5,8 @@ export declare type AppUser = {
   email: string;
   role: string;
   manager_id?: string;
-  pto_allowance: string;
-  pto_used: string;
+  pto_allowance: int;
+  pto_used: int;
+  pto_pending: int;
+  user_color: string;
 };

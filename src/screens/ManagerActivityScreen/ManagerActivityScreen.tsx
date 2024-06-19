@@ -3,12 +3,12 @@ import React, { useCallback, useContext, useState } from "react";
 import { List } from "react-native-paper";
 import { useFocusEffect } from "@react-navigation/native";
 import styles from "./styles";
-import GetUserDataById from "../../firebase/firestore/GetUserDataById";
-import GetSubordinates from "../../firebase/firestore/GetSubordinates";
-import GetPTOByStatus from "../../firebase/firestore/pto/GetPTOByStatus";
+import GetUserData from "../../firebase/operations/GetUserData";
+import GetSubordinates from "../../firebase/operations/GetSubordinates";
+import GetPTOByStatus from "../../firebase/operations/GetPTOByStatus";
 import { UserContext } from "../../context/UserContext";
-import ApprovePTO from "../../firebase/firestore/pto/ApprovePTO";
-import DenyPTO from "../../firebase/firestore/pto/DenyPTO";
+import ApprovePTO from "../../firebase/operations/ApprovePTO";
+import DenyPTO from "../../firebase/operations/DenyPTO";
 
 export default function ManagerActivityScreen() {
   const currentUser = useContext(UserContext);
@@ -44,7 +44,7 @@ export default function ManagerActivityScreen() {
 
   const pendingAlert = useCallback(
     async (data: any) => {
-      const user = await GetUserDataById(data.user_id);
+      const user = await GetUserData(data.user_id);
       Alert.alert(
         "PTO Request",
         `Employee: ${user.first_name} ${user.surname}\nReason: ${data.reason}\nStarting: ${data.start_date}\nEnding: ${data.end_date}\nHours Requested: ${data.hours}`,
@@ -69,7 +69,7 @@ export default function ManagerActivityScreen() {
   );
 
   const queryAlert = useCallback(async (data: any) => {
-    const user = await GetUserDataById(data.user_id);
+    const user = await GetUserData(data.user_id);
     Alert.alert(
       "PTO Request",
       `Employee: ${user.first_name} ${user.surname}\nReason: ${data.reason}\nStarting: ${data.start_date}\nEnding: ${data.end_date}\nHours Requested: ${data.hours}`,
@@ -129,13 +129,13 @@ export default function ManagerActivityScreen() {
   return (
     <View style={styles.container}>
       <List.AccordionGroup>
-        <List.Accordion title="Pending" id="1">
+        <List.Accordion title="Pending" id="1" testID="pending_accordion">
           {pendingPTO}
         </List.Accordion>
-        <List.Accordion title="Approved" id="2">
+        <List.Accordion title="Approved" id="2" testID="approved_accordion">
           {approvedPTO}
         </List.Accordion>
-        <List.Accordion title="Denied" id="3">
+        <List.Accordion title="Denied" id="3" testID="denied_accordion">
           {deniedPTO}
         </List.Accordion>
       </List.AccordionGroup>

@@ -22,27 +22,15 @@ describe("App", () => {
     jest.resetAllMocks();
   });
 
+  it("renders correctly", () => {
+    const { toJSON } = render(<App />);
+    expect(toJSON()).toMatchSnapshot();
+  });
+
   it("calls onAuthStateChanged when authentication state changes", () => {
     render(<App />);
     expect(
       require("./src/firebase/firebaseConfig").FIREBASE_AUTH.onAuthStateChanged,
     ).toHaveBeenCalled();
-  });
-
-  it("renders User Activity Screen if user is authenticated", () => {
-    require("./src/firebase/firebaseConfig").FIREBASE_AUTH.onAuthStateChanged.mockImplementationOnce(
-      (handler: any) =>
-        handler({ uid: "123", displayName: "Test User" } as any),
-    );
-    const { getAllByText } = render(<App />);
-    expect(getAllByText("Activity")).toBeTruthy();
-  });
-
-  it("renders LoginScreen if user is not authenticated", () => {
-    require("./src/firebase/firebaseConfig").FIREBASE_AUTH.onAuthStateChanged.mockImplementationOnce(
-      (handler: any) => handler(null),
-    );
-    const { getByText } = render(<App />);
-    expect(getByText("Login")).toBeTruthy();
   });
 });

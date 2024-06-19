@@ -1,4 +1,11 @@
+# Development
+
+Yarn
+expo cli
+
 # Testing
+
+concurrency set to 1 so firebase integration tests with emulators do not conflict
 
 ## Firebase emulators
 

@@ -1,14 +1,16 @@
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SegmentedButtons } from "react-native-paper";
 import DropDownPicker from "react-native-dropdown-picker";
 import styles from "./styles";
-import AddUser from "../../firebase/firestore/AddUser";
-import GetCurrentUserData from "../../firebase/firestore/GetCurrentUserData";
-import GetAllManagers from "../../firebase/firestore/GetAllManagers";
+import AddUser from "../../firebase/operations/AddUser";
+import GetUserData from "../../firebase/operations/GetUserData";
+import GetAllManagers from "../../firebase/operations/GetAllManagers";
+import { UserContext } from "../../context/UserContext";
 
 export default function RegistrationScreen() {
+  const currentUser = useContext(UserContext);
   const [formComplete, setFormComplete] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [surname, setSurname] = useState("");
@@ -29,7 +31,7 @@ export default function RegistrationScreen() {
   }
 
   async function HandleAddUserBtn() {
-    if ((await GetCurrentUserData()).role === "Administrator") {
+    if ((await GetUserData(currentUser!.uid)).role === "Administrator") {
       AddUser(
         {
           first_name: firstName,

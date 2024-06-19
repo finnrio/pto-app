@@ -8,8 +8,11 @@ import {
   act,
 } from "@testing-library/react-native";
 import { FirebaseError } from "firebase/app";
+import { User } from "firebase/auth";
+import { createMock } from "@golevelup/ts-jest";
 import RegistrationScreen from "./RegistrationScreen";
-import AddUser from "../../firebase/firestore/AddUser";
+import AddUser from "../../firebase/operations/AddUser";
+import { UserContext } from "../../context/UserContext";
 
 // solution from https://github.com/APSL/react-native-keyboard-aware-scroll-view/issues/493#issuecomment-1023551697
 jest.mock("react-native-keyboard-aware-scroll-view", () => ({
@@ -17,7 +20,7 @@ jest.mock("react-native-keyboard-aware-scroll-view", () => ({
     props.children,
 }));
 
-jest.mock("../../firebase/firestore/GetAllManagers", () => {
+jest.mock("../../firebase/operations/GetAllManagers", () => {
   return jest.fn(() => {
     return Promise.resolve([
       { id: "1", first_name: "Manager", surname: "One" },
@@ -26,17 +29,19 @@ jest.mock("../../firebase/firestore/GetAllManagers", () => {
   });
 });
 
-jest.mock("../../firebase/firestore/AddUser", () => {
+jest.mock("../../firebase/operations/AddUser", () => {
   return jest.fn(() => {
     return Promise.resolve();
   });
 });
 
-jest.mock("../../firebase/firestore/GetCurrentUserData", () => {
+jest.mock("../../firebase/operations/GetUserData", () => {
   return jest.fn().mockImplementation(() => {
     return Promise.resolve({ role: "Administrator" });
   });
 });
+
+const mockAuthUser: User = createMock<User>({ uid: "mock_uid" });
 
 const spyAlert = jest.spyOn(Alert, "alert");
 
@@ -52,7 +57,11 @@ describe("RegistrationScreen", () => {
   });
 
   it("renders a blank registration form", async () => {
-    render(<RegistrationScreen />);
+    render(
+      <UserContext.Provider value={mockAuthUser}>
+        <RegistrationScreen />
+      </UserContext.Provider>,
+    );
     expect(screen.getByTestId("firstName_input").props.value).toBe("");
     expect(screen.getByTestId("surname_input").props.value).toBe("");
     expect(screen.getByTestId("email_input").props.value).toBe("");
@@ -65,7 +74,11 @@ describe("RegistrationScreen", () => {
   });
 
   it("resets the form with the reset form button", async () => {
-    render(<RegistrationScreen />);
+    render(
+      <UserContext.Provider value={mockAuthUser}>
+        <RegistrationScreen />
+      </UserContext.Provider>,
+    );
     fireEvent.changeText(screen.getByTestId("firstName_input"), "John");
     fireEvent.press(screen.getByTestId("reset_button"));
     expect(screen.getByTestId("firstName_input").props.value).toBe("");
@@ -74,7 +87,11 @@ describe("RegistrationScreen", () => {
   describe("when registering a new user", () => {
     describe("with a valid form", () => {
       beforeEach(async () => {
-        render(<RegistrationScreen />);
+        render(
+          <UserContext.Provider value={mockAuthUser}>
+            <RegistrationScreen />
+          </UserContext.Provider>,
+        );
         fireEvent.changeText(screen.getByTestId("firstName_input"), "John");
         fireEvent.changeText(screen.getByTestId("surname_input"), "Doe");
         fireEvent.changeText(
@@ -114,12 +131,16 @@ describe("RegistrationScreen", () => {
 
     describe("when the user is not an administrator", () => {
       beforeEach(async () => {
-        require("../../firebase/firestore/GetCurrentUserData").mockImplementationOnce(
+        require("../../firebase/operations/GetUserData").mockImplementationOnce(
           () => {
             return Promise.resolve({ role: "User" });
           },
         );
-        render(<RegistrationScreen />);
+        render(
+          <UserContext.Provider value={mockAuthUser}>
+            <RegistrationScreen />
+          </UserContext.Provider>,
+        );
         fireEvent.changeText(screen.getByTestId("firstName_input"), "John");
         fireEvent.changeText(screen.getByTestId("surname_input"), "Doe");
         fireEvent.changeText(
@@ -143,7 +164,11 @@ describe("RegistrationScreen", () => {
 
     describe("when the form is incomplete", () => {
       beforeEach(async () => {
-        render(<RegistrationScreen />);
+        render(
+          <UserContext.Provider value={mockAuthUser}>
+            <RegistrationScreen />
+          </UserContext.Provider>,
+        );
         fireEvent.changeText(screen.getByTestId("firstName_input"), "John");
         fireEvent.changeText(screen.getByTestId("surname_input"), "Doe");
         await act(() => {
@@ -166,14 +191,18 @@ describe("RegistrationScreen", () => {
     describe("when the backend methods fails", () => {
       describe("when GetAllManagers fails", () => {
         beforeEach(async () => {
-          require("../../firebase/firestore/GetAllManagers").mockImplementationOnce(
+          require("../../firebase/operations/GetAllManagers").mockImplementationOnce(
             () => {
               return Promise.reject(
                 new FirebaseError("Error", "An error occurred"),
               );
             },
           );
-          render(<RegistrationScreen />);
+          render(
+            <UserContext.Provider value={mockAuthUser}>
+              <RegistrationScreen />
+            </UserContext.Provider>,
+          );
           fireEvent.changeText(screen.getByTestId("firstName_input"), "John");
           fireEvent.changeText(screen.getByTestId("surname_input"), "Doe");
           fireEvent.changeText(
@@ -197,14 +226,18 @@ describe("RegistrationScreen", () => {
 
       describe("when AddUser fails", () => {
         beforeEach(async () => {
-          require("../../firebase/firestore/AddUser").mockImplementationOnce(
+          require("../../firebase/operations/AddUser").mockImplementationOnce(
             () => {
               return Promise.reject(
                 new FirebaseError("Error", "An error occurred"),
               );
             },
           );
-          render(<RegistrationScreen />);
+          render(
+            <UserContext.Provider value={mockAuthUser}>
+              <RegistrationScreen />
+            </UserContext.Provider>,
+          );
           fireEvent.changeText(screen.getByTestId("firstName_input"), "John");
           fireEvent.changeText(screen.getByTestId("surname_input"), "Doe");
           fireEvent.changeText(
