@@ -22,7 +22,6 @@ export default function AppDrawerNavigator() {
 
   useEffect(() => {
     GetUserData(currentUser!.uid).then((data) => {
-      console.log(data.role);
       setRole(data.role);
     });
   }, []);

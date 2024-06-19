@@ -54,7 +54,10 @@ export default function AdminUserProfileScreen() {
     return {
       first_name: firstName,
       surname,
-      email,
+      role,
+      manager_id: manager,
+      pto_allowance: ptoAllowance,
+      pto_used: ptoUsed,
     };
   }
 
@@ -67,15 +70,7 @@ export default function AdminUserProfileScreen() {
           {
             text: "Update",
             onPress: () => {
-              UpdateUserData(createUserDataObject(), currentUser?.uid);
-              if (email !== FIREBASE_AUTH.currentUser?.email) {
-                // updateEmail(currentUser!, email!).catch((error) =>
-                //   Alert.alert("Error", error.code),
-                // );
-                Alert.alert(
-                  "This email will not be upated for the auth system",
-                );
-              }
+              UpdateUserData(createUserDataObject(), selectedUser);
               RenderUserData("");
             },
             style: "default",
@@ -206,7 +201,7 @@ export default function AdminUserProfileScreen() {
           value={email!}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
-          editable={!!selectedUser}
+          editable={false}
           testID="email_input"
         />
         <Text style={styles.text}>Role</Text>
