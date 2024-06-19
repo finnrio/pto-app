@@ -6,7 +6,6 @@ export default async function VerifyUser(uid: string): Promise<boolean> {
     const userDoc = await getDoc(
       doc(FIRESTORE_DB, `${process.env.NODE_ENV}`, uid),
     );
-    console.log(userDoc);
     if (userDoc.exists()) {
       return true;
     }
