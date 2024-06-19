@@ -1,5 +1,5 @@
 import { collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
-import { faker } from "@faker-js/faker";
+import { v4 as uuidv4 } from "uuid";
 import { FIRESTORE_DB } from "../firebaseConfig";
 
 function calculateHours(startDate: Date, endDate: Date): number {
@@ -51,7 +51,7 @@ export default async function CreatePTORequest(
   const ptoCollection = collection(userDoc, "pto");
 
   // Add a new document with a generated id.
-  const ptoUuid = faker.string.uuid(); // TODO generate a random ID with UUIDv4library
+  const ptoUuid = uuidv4();
   await setDoc(doc(ptoCollection, ptoUuid), {
     start_date: startDate.toISOString().split("T")[0],
     end_date: endDate.toISOString().split("T")[0],

@@ -9,7 +9,7 @@ jest.mock("react-native-keyboard-aware-scroll-view", () => ({
     props.children,
 }));
 
-jest.mock("expo-font"); // needed?
+jest.mock("expo-font");
 
 jest.mock("./src/firebase/firebaseConfig", () => ({
   FIREBASE_AUTH: {
@@ -33,21 +33,4 @@ describe("App", () => {
       require("./src/firebase/firebaseConfig").FIREBASE_AUTH.onAuthStateChanged,
     ).toHaveBeenCalled();
   });
-
-  // it("renders AppDrawerNavigator once user is authenticated", () => {
-  //   require("./src/firebase/firebaseConfig").FIREBASE_AUTH.onAuthStateChanged.mockImplementationOnce(
-  //     (handler: any) =>
-  //       handler({ uid: "2awUZGPA2ph1WA7OMTiULwm9COu0", displayName: "Test User" } as any),
-  //   );
-  //   const { getAllByText } = render(<App />);
-  //   expect(getAllByText("Dashboard")).toBeTruthy();
-  // });
-
-  // it("renders LoginScreen if user is not authenticated", () => {
-  //   require("./src/firebase/firebaseConfig").FIREBASE_AUTH.onAuthStateChanged.mockImplementationOnce(
-  //     (handler: any) => handler(null),
-  //   );
-  //   const { getByText } = render(<App />);
-  //   expect(getByText("Login")).toBeTruthy();
-  // });
 });

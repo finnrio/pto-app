@@ -3,8 +3,6 @@ import { deleteDoc, doc, setDoc } from "firebase/firestore";
 import { FIRESTORE_DB } from "../firebaseConfig";
 import GetUserData from "./GetUserData";
 
-// TODO sort the imports or setup and afterall deletes for the GET operations
-
 const { NODE_ENV } = process.env;
 const testUserID: string = "testManagerId";
 const randomTestUserData = {
