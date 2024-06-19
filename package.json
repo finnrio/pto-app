@@ -9,7 +9,7 @@
     "android": "NODE_ENV=development expo start --android",
     "ios": "NODE_ENV=development expo start --ios",
     "web": "NODE_ENV=development expo start --web",
-    "start-firebase-emulators": "firebase emulators:start --import=./src/firebase/emulators",
+    "start-firebase-emulators": "firebase emulators:start",
     "test": "jest",
     "test:watch": "yarn run test -- --watch",
     "test:ci": "yarn run test -- --coverage",
