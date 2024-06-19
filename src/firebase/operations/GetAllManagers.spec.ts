@@ -1,13 +1,14 @@
 import { deleteDoc, doc, setDoc } from "firebase/firestore";
+import { v4 as uuidV4 } from "uuid";
 import { FIRESTORE_DB } from "../firebaseConfig";
 import GetAllManagers from "./GetAllManagers";
 
 const { NODE_ENV } = process.env;
-const testManagerId1 = "testUid1";
+const testManagerId1 = uuidV4();
 const testManager1DocRef = doc(FIRESTORE_DB, `${NODE_ENV}`, testManagerId1);
-const testManagerId2 = "testUid2";
+const testManagerId2 = uuidV4();
 const testManager2DocRef = doc(FIRESTORE_DB, `${NODE_ENV}`, testManagerId2);
-const testUserId = "testUid3";
+const testUserId = uuidV4();
 const testUserDocRef = doc(FIRESTORE_DB, `${NODE_ENV}`, testUserId);
 
 describe("GetAllManagers", () => {

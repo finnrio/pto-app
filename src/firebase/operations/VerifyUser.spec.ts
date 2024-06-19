@@ -1,11 +1,12 @@
 import { deleteDoc, doc, setDoc } from "firebase/firestore";
 import { createMock } from "@golevelup/ts-jest";
+import { v4 as uuidV4 } from "uuid";
 import { FIRESTORE_DB } from "../firebaseConfig";
 import { AppUser } from "../../types/AppUser";
 import VerifyUser from "./VerifyUser";
 
 const { NODE_ENV } = process.env;
-const testUserId = "testUserId";
+const testUserId = uuidV4();
 const testUser: AppUser = createMock<AppUser>();
 const testUserDocRef = doc(FIRESTORE_DB, `${NODE_ENV}`, testUserId);
 
@@ -14,7 +15,7 @@ describe("VerifyUser", () => {
     await setDoc(testUserDocRef, testUser);
   });
   afterAll(async () => {
-    deleteDoc(testUserDocRef);
+    await deleteDoc(testUserDocRef);
   });
   it("should return true if the user exists", async () => {
     expect(await VerifyUser(testUserId)).toBe(true);

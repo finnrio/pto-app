@@ -10,9 +10,9 @@
     "ios": "NODE_ENV=development expo start --ios",
     "web": "NODE_ENV=development expo start --web",
     "start-firebase-emulators": "firebase emulators:start",
-    "test": "jest  --maxConcurrency 1",
-    "test:watch": "yarn run test  --maxConcurrency 1 --watch",
-    "test:ci": "yarn run test --maxConcurrency 1 --coverage",
+    "test": "jest",
+    "test:watch": "yarn run test --watch",
+    "test:ci": "yarn run test --coverage",
     "ts:check": "tsc"
   },
   "dependencies": {
