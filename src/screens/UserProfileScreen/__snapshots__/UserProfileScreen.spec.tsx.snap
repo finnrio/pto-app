@@ -113,41 +113,77 @@ exports[`UserProfileScreen renders correctly 1`] = `
     underlineColorAndroid="transparent"
     value=""
   />
-  <Text
-    style={
+  <View
+    accessibilityState={
       {
-        "marginBottom": 10,
-        "marginLeft": 30,
-        "marginRight": 30,
-        "marginTop": 10,
-        "paddingLeft": 16,
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
       }
     }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "opacity": 1,
+      }
+    }
+    testID="email_touchable"
   >
-    Email
-  </Text>
-  <TextInput
-    autoCapitalize="none"
-    onChangeText={[Function]}
-    placeholder="E-mail"
-    placeholderTextColor="#aaaaaa"
-    style={
-      {
-        "backgroundColor": "white",
-        "borderRadius": 5,
-        "height": 48,
-        "marginBottom": 10,
-        "marginLeft": 30,
-        "marginRight": 30,
-        "marginTop": 10,
-        "overflow": "hidden",
-        "paddingLeft": 16,
+    <Text
+      style={
+        {
+          "marginBottom": 10,
+          "marginLeft": 30,
+          "marginRight": 30,
+          "marginTop": 10,
+          "paddingLeft": 16,
+        }
       }
-    }
-    testID="email_input"
-    underlineColorAndroid="transparent"
-    value=""
-  />
+    >
+      Email
+    </Text>
+    <TextInput
+      autoCapitalize="none"
+      editable={false}
+      placeholder="E-mail"
+      placeholderTextColor="#aaaaaa"
+      style={
+        {
+          "backgroundColor": "white",
+          "borderRadius": 5,
+          "height": 48,
+          "marginBottom": 10,
+          "marginLeft": 30,
+          "marginRight": 30,
+          "marginTop": 10,
+          "overflow": "hidden",
+          "paddingLeft": 16,
+        }
+      }
+      testID="email_input"
+      underlineColorAndroid="transparent"
+      value=""
+    />
+  </View>
   <Text
     style={
       {
@@ -181,6 +217,40 @@ exports[`UserProfileScreen renders correctly 1`] = `
     testID="role_input"
     underlineColorAndroid="transparent"
     value=""
+  />
+  <Text
+    style={
+      {
+        "marginBottom": 10,
+        "marginLeft": 30,
+        "marginRight": 30,
+        "marginTop": 10,
+        "paddingLeft": 16,
+      }
+    }
+  >
+    PTO Available
+  </Text>
+  <TextInput
+    editable={false}
+    placeholder="PTO Available"
+    placeholderTextColor="#aaaaaa"
+    style={
+      {
+        "backgroundColor": "white",
+        "borderRadius": 5,
+        "height": 48,
+        "marginBottom": 10,
+        "marginLeft": 30,
+        "marginRight": 30,
+        "marginTop": 10,
+        "overflow": "hidden",
+        "paddingLeft": 16,
+      }
+    }
+    testID="ptoAvailable_input"
+    underlineColorAndroid="transparent"
+    value="0"
   />
   <View
     accessibilityState={
