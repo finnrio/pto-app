@@ -35,13 +35,18 @@ describe("GetAllUsers", () => {
     await deleteDoc(testUser3DocRef);
   });
   it("should return all users in the format required for the DropDownPicker", async () => {
-    expect(await GetAllUsers()).toEqual(
+    const res = await GetAllUsers();
+    expect(res).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ value: testUserId1 }),
+      ]),
+    );
+    expect(res).toEqual(
+      expect.arrayContaining([
         expect.objectContaining({ value: testUserId2 }),
       ]),
     );
-    expect(await GetAllUsers()).not.toEqual(
+    expect(res).not.toEqual(
       expect.arrayContaining([expect.objectContaining({ value: testUserId3 })]),
     );
   });
