@@ -27,6 +27,7 @@ export default function CalendarScreen({ navigation: { navigate } }: any) {
         selected: true,
         selectedColor: color,
       });
+      setMarkedDates(mergedEvents);
     });
     // Get the current user's subordinates' PTO events
     GetSubordinates(currentUser.uid)
@@ -147,9 +148,15 @@ export default function CalendarScreen({ navigation: { navigate } }: any) {
     </View>
   ) : (
     <CalendarList
-      onDayPress={(day) =>
-        startDate ? endAlert(day.dateString) : startAlert(day.dateString)
-      }
+      onDayPress={(day) => {
+        // check date is in future
+        if(new Date() > new Date(day.dateString)){
+          Alert.alert("Error", "PTO can only be requested for future dates");
+        }
+        else {
+          startDate ? endAlert(day.dateString) : startAlert(day.dateString);
+        };
+      }}
       markingType={"multi-dot"}
       markedDates={markedDates}
     />
