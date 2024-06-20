@@ -1,5 +1,6 @@
 import { collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
-import { v4 as uuidv4 } from "uuid";
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
 import { FIRESTORE_DB } from "../firebaseConfig";
 
 function calculateHours(startDate: Date, endDate: Date): number {
