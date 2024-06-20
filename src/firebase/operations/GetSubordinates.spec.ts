@@ -28,9 +28,16 @@ describe("GetSubordinates", () => {
     await deleteDoc(testSubordinate2DocRef);
   });
   it("should return an array of subordinates", async () => {
-    expect(await GetSubordinates(testUserId)).toEqual(expect.objectContaining([
+    const res = await GetSubordinates(testUserId);
+    expect(res).toEqual(expect.arrayContaining([
+      expect.objectContaining(
       { id: testSubordinateId1 },
+      )
+    ]));
+    expect(res).toEqual(expect.arrayContaining([
+      expect.objectContaining(
       { id: testSubordinateId2 },
+      )
     ]));
   });
   it("should return an empty array if the manager has no subordinates", async () => {

@@ -39,6 +39,10 @@ describe("GetAllManagers", () => {
     expect(res).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ value: testManagerId1 }),
+      ]),
+    );
+    expect(res).toEqual(
+      expect.arrayContaining([
         expect.objectContaining({ value: testManagerId2 }),
       ]),
     );

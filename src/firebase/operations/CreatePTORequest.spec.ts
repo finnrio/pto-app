@@ -8,6 +8,9 @@ const testUserId = uuidV4();
 const testUserDocRef = doc(FIRESTORE_DB, `${NODE_ENV}`, testUserId);
 
 describe("CreatePTORequest", () => {
+  afterAll(async () => {
+    await deleteDoc(testUserDocRef);
+  });
   describe("when successful", () => {
     let ptoUuid: string;
     let userDocData: any;
@@ -27,7 +30,6 @@ describe("CreatePTORequest", () => {
     });
     afterAll(async () => {
       await deleteDoc(doc(testUserDocRef, "pto", ptoUuid));
-      await deleteDoc(testUserDocRef);
     });
     it("should generate a pto request", async () => {
       expect(
