@@ -6,12 +6,14 @@ import styles from "./styles";
 import GetUserData from "../../firebase/operations/GetUserData";
 import GetPTOByStatus from "../../firebase/operations/GetPTOByStatus";
 import { UserContext } from "../../context/UserContext";
+import DeletePTORequest from "../../firebase/operations/DeletePTORequest";
 
-export default function EmployeeActivityScreen() {
+export default function UserActivityScreen() {
   const currentUser = useContext(UserContext);
   const [pendingPTO, setPendingPTO] = useState<any[]>([]);
   const [approvedPTO, setApprovedPTO] = useState<any[]>([]);
   const [deniedPTO, setDeniedPTO] = useState<any[]>([]);
+  const [refresh, setRefresh] = useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -24,7 +26,7 @@ export default function EmployeeActivityScreen() {
       GetPTOByStatus(currentUser!.uid, "Denied").then((data) => {
         setDeniedPTO(data);
       });
-    }, []),
+    }, [refresh]),
   );
 
   async function queryAlert(data: any) {
@@ -32,6 +34,32 @@ export default function EmployeeActivityScreen() {
     Alert.alert(
       "PTO Request",
       `Employee: ${user.first_name} ${user.surname}\nReason: ${data.reason}\nStarting: ${data.start_date}\nEnding: ${data.end_date}\nHours Requested: ${data.hours}`,
+      [
+        {
+          text: "Delete PTO Request",
+          onPress: async () => {
+            if (data.start_date < new Date().toISOString().split("T")[0]) {
+              Alert.alert("Error", "Cannot delete past PTO requests");
+              return;
+            }
+            console.log(
+              "User ",
+              data.user_id,
+              " deleted pto request: ",
+              data.id,
+            );
+            await DeletePTORequest(data.user_id, data.id).then(() =>
+              setRefresh(!refresh),
+            );
+          },
+          style: "default",
+        },
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+      ],
+      { cancelable: true },
     );
   }
 

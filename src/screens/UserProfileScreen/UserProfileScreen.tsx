@@ -109,9 +109,14 @@ export default function UserProfileScreen() {
           testID="surname_input"
         />
         <TouchableOpacity
-          onPress={() => Alert.alert("Email cannot be updated", "Contact an administrator to update your email")}
+          onPress={() =>
+            Alert.alert(
+              "Email cannot be updated",
+              "Contact an administrator to update your email",
+            )
+          }
           testID="email_touchable"
-          >
+        >
           <Text style={styles.text}>Email</Text>
           <TextInput
             style={styles.input}

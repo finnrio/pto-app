@@ -150,12 +150,13 @@ export default function CalendarScreen({ navigation: { navigate } }: any) {
     <CalendarList
       onDayPress={(day) => {
         // check date is in future
-        if(new Date() > new Date(day.dateString)){
+        if (new Date() > new Date(day.dateString)) {
           Alert.alert("Error", "PTO can only be requested for future dates");
+        } else if (startDate) {
+          endAlert(day.dateString);
+        } else {
+          startAlert(day.dateString);
         }
-        else {
-          startDate ? endAlert(day.dateString) : startAlert(day.dateString);
-        };
       }}
       markingType={"multi-dot"}
       markedDates={markedDates}
