@@ -5,7 +5,7 @@ import { FIRESTORE_DB } from "../firebaseConfig";
 import GetUserData from "./GetUserData";
 
 const { NODE_ENV } = process.env;
-const testUserID= uuidV4();
+const testUserID = uuidV4();
 const randomTestUserData = {
   uid: testUserID,
   first_name: faker.person.firstName(),

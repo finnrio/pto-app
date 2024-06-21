@@ -63,11 +63,21 @@ describe("UserProfileScreen", () => {
       </UserContext.Provider>,
     );
     expect(screen.getByTestId("user_id_input").props.value).toBe("mock_uid");
-    expect((await screen.getByTestId("firstName_input")).props.value).toBe("mock_first_name");
-    expect((await screen.getByTestId("surname_input")).props.value).toBe("mock_surname");
-    expect((await screen.getByTestId("email_input")).props.value).toBe("mock_email");
-    expect((await screen.getByTestId("role_input")).props.value).toBe("mock_role");
-    expect((await screen.getByTestId("ptoAvailable_input")).props.value).toBe("135");
+    expect((await screen.getByTestId("firstName_input")).props.value).toBe(
+      "mock_first_name",
+    );
+    expect((await screen.getByTestId("surname_input")).props.value).toBe(
+      "mock_surname",
+    );
+    expect((await screen.getByTestId("email_input")).props.value).toBe(
+      "mock_email",
+    );
+    expect((await screen.getByTestId("role_input")).props.value).toBe(
+      "mock_role",
+    );
+    expect((await screen.getByTestId("ptoAvailable_input")).props.value).toBe(
+      "135",
+    );
   });
   it("user id, email and role should not be editable", async () => {
     render(
@@ -116,8 +126,12 @@ describe("UserProfileScreen", () => {
       // @ts-ignore
       spyAlert.mock.calls[0][2][1].onPress();
     });
-    expect((await screen.findByTestId("firstName_input")).props.value).toBe("mock_first_name");
-    expect((await screen.findByTestId("surname_input")).props.value).toBe("mock_surname");
+    expect((await screen.findByTestId("firstName_input")).props.value).toBe(
+      "mock_first_name",
+    );
+    expect((await screen.findByTestId("surname_input")).props.value).toBe(
+      "mock_surname",
+    );
   });
   it("alerts the user that the email cannot be updated", async () => {
     render(
@@ -130,7 +144,7 @@ describe("UserProfileScreen", () => {
     });
     expect(spyAlert).toHaveBeenCalledWith(
       "Email cannot be updated",
-      "Contact an administrator to update your email"
+      "Contact an administrator to update your email",
     );
   });
 });

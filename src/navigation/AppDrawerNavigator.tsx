@@ -4,7 +4,7 @@ import {
   AdminDashboardScreen,
   AdminUserProfileScreen,
   CalendarScreen,
-  EmployeeActivityScreen,
+  UserActivityScreen,
   ManagerActivityScreen,
   ManagerDashboardScreen,
   PTORequestFormScreen,
@@ -54,10 +54,7 @@ export default function AppDrawerNavigator() {
           detachInactiveScreens={true}
         >
           <Drawer.Screen name="Dashboard" component={ManagerDashboardScreen} />
-          <Drawer.Screen
-            name="My Activity"
-            component={EmployeeActivityScreen}
-          />
+          <Drawer.Screen name="My Activity" component={UserActivityScreen} />
           <Drawer.Screen
             name="Team Activity"
             component={ManagerActivityScreen}
@@ -78,10 +75,7 @@ export default function AppDrawerNavigator() {
           detachInactiveScreens={true}
         >
           <Drawer.Screen name="Dashboard" component={UserDashboardScreen} />
-          <Drawer.Screen
-            name="My Activity"
-            component={EmployeeActivityScreen}
-          />
+          <Drawer.Screen name="My Activity" component={UserActivityScreen} />
           <Drawer.Screen name="Calendar" component={CalendarScreen} />
           <Drawer.Screen name="Profile" component={UserProfileScreen} />
           <Drawer.Screen

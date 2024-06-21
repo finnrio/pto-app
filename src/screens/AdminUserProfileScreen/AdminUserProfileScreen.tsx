@@ -7,7 +7,6 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { UserContext } from "../../context/UserContext";
 import UpdateUserData from "../../firebase/operations/UpdateUserData";
 import styles from "./styles";
-import { FIREBASE_AUTH } from "../../firebase/firebaseConfig";
 import { AppUser } from "../../types/AppUser";
 import GetAllManagers from "../../firebase/operations/GetAllManagers";
 import GetAllUsers from "../../firebase/operations/GetAllUsers";
@@ -15,7 +14,6 @@ import DeleteUser from "../../firebase/operations/DeleteUser";
 import GetUserData from "../../firebase/operations/GetUserData";
 
 export default function AdminUserProfileScreen() {
-  const currentUser = useContext(UserContext);
   const [firstName, setFirstName] = useState("");
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");

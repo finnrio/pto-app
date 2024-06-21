@@ -1,4 +1,4 @@
-export { default as EmployeeActivityScreen } from "./EmployeeActivityScreen/EmployeeActivityScreen";
+export { default as UserActivityScreen } from "./UserActivityScreen/UserActivityScreen";
 
 export { default as CalendarScreen } from "./CalendarScreen/CalendarScreen";
 
