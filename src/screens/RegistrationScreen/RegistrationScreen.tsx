@@ -20,6 +20,7 @@ export default function RegistrationScreen() {
   const [manager, setManager] = useState("");
   const [managerList, setManagerList] = useState<any[]>([]);
   const [openManager, setOpenManager] = useState(false);
+  const [scrollEnabled, setScrollEnabled] = useState(true);
 
   function ResetForm() {
     setFirstName("");
@@ -77,6 +78,7 @@ export default function RegistrationScreen() {
       <KeyboardAwareScrollView
         style={{ flex: 1, width: "100%" }}
         keyboardShouldPersistTaps="always"
+        scrollEnabled={scrollEnabled}
       >
         <Text style={styles.text}>First Name</Text>
         <TextInput
@@ -156,6 +158,8 @@ export default function RegistrationScreen() {
           setOpen={setOpenManager}
           setValue={setManager}
           setItems={setManagerList}
+          onOpen={() => setScrollEnabled(false)}
+          onClose={() => setScrollEnabled(true)}
           searchable={true}
           testID="manager_dropdown"
         />
