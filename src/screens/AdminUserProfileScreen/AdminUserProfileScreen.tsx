@@ -1,10 +1,9 @@
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SegmentedButtons } from "react-native-paper";
 import DropDownPicker from "react-native-dropdown-picker";
 
-import { UserContext } from "../../context/UserContext";
 import UpdateUserData from "../../firebase/operations/UpdateUserData";
 import styles from "./styles";
 import { AppUser } from "../../types/AppUser";
@@ -27,6 +26,7 @@ export default function AdminUserProfileScreen() {
   const [selectedUser, setSelectedUser] = useState("");
   const [openUser, setOpenUser] = useState(false);
   const [openManager, setOpenManager] = useState(false);
+  const [scrollEnabled, setScrollEnabled] = useState(true);
 
   async function RenderUserData(id: string) {
     const res: AppUser = await GetUserData(id);
@@ -130,7 +130,7 @@ export default function AdminUserProfileScreen() {
   }, [userList, managerList]);
 
   useEffect(() => {
-    RenderUserData(selectedUser);
+    if (selectedUser) RenderUserData(selectedUser);
     RenderUserLists();
   }, [selectedUser]);
 
@@ -139,6 +139,7 @@ export default function AdminUserProfileScreen() {
       <KeyboardAwareScrollView
         style={{ flex: 1, width: "100%" }}
         keyboardShouldPersistTaps="always"
+        scrollEnabled={scrollEnabled}
       >
         <DropDownPicker
           open={openUser}
@@ -147,6 +148,8 @@ export default function AdminUserProfileScreen() {
           setOpen={setOpenUser}
           setValue={setSelectedUser}
           setItems={setAllUserList}
+          onOpen={() => setScrollEnabled(false)}
+          onClose={() => setScrollEnabled(true)}
           searchable={true}
           testID="user_dropdown"
         />
@@ -229,6 +232,8 @@ export default function AdminUserProfileScreen() {
           setOpen={setOpenManager}
           setValue={setManager}
           setItems={setManagerList}
+          onOpen={() => setScrollEnabled(false)}
+          onClose={() => setScrollEnabled(true)}
           searchable={true}
           testID="manager_dropdown"
         />
